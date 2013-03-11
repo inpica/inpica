@@ -1,12 +1,16 @@
 from django.conf.urls import patterns, include, url
+<<<<<<< HEAD
 from django.conf import settings
 from django.conf.urls.static import static
+=======
+>>>>>>> init django project (using django 1.5)
 
 # Uncomment the next two lines to enable the admin:
 # from django.contrib import admin
 # admin.autodiscover()
 
 urlpatterns = patterns('',
+<<<<<<< HEAD
 
     url(r'^$', 'main.views.Index'),
 
@@ -32,10 +36,19 @@ urlpatterns = patterns('',
 
 
 
+=======
+    # Examples:
+    # url(r'^$', 'inpica.views.home', name='home'),
+    # url(r'^inpica/', include('inpica.foo.urls')),
+>>>>>>> init django project (using django 1.5)
 
     # Uncomment the admin/doc line below to enable admin documentation:
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
     # Uncomment the next line to enable the admin:
     # url(r'^admin/', include(admin.site.urls)),
+<<<<<<< HEAD
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+=======
+)
+>>>>>>> init django project (using django 1.5)

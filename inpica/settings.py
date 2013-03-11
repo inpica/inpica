@@ -11,15 +11,23 @@ MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
+<<<<<<< HEAD
         'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
         'NAME': 'inpica',                      # Or path to database file if using sqlite3.
         'USER': 'root',
+=======
+        'ENGINE': 'django.db.backends.', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+        'NAME': '',                      # Or path to database file if using sqlite3.
+        # The following settings are not used with sqlite3:
+        'USER': '',
+>>>>>>> init django project (using django 1.5)
         'PASSWORD': '',
         'HOST': '',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
         'PORT': '',                      # Set to empty string for default.
     }
 }
 
+<<<<<<< HEAD
 #TEMP###########################################################
 #COMMENT when ready for production
 #Used to show email message in stdout (console) rather than sending actual email
@@ -34,6 +42,8 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 #EMAIL_USE_TLS = True
 ###########################################################
 
+=======
+>>>>>>> init django project (using django 1.5)
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
 ALLOWED_HOSTS = []
@@ -50,6 +60,7 @@ LANGUAGE_CODE = 'en-us'
 
 SITE_ID = 1
 
+<<<<<<< HEAD
 LOGIN_URL = '/login'
 
 LOGOUT_URL = '/login'
@@ -57,6 +68,8 @@ LOGOUT_URL = '/login'
 #URL that user is taken to after they log in successfully
 LOGIN_REDIRECT_URL = '/'
 
+=======
+>>>>>>> init django project (using django 1.5)
 # If you set this to False, Django will make some optimizations so as not
 # to load the internationalization machinery.
 USE_I18N = True
@@ -70,12 +83,20 @@ USE_TZ = True
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/var/www/example.com/media/"
+<<<<<<< HEAD
 MEDIA_ROOT = '/Users/gauravshetti/Documents/inpica/media'
+=======
+MEDIA_ROOT = ''
+>>>>>>> init django project (using django 1.5)
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
 # Examples: "http://example.com/media/", "http://media.example.com/"
+<<<<<<< HEAD
 MEDIA_URL = '/media/'
+=======
+MEDIA_URL = ''
+>>>>>>> init django project (using django 1.5)
 
 # Absolute path to the directory static files should be collected to.
 # Don't put anything in this directory yourself; store your static files
@@ -89,7 +110,10 @@ STATIC_URL = '/static/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
+<<<<<<< HEAD
     '/Users/gauravshetti/Documents/inpica/static',
+=======
+>>>>>>> init django project (using django 1.5)
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
@@ -129,7 +153,10 @@ ROOT_URLCONF = 'inpica.urls'
 WSGI_APPLICATION = 'inpica.wsgi.application'
 
 TEMPLATE_DIRS = (
+<<<<<<< HEAD
     '/Users/gauravshetti/Documents/inpica/templates',
+=======
+>>>>>>> init django project (using django 1.5)
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
@@ -146,8 +173,11 @@ INSTALLED_APPS = (
     # 'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
+<<<<<<< HEAD
     'main',
     'account',
+=======
+>>>>>>> init django project (using django 1.5)
 )
 
 # A sample logging configuration. The only tangible logging
