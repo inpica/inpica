@@ -12,6 +12,7 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
 <<<<<<< HEAD
+<<<<<<< HEAD
         'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
         'NAME': 'inpica',                      # Or path to database file if using sqlite3.
         'USER': 'root',
@@ -21,6 +22,12 @@ DATABASES = {
         # The following settings are not used with sqlite3:
         'USER': '',
 >>>>>>> init django project (using django 1.5)
+=======
+        'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+        'NAME': 'inpica',                      # Or path to database file if using sqlite3.
+        # The following settings are not used with sqlite3:
+        'USER': 'root',
+>>>>>>> svg library
         'PASSWORD': '',
         'HOST': '',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
         'PORT': '',                      # Set to empty string for default.
@@ -84,19 +91,27 @@ USE_TZ = True
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/var/www/example.com/media/"
 <<<<<<< HEAD
+<<<<<<< HEAD
 MEDIA_ROOT = '/Users/gauravshetti/Documents/inpica/media'
 =======
 MEDIA_ROOT = ''
 >>>>>>> init django project (using django 1.5)
+=======
+MEDIA_ROOT = 'C:/Users/ashams/Documents/GitHub/apply.scitech/media'
+>>>>>>> svg library
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
 # Examples: "http://example.com/media/", "http://media.example.com/"
 <<<<<<< HEAD
+<<<<<<< HEAD
 MEDIA_URL = '/media/'
 =======
 MEDIA_URL = ''
 >>>>>>> init django project (using django 1.5)
+=======
+MEDIA_URL = '/media/'
+>>>>>>> svg library
 
 # Absolute path to the directory static files should be collected to.
 # Don't put anything in this directory yourself; store your static files
@@ -111,9 +126,13 @@ STATIC_URL = '/static/'
 # Additional locations of static files
 STATICFILES_DIRS = (
 <<<<<<< HEAD
+<<<<<<< HEAD
     '/Users/gauravshetti/Documents/inpica/static',
 =======
 >>>>>>> init django project (using django 1.5)
+=======
+    'C:/Users/ashams/Documents/GitHub/apply.scitech/static',
+>>>>>>> svg library
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
@@ -154,9 +173,13 @@ WSGI_APPLICATION = 'inpica.wsgi.application'
 
 TEMPLATE_DIRS = (
 <<<<<<< HEAD
+<<<<<<< HEAD
     '/Users/gauravshetti/Documents/inpica/templates',
 =======
 >>>>>>> init django project (using django 1.5)
+=======
+    'C:/Users/ashams/Documents/GitHub/inpica/templates',
+>>>>>>> svg library
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
@@ -174,10 +197,15 @@ INSTALLED_APPS = (
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
 <<<<<<< HEAD
+<<<<<<< HEAD
     'main',
     'account',
 =======
 >>>>>>> init django project (using django 1.5)
+=======
+    'main',
+    'account'
+>>>>>>> svg library
 )
 
 # A sample logging configuration. The only tangible logging

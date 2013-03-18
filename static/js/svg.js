@@ -8,6 +8,7 @@ function canvas(config){
 	this.h = config.h;
 	this.panx = config.panx;
 	this.pany = config.pany;
+<<<<<<< HEAD
 	this.xoffset = config.xoffset;//x pixels the canvas' left CSS prop. Only matters for ruler
 	this.yoffset = config.yoffset;//x pixels the canvas' top CSS prop. Only matters for ruler
 	this.focus = null;
@@ -17,6 +18,12 @@ function canvas(config){
 	this.init = function(){
 		this.paper = new Raphael(document.getElementById(this.id), this.w, this.h);
 		this.pan(0,0);
+=======
+	this.focus = null;
+	this.robjects = [];
+	this.init = function(){
+		this.paper = new Raphael(document.getElementById(this.id), this.w, this.h);
+>>>>>>> svg library
 		this.paper.customAttributes.arc = function (xloc, yloc, value, total, R) {
 		    var alpha = 360 / total * value,
 		        a = (90 - alpha) * Math.PI / 180,
@@ -40,6 +47,7 @@ function canvas(config){
 		};
 	};
 
+<<<<<<< HEAD
 	this.addObjects = function(objects, isEditable, isFurniture){
 		var cvs = this;
 		var rs = this.robjects;
@@ -79,10 +87,15 @@ function canvas(config){
 
 	this.select_set = function(){
 		var cvs = this;
+=======
+	this.select_set = function(){
+		var c = this;
+>>>>>>> svg library
 		var p = this.paper;
 		_.each(this.robjects, function(robject){
 			robject.click_set();
 		})
+<<<<<<< HEAD
 		$('#'+cvs.id).on("click", function(e){
 			if (!p.getElementByPoint(e.pageX, e.pageY)){
 				cvs.focus_clear();				
@@ -119,10 +132,16 @@ function canvas(config){
 					$('#'+cvs.id).unbind("mousemove").unbind("mouseup");
 					cvs.focus_clear();
 				});
+=======
+		$('#'+this.id).on("click", function(e){
+			if (!p.getElementByPoint(e.pageX, e.pageY)){
+				c.focus_clear();				
+>>>>>>> svg library
 			};
 		});
 	};
 
+<<<<<<< HEAD
 	this.panselect_last = function(){
 		//this is used when a user adds an object to the canvas from the picker. probably better way to do it but this is easiest.
 		_.last(this.robjects).click_set();
@@ -149,6 +168,11 @@ function canvas(config){
 			}else{
 				$("#"+this.id).trigger("layoutModified");
 			}
+=======
+	this.focus_clear = function(){
+		if (this.focus != null){
+			this.focus.focus_clear();
+>>>>>>> svg library
 			this.focus = null;
 		};
 	};
@@ -159,6 +183,7 @@ function canvas(config){
 		this.focus.focus();
 	};
 
+<<<<<<< HEAD
 	this.focus_last = function(){
 		this.focus_set(_.last(this.robjects));
 	};
@@ -175,6 +200,20 @@ function canvas(config){
 				};
 			};
 		});
+=======
+	this.draw = function(objects){
+		//list of objects (JSON)
+		var c = this;
+		var rs = this.robjects;
+		_.each(objects, function(object){
+			object.canvas = c;
+			rs.push(ObjectToRobject(object));
+		});
+
+		_.each(this.robjects, function(robject){
+			robject.draw();
+		})
+>>>>>>> svg library
 	};
 
 	this.zoom = function(pixelsPerFoot){
@@ -184,6 +223,7 @@ function canvas(config){
 			robject.redraw();
 			robject.click_set();
 		});
+<<<<<<< HEAD
 		if(this.map != null){
 			this.map.redraw().toBack();	
 		};
@@ -212,6 +252,8 @@ function canvas(config){
 		}
 		this.ruler = null;
 		$("#"+this.id).off("mouseup").off("mousedown");
+=======
+>>>>>>> svg library
 	};
 
 	this.feetToPixel = function(feet){
@@ -221,6 +263,7 @@ function canvas(config){
 	this.pixelToFeet = function(pixel){
 		return pixel/this.pixelsPerFoot;
 	};
+<<<<<<< HEAD
 
 	this.convertToData_layout = function(){
 		var data = [];
@@ -244,6 +287,8 @@ function canvas(config){
 		});
 		this.robjects = this.layout();
 	};
+=======
+>>>>>>> svg library
 };
 
 function outerpath(data){
@@ -254,7 +299,10 @@ function outerpath(data){
 	this.dim = data.dim;
 	this.element = null; //Raphael Element
 	this.transform = null;
+<<<<<<< HEAD
 	this.isEditable = null;
+=======
+>>>>>>> svg library
 	this.pixelLength = function(){return this.element.getTotalLength();};
 	this.startPoint = function(){return Raphael.getPointAtLength(this.mapedPath(), 0);};
 	this.endPoint = function(){return Raphael.getPointAtLength(this.mapedPath(), 9999);};
@@ -286,17 +334,21 @@ function outerpath(data){
 
 	};
 
+<<<<<<< HEAD
 	this.remove = function(){
 		if(this.element != null){
 			this.element.remove();
 		};
 	};
 
+=======
+>>>>>>> svg library
 	this.redraw = function(){
 		this.element.remove();
 		this.draw();
 	};
 
+<<<<<<< HEAD
 	this.toFront = function(){
 		this.element.toFront();
 	};
@@ -306,6 +358,8 @@ function outerpath(data){
 		if(this.canvas.map != null){this.canvas.map.toBack()};
 	};
 
+=======
+>>>>>>> svg library
 	this.click_set = function(){
 		this.element.click(function(){
 			var robject = this.data("robject");
@@ -388,7 +442,10 @@ function innerpath(data){
 	this.dim = data.dim;
 	this.element = null; //Raphael Element
 	this.transform = null;
+<<<<<<< HEAD
 	this.isEditable = null;
+=======
+>>>>>>> svg library
 	this.pixelLength = function(){return this.element.getTotalLength();};
 	this.startPoint = function(){return Raphael.getPointAtLength(Raphael.mapPath(this.element.attr("path"), this.element.matrix), 0);};
 	this.endPoint = function(){return Raphael.getPointAtLength(Raphael.mapPath(this.element.attr("path"), this.element.matrix), 9999);};
@@ -411,17 +468,21 @@ function innerpath(data){
 		this.id = ip.id;
 	};
 
+<<<<<<< HEAD
 	this.remove = function(){
 		if(this.element != null){
 			this.element.remove();
 		};
 	};
 
+=======
+>>>>>>> svg library
 	this.redraw = function(){
 		this.element.remove();
 		this.draw();
 	};
 
+<<<<<<< HEAD
 	this.toFront = function(){
 		this.element.toFront();
 	};
@@ -432,6 +493,8 @@ function innerpath(data){
 
 	};
 
+=======
+>>>>>>> svg library
 	this.click_set = function(){
 		this.element.click(function(){
 			var robject = this.data("robject");
@@ -516,7 +579,10 @@ function multi(data){
 	this.robjects = [];
 	this.bbox = null;
 	this.areaPaths = [];
+<<<<<<< HEAD
 	this.isEditable = null;
+=======
+>>>>>>> svg library
 
 	this.draw = function(){
 		var c = this.canvas;
@@ -557,17 +623,21 @@ function multi(data){
 
 	};
 
+<<<<<<< HEAD
 	this.remove = function(){
 		if(this.set != null){
 			this.set.remove();
 		};
 	};
 
+=======
+>>>>>>> svg library
 	this.redraw = function(){
 		this.set.remove();
 		this.draw();
 	};
 
+<<<<<<< HEAD
 	this.toFront = function(){
 		this.set.toFront();
 	};
@@ -578,6 +648,8 @@ function multi(data){
 
 	};
 
+=======
+>>>>>>> svg library
 	this.click_set = function(){
 		this.bbox.click(function(){
 			var robject = this.data("robject");
@@ -636,7 +708,10 @@ function outerarc(data){
 	this.dim = data.dim;
 	this.element = null; //Raphael Element
 	this.transform = null;
+<<<<<<< HEAD
 	this.isEditable = null;
+=======
+>>>>>>> svg library
 	this.pixelLength = function(){
 		//this is not exact length but the triangle length to help with better positioning in this.ft_clear().
 		return 2*Math.sqrt(Math.pow(this.canvas.feetToPixel(this.dim.w)/2, 2) + Math.pow(this.canvas.feetToPixel(this.dim.h),2));
@@ -671,17 +746,21 @@ function outerarc(data){
 
 	};
 
+<<<<<<< HEAD
 	this.remove = function(){
 		if(this.element != null){
 			this.element.remove();
 		};
 	};
 
+=======
+>>>>>>> svg library
 	this.redraw = function(){
 		this.element.remove();
 		this.draw();
 	};
 
+<<<<<<< HEAD
 	this.toFront = function(){
 		this.element.toFront();
 	};
@@ -691,6 +770,8 @@ function outerarc(data){
 		if(this.canvas.map != null){this.canvas.map.toBack()};
 	};
 
+=======
+>>>>>>> svg library
 	this.click_set = function(){
 		this.element.click(function(){
 			var robject = this.data("robject");
@@ -768,7 +849,10 @@ function outerarc(data){
 
 function image(data){
 	this.id = null;
+<<<<<<< HEAD
 	this.mid = null;//model id of furniture.
+=======
+>>>>>>> svg library
 	this.canvas = data.canvas;
 	this.originalData = data;
 	this.type = "image";
@@ -776,7 +860,10 @@ function image(data){
 	this.src = data.src;
 	this.element = null; //Raphael Element
 	this.transform = null;
+<<<<<<< HEAD
 	this.isEditable = null;
+=======
+>>>>>>> svg library
 
 	this.draw = function(){
 
@@ -793,6 +880,7 @@ function image(data){
 		this.element = i;
 		this.element.data("robject",this);
 		this.id = i.id;
+<<<<<<< HEAD
 
 		if(this.originalData.mid){
 			this.mid = this.originalData.mid;
@@ -803,11 +891,14 @@ function image(data){
 		if(this.element != null){
 			this.element.remove();
 		};
+=======
+>>>>>>> svg library
 	};
 
 	this.redraw = function(){
 		this.element.remove();
 		this.draw();
+<<<<<<< HEAD
 		return this;
 	};
 
@@ -818,6 +909,8 @@ function image(data){
 	this.toBack = function(){
 		this.element.toBack();
 		if(this.canvas.map != null && this.canvas.map.id != this.element.id){this.canvas.map.toBack()};
+=======
+>>>>>>> svg library
 	};
 
 	this.click_set = function(){
@@ -855,6 +948,7 @@ function image(data){
 		this.dim.y = this.canvas.pixelToFeet(this.transform.attrs.translate.y);
 		this.dim.r = this.transform.attrs.rotate;
 	};
+<<<<<<< HEAD
 
 	this.convertToData = function(){
 		return {
@@ -863,10 +957,13 @@ function image(data){
 			src:this.src
 		}
 	};
+=======
+>>>>>>> svg library
 };
 
 function ruler(data){
 	this.canvas = data.canvas;
+<<<<<<< HEAD
 	this.startPoint = null;
 	this.endPoint = null;
 	this.element = null;
@@ -877,10 +974,20 @@ function ruler(data){
 
 	this.start = function(x,y){
 		if(this.element != null){this.remove();};
+=======
+	startPoint = null;
+	endPoint = null;
+	this.element = null;
+	this.generatePathstring = function(){
+		return "M" + this.startPoint.x + ',' + this.startPoint.y + "L" + this.endPoint.x + "," + this.endPoint.y;
+	};
+	this.init = function(x, y){
+>>>>>>> svg library
 		this.startPoint = this.endPoint = {
 			x:x,
 			y:y
 		}
+<<<<<<< HEAD
 		this.element = this.canvas.paper.path(this.generatePathstring()).attr("stroke-width", 5).attr("stroke", "red").toFront();
 	};
 
@@ -927,6 +1034,26 @@ function ruler(data){
 	this.remove = function(){
 		this.element.remove();
 	};
+=======
+		this.element = this.canvas.paper.path(this.generatePathstring()).attr("stroke-width", 5).attr("stroke", "#CCC");
+	};
+	this.update = function(x, y){
+		this.endPoint = {
+			x:x,
+			y:y
+		}
+		this.redraw();
+	};
+	this.redraw = function(){
+		this.element.attr("path", this.generatePathstring());
+	};
+	this.pixelLength = function(){
+		return DistanceBetween(this.startPoint, this.endPoint);
+	};
+	this.feetLength = function(){
+		return this.canvas.pixelToFeet(this.pixelLength());
+	};
+>>>>>>> svg library
 };
 
 function DistanceBetween(point1, point2){

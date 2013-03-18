@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.template import RequestContext
@@ -75,3 +76,6 @@ def FurnitureInfoProp(request, id):
 @login_required
 def FurnitureEditProp(request, id):
 	return HttpResponse("TODO: Furniture Properties box showing edit properties")
+=======
+# Create your views here.
+>>>>>>> svg library
