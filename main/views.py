@@ -1,10 +1,14 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> account management
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.template import RequestContext
 from django.shortcuts import render_to_response
 from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
+<<<<<<< HEAD
 from django.views.decorators.csrf import csrf_exempt
 import json
 
@@ -79,3 +83,11 @@ def FurnitureEditProp(request, id):
 =======
 # Create your views here.
 >>>>>>> svg library
+=======
+
+from django.contrib.auth.models import User
+
+@login_required
+def Index(request):
+	return HttpResponse("TODO")
+>>>>>>> account management

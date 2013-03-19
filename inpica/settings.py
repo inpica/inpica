@@ -25,7 +25,6 @@ DATABASES = {
 =======
         'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
         'NAME': 'inpica',                      # Or path to database file if using sqlite3.
-        # The following settings are not used with sqlite3:
         'USER': 'root',
 >>>>>>> svg library
         'PASSWORD': '',
@@ -35,6 +34,9 @@ DATABASES = {
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> account management
 #TEMP###########################################################
 #COMMENT when ready for production
 #Used to show email message in stdout (console) rather than sending actual email
@@ -49,8 +51,11 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 #EMAIL_USE_TLS = True
 ###########################################################
 
+<<<<<<< HEAD
 =======
 >>>>>>> init django project (using django 1.5)
+=======
+>>>>>>> account management
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
 ALLOWED_HOSTS = []
@@ -68,6 +73,9 @@ LANGUAGE_CODE = 'en-us'
 SITE_ID = 1
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> account management
 LOGIN_URL = '/login'
 
 LOGOUT_URL = '/login'
@@ -75,8 +83,11 @@ LOGOUT_URL = '/login'
 #URL that user is taken to after they log in successfully
 LOGIN_REDIRECT_URL = '/'
 
+<<<<<<< HEAD
 =======
 >>>>>>> init django project (using django 1.5)
+=======
+>>>>>>> account management
 # If you set this to False, Django will make some optimizations so as not
 # to load the internationalization machinery.
 USE_I18N = True
@@ -92,6 +103,7 @@ USE_TZ = True
 # Example: "/var/www/example.com/media/"
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 MEDIA_ROOT = '/Users/gauravshetti/Documents/inpica/media'
 =======
 MEDIA_ROOT = ''
@@ -99,6 +111,9 @@ MEDIA_ROOT = ''
 =======
 MEDIA_ROOT = 'C:/Users/ashams/Documents/GitHub/apply.scitech/media'
 >>>>>>> svg library
+=======
+MEDIA_ROOT = 'C:/Users/ashams/Documents/GitHub/inpica/media'
+>>>>>>> account management
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
@@ -127,12 +142,16 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     '/Users/gauravshetti/Documents/inpica/static',
 =======
 >>>>>>> init django project (using django 1.5)
 =======
     'C:/Users/ashams/Documents/GitHub/apply.scitech/static',
 >>>>>>> svg library
+=======
+    'C:/Users/ashams/Documents/GitHub/inpica/static',
+>>>>>>> account management
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.

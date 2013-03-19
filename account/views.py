@@ -1,4 +1,7 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> account management
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.template import RequestContext
@@ -84,6 +87,9 @@ def Confirm(request, id):
 	return render_to_response('account/confirm.html', {"confirmed":False}, context_instance=RequestContext(request))
 
 
+<<<<<<< HEAD
 =======
 # Create your views here.
 >>>>>>> svg library
+=======
+>>>>>>> account management

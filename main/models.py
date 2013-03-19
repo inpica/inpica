@@ -9,14 +9,20 @@ class UserDetails(models.Model):
 	'''
 	Additional user information (if needed)
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> account management
 	confirmCode = when user creates account, confirmCode is emailed to them so that they can activate their account
 	'''
 	user = models.OneToOneField(User, primary_key=True)
 	confirmCode = models.CharField(max_length=40, null=True)
+<<<<<<< HEAD
 =======
 	'''
 	user = models.OneToOneField(User, primary_key=True)
 >>>>>>> svg library
+=======
+>>>>>>> account management
 
 
 
@@ -206,6 +212,9 @@ class FloorplanCameraPic(models.Model):
 	RCD = models.DateTimeField(default=datetime.now)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> account management
 
 
 class Bookmarklet(models.Model):
@@ -213,5 +222,8 @@ class Bookmarklet(models.Model):
 	uuid = models.CharField(max_length=40)
 	EOL = models.DateTimeField() #End of Life
 	RCD = models.DateTimeField(datetime.now)
+<<<<<<< HEAD
 =======
 >>>>>>> svg library
+=======
+>>>>>>> account management
