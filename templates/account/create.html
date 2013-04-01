@@ -1,0 +1,17 @@
+{%extends 'layout/master.html' %}
+{%block title%}Create Account{%endblock%}
+{%block body%}
+	<h1>Create</h1>
+	{%if created%}
+	<p>Thank you for creating an account. An confirmation email has been sent to you.</p>
+	{%else%}
+	<form method="post" action="">
+		{%if errormsg%}
+			<div>{{errormsg}}</div>
+		{%endif%}
+		{%csrf_token%}
+		{{form.as_p}}
+		<input type="submit" value="Create"/>
+	</form>
+	{%endif%}
+{%endblock%}

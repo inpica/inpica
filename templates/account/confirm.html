@@ -1,0 +1,10 @@
+{%extends 'layout/master.html' %}
+{%block title%}Confirm Account{%endblock%}
+{%block body%}
+	<h1>Confirm</h1>
+	{%if confirmed%}
+	<p>Thank you. Your account has been confirmed and activated</p>
+	{%else%}
+	<p>There was an error confirming your account.</p>
+	{%endif%}
+{%endblock%}

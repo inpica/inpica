@@ -1,0 +1,171 @@
+{%extends 'layout/master.html' %}
+{%load maintags%}
+{%block title%}Floorplan{%endblock%}
+{%block body%}
+
+	<style>
+		body{
+			position:relative;
+			padding:0px;
+			margin:0px;
+		}
+		#picker-wrapper{
+			position:absolute;
+			left:0px;
+			top:0px;
+			width:400px;
+			overflow: hidden;
+		}
+		#picker-wrapper .object img{
+			max-width:100px;
+		}
+		#canvas-wrapper{
+			position:absolute;
+			top:0px;
+			left:402px;
+			width: -webkit-calc(100% - 406px);/*chrome*/
+			width: calc(100% - 406px);/*ie9,ie10*/
+			height:500px;
+			border:2px solid #CCC;
+			overflow: hidden;
+		}
+		#canvas-wrapper .toolbar{
+			position: absolute;
+			height:40px;
+			width:100%;
+			background-color:#FAFAFA;
+			z-index: 100;
+		}
+		#main-canvas{
+			position:absolute;
+		}
+		#main-canvas svg{
+			background-color: #F3F3F3;
+		}
+		#zoom{
+			float: right;
+			width:200px;
+			margin:10px;
+		}
+		#map-uploader-wrapper{
+			position:absolute;
+			top:510px;
+			left:0px;
+		}
+	</style>
+
+	<div id="picker-wrapper">
+		{%if isOwner%}
+			<div id="picker-tab-layout" {%if not furnishing.jsonObjects%}active='1'{%endif%}>Layout</div>
+			<div id="picker-tab-furniture" {%if furnishing.jsonObjects%}active='1'{%endif%}>Furniture</div>
+		{%endif%}
+		{%if isOwner %}
+			{%include 'snippet/layout-picker.html'%}
+		{%endif%}
+		{% FurniturePicker True %}
+	</div>
+
+	<div id="map-uploader-wrapper">
+		{%include 'snippet/map-uploader.html'%}
+	</div>	
+
+	<div id="canvas-wrapper">
+		<div class="toolbar">
+			<input id="data" type="button" value="data" />
+			<div id="zoom"></div>
+		</div>
+		<div id="main-canvas">
+		</div>
+	</div>
+
+	<script>
+		var canvas_config = {
+			pixelsPerFoot:{{floorplan.scalePixelsPerFoot}},
+			id:'main-canvas',
+			w:4000,
+			h:2250,
+			panx:{{floorplan.panX}},
+			pany:{{floorplan.panY}},
+			xoffset:402,
+			yoffset:0
+		};
+
+		var canvas_data = {//TEMP, this is here just for testing. remove entire object when ready
+			objects:[
+				{
+					type:"outerpath",
+					dim:{x:12, y:6, r:0, l:10}
+				},
+				{
+					type:"innerpath",
+					dim:{x:10, y:15, r:30, l:10}
+				},
+				{
+					type:"outerarc",
+					dim:{x:30, y:10, r:0, w:4, h:1.3}
+				},
+				{
+					type:"image",
+					dim:{x:10, y:10, r:10, w:6, h:3},
+					src:"{{STATIC_URL}}image/furniture/symbol/couch.png"
+				}
+			],
+		};
+
+		var floorplan_data = {
+			isEditable:{%if isOwner%}true{%else%}false{%endif%},
+			objects:{{floorplan.jsonObjects|default:"null"}}
+		};
+
+		$(document).ready(function(){
+
+			//init and draw canvas
+			var c = new canvas(canvas_config);
+			c.init();
+			c.addObjects(canvas_data.objects, true, true)
+			c.draw()
+			c.panselect_set();
+
+			//adding objects to canvas
+			$('#layout-picker .object').on("click", function(){
+				object = $(this);
+				switch(object.attr("type")){
+					case "outerpath":
+					case "innerpath":
+						c.addObjects([{
+							type:object.attr("type"),
+							dim:{x:10, y:10, r:0, l:object.attr("l")}
+						}], true, false);
+						break;
+					case "outerarc":
+					case "image":
+						c.addObjects([{
+							type:object.attr("type"),
+							dim:{x:10, y:10, r:0, w:object.attr("w"), h:object.attr("h")}
+						}], true, false);
+				};
+				c.draw();
+				c.panselect_last();
+				c.focus_last();
+			});
+
+			//zoom control
+			$('#zoom').slider({
+				value:{{floorplan.scalePixelsPerFoot}},
+				min:5,
+				max:40,
+				step:5,
+				slide: function(event, ui){
+					c.zoom(ui.value);
+				}
+			});
+
+			//TEMP-REMOVE WHEN DONE
+			$('#data').on("click", function(){
+				c.furnishing_clear();
+			});
+
+		});//document.ready
+	</script>
+
+{%endblock%}

@@ -1,0 +1,17 @@
+{%extends 'layout/master.html' %}
+{%block title%}Floorplan{%endblock%}
+{%block body%}
+	<h1>Dashboard</h1>
+
+	<form method="post" action="/floorplan/new">
+		{%csrf_token%}
+		<h2>New Floorplan</h2>
+		<label>Title</label>
+		<input type="text" name="title" />
+		<input type="submit" value="Create" />
+	</form>
+	
+	{%for f in floorplans%}
+		<a href="/floorplan/{{f.id}}">{{f.title}}</a>
+	{%endfor%}
+{%endblock%}
