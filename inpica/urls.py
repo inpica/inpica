@@ -23,12 +23,23 @@ urlpatterns = patterns('',
     url(r'^account/create$', 'account.views.Create'),
     url(r'^account/confirm/(?P<id>\d+)$', 'account.views.Confirm'),
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> floorplan
     
     #Main################################################
     url(r'^floorplan/(?P<id>\d+)$', 'main.views.Floorplan'),
     url(r'^floorplan/new$', 'main.views.NewFloorplan'),
     url(r'^floorplan/map-upload/(?P<id>\d+)$', 'main.views.MapUpload'),
+<<<<<<< HEAD
     url(r'^floorplan/save/layout/(?P<id>\d+)$', 'main.views.SaveLayout'),
+=======
+
+    
+    url(r'^dashboard$', 'main.views.Dashboard'),
+
+
+>>>>>>> floorplan
 
     url(r'^furniture/prop/(?P<id>\d+)$', 'main.views.FurnitureInfoProp'),
 

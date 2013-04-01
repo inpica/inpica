@@ -223,8 +223,12 @@ INSTALLED_APPS = (
 >>>>>>> init django project (using django 1.5)
 =======
     'main',
+<<<<<<< HEAD
     'account'
 >>>>>>> svg library
+=======
+    'account',
+>>>>>>> floorplan
 )
 
 # A sample logging configuration. The only tangible logging

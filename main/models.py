@@ -38,17 +38,23 @@ class Floorplan(models.Model):
 	User generated floor plans. jsonObjects represents a JSON of all Layout objects composing the Floorplan - used for performance boost. map represents the floorplan map uploaded by the user (this may be null). Users can only upload 1 map per floorplan. All maps are positioned in the same x,y top left coordinate for simplification.
 	scalePixelsPerFoot = zoom setting in pixels per foot 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	panX = x pixels canvas is panned left
 	panY = y pixels canvas is panned up
 =======
 	panX = x feel canvas is panned left
 	panY = y feet canvas is panned up
 >>>>>>> svg library
+=======
+	panX = x pixels canvas is panned left
+	panY = y pixels canvas is panned up
+>>>>>>> floorplan
 	'''
 	id = models.AutoField(primary_key=True)
 	user = models.ForeignKey(User, db_index=True)
 	title = models.CharField(max_length=255)
 	jsonObjects = models.CharField(max_length=9999, null=True)
+<<<<<<< HEAD
 <<<<<<< HEAD
 	scalePixelsPerFoot = models.IntegerField(default=20)
 	panX = models.IntegerField(default=0)
@@ -60,6 +66,11 @@ class Floorplan(models.Model):
 	scalePixelsPerFoot = models.IntegerField()
 	panX = models.IntegerField()
 	panY = models.IntegerField()
+=======
+	scalePixelsPerFoot = models.IntegerField(default=20)
+	panX = models.IntegerField(default=0)
+	panY = models.IntegerField(default=0)
+>>>>>>> floorplan
 	map = models.ImageField(upload_to=FloorplanMap_Filename, null=True)
 	mapPixelsPerFoot = models.IntegerField(null=True)
 >>>>>>> svg library
@@ -97,6 +108,7 @@ class Furnishing(models.Model):
 	furnitures = models.ManyToManyField('Furniture', through='FurnitureFurnishing')
 	jsonObjects = models.CharField(max_length=9999, null=True)
 <<<<<<< HEAD
+<<<<<<< HEAD
 	comment = models.CharField(max_length=4000, null=True)
 	isDefault = models.BooleanField(default=False)
 =======
@@ -105,6 +117,13 @@ class Furnishing(models.Model):
 	panY = models.IntegerField()
 	comment = models.CharField(max_length=4000, null=True)
 >>>>>>> svg library
+=======
+	#scalePixelsPerFoot = models.IntegerField()
+	#panX = models.IntegerField()
+	#panY = models.IntegerField()
+	comment = models.CharField(max_length=4000, null=True)
+	isDefault = models.BooleanField(default=False)
+>>>>>>> floorplan
 	RCD = models.DateTimeField(default=datetime.now)
 	RUD = models.DateTimeField(default=datetime.now)
 
