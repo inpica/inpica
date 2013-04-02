@@ -10,4 +10,4 @@ def FurnitureBuilder(x, y, z):
 
 @register.inclusion_tag('snippet/furniture-picker.html')
 def FurniturePicker(includePins):
-	return {"test":"test"}
+	return {"includePins":includePins}
