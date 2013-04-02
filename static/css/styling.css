@@ -1,0 +1,14 @@
+
+table, td, th
+	{
+	padding: 10px;
+	}
+
+th
+	{
+	background-color:green;
+	color:white;
+	}
+
+tr:nth-child(even) {background: #CCC}
+tr:nth-child(odd) {background: #FFF}

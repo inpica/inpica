@@ -11,7 +11,15 @@
 		<input type="submit" value="Create" />
 	</form>
 	
-	{%for f in floorplans%}
-		<a href="/floorplan/{{f.id}}">{{f.title}}</a>
-	{%endfor%}
+	<div> <H3>Floorplans</H3>
+		<table>
+			{%for f in floorplans%}
+				<tr>
+					<td><a href="/floorplan/{{f.id}}">{{f.title}}</a></td>
+					<td>{{f.RCD}}</td>
+					<td>{{f.RUD}}</td>
+				</tr>
+			{%endfor%}
+		</table>
+	</div>
 {%endblock%}
