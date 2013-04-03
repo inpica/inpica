@@ -1,4 +1,6 @@
 from django.conf.urls import patterns, include, url
+from django.conf import settings
+from django.conf.urls.static import static
 
 # Uncomment the next two lines to enable the admin:
 # from django.contrib import admin
@@ -18,6 +20,7 @@ urlpatterns = patterns('',
     url(r'^floorplan/(?P<id>\d+)$', 'main.views.Floorplan'),
     url(r'^floorplan/new$', 'main.views.NewFloorplan'),
     url(r'^floorplan/map-upload/(?P<id>\d+)$', 'main.views.MapUpload'),
+    url(r'^floorplan/save/layout/(?P<id>\d+)$', 'main.views.SaveLayout'),
 
     
     url(r'^dashboard$', 'main.views.Dashboard'),
@@ -33,4 +36,4 @@ urlpatterns = patterns('',
 
     # Uncomment the next line to enable the admin:
     # url(r'^admin/', include(admin.site.urls)),
-)
+) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

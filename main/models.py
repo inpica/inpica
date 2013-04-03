@@ -16,7 +16,7 @@ class UserDetails(models.Model):
 
 
 def FloorplanMap_Filename(instance, filename):
-	return '/'.join(['image/floorplan/map', str(instance.id) + filename.split('.')[-1]])
+	return '/'.join(['image/floorplan/map', str(instance.id) + '.' + filename.split('.')[-1]])
 
 class Floorplan(models.Model):
 	'''
@@ -33,8 +33,8 @@ class Floorplan(models.Model):
 	panX = models.IntegerField(default=0)
 	panY = models.IntegerField(default=0)
 	map = models.ImageField(upload_to=FloorplanMap_Filename, null=True)
-	mapxFeet = models.IntegerField(null=True)
-	mapyFeet = models.IntegerField(null=True)
+	mapxFeet = models.FloatField(null=True)
+	mapyFeet = models.FloatField(null=True)
 	RCD = models.DateTimeField(default=datetime.now)
 	RUD = models.DateTimeField(default=datetime.now)
 

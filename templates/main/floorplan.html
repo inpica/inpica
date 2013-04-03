@@ -1,6 +1,6 @@
 {%extends 'layout/master.html' %}
 {%load maintags%}
-{%block title%}Floorplan{%endblock%}
+{%block title%}{{floorplan.title}}{%endblock%}
 {%block body%}
 
 	<style>
@@ -78,7 +78,15 @@
 		</div>
 	</div>
 
-	<script>
+	<script type="text/javascript">
+
+		//data used in sourced javascript files
+		var floorplan = {
+			id:{{floorplan.id}}
+		};
+
+		var c;//canvas
+
 		var canvas_config = {
 			pixelsPerFoot:{{floorplan.scalePixelsPerFoot}},
 			id:'main-canvas',
@@ -90,40 +98,46 @@
 			yoffset:0
 		};
 
-		var canvas_data = {//TEMP, this is here just for testing. remove entire object when ready
-			objects:[
-				{
-					type:"outerpath",
-					dim:{x:12, y:6, r:0, l:10}
-				},
-				{
-					type:"innerpath",
-					dim:{x:10, y:15, r:30, l:10}
-				},
-				{
-					type:"outerarc",
-					dim:{x:30, y:10, r:0, w:4, h:1.3}
-				},
-				{
-					type:"image",
-					dim:{x:10, y:10, r:10, w:6, h:3},
-					src:"{{STATIC_URL}}image/furniture/symbol/couch.png"
-				}
-			],
-		};
+		// var canvas_data = {
+		// 	objects:[
+		// 		{
+		// 			type:"outerpath",
+		// 			dim:{x:12, y:6, r:0, l:10}
+		// 		},
+		// 		{
+		// 			type:"innerpath",
+		// 			dim:{x:10, y:15, r:30, l:10}
+		// 		},
+		// 		{
+		// 			type:"outerarc",
+		// 			dim:{x:30, y:10, r:0, w:4, h:1.3}
+		// 		},
+		// 		{
+		// 			type:"image",
+		// 			dim:{x:10, y:10, r:10, w:6, h:3},
+		// 			src:"{{STATIC_URL}}image/furniture/symbol/couch.png"
+		// 		}
+		// 	],
+		// };
 
-		var floorplan_data = {
+		var layout_data = {
 			isEditable:{%if isOwner%}true{%else%}false{%endif%},
-			objects:{{floorplan.jsonObjects|default:"null"}}
+			map:{%if floorplan.map%}{
+				type:"image",
+				src:"{{floorplan.map.url}}",
+				dim:{x:0, y:0, r:0, w:{{floorplan.mapxFeet}}, h:{{floorplan.mapyFeet}}}
+			}{%else%}null{%endif%},
+			objects:{{floorplan.jsonObjects|default_if_none:"null"|safe}}
 		};
 
 		$(document).ready(function(){
 
 			//init and draw canvas
-			var c = new canvas(canvas_config);
+			c = new canvas(canvas_config);
 			c.init();
-			c.addObjects(canvas_data.objects, true, true)
-			c.draw()
+			if(layout_data.map){c.addMap(layout_data.map)};
+			c.addObjects(layout_data.objects, layout_data.isEditable, false);
+			c.draw();
 			c.panselect_set();
 
 			//adding objects to canvas
@@ -160,6 +174,20 @@
 				}
 			});
 
+			$("#main-canvas").on("layoutModified", function(){
+				console.log(c.convertToData_layout());
+				$.ajax({
+					type:"POST",
+					url:'/floorplan/save/layout/'+floorplan.id,
+					contentType: 'application/json',
+					data:JSON.stringify(c.convertToData_layout())
+				});
+			});
+
+			$("#main-canvas").on("furnitureModified", function(){
+				//$.post('floorplan/save/furnishing/'+floorplan.id, c.convertToData_layout());
+			});
+
 			//TEMP-REMOVE WHEN DONE
 			$('#data').on("click", function(){
 				c.furnishing_clear();
@@ -167,5 +195,7 @@
 
 		});//document.ready
 	</script>
+
+	<script type="text/javascript" src="{{STATIC_URL}}js/map-uploader.js"></script>
 
 {%endblock%}

@@ -41,10 +41,10 @@ function canvas(config){
 	};
 
 	this.addObjects = function(objects, isEditable, isFurniture){
-		var c = this;
+		var cvs = this;
 		var rs = this.robjects;
 		_.each(objects, function(object){
-			object.canvas = c;
+			object.canvas = cvs;
 			robject = ObjectToRobject(object);
 			robject.isEditable = isEditable;
 			robject.isFurniture = isFurniture;
@@ -63,44 +63,61 @@ function canvas(config){
 		this.map.toBack();
 	};
 
+	this.furniture = function(){
+		return _.filter(this.robjects, function(robject){return robject.isFurniture })
+	};
+
+	this.layout = function(){
+		return _.filter(this.robjects, function(robject){return !robject.isFurniture })
+	};
+
 	this.removeFurnishing = function(){
-		_.each(this.robjects, function(robject){if(robject.isFurniture){
-			robject.remove();
-		}});
+		_.each(this.furniture(), function(furniture){
+			furniture.remove();
+		});
 	};
 
 	this.select_set = function(){
-		var c = this;
+		var cvs = this;
 		var p = this.paper;
 		_.each(this.robjects, function(robject){
 			robject.click_set();
 		})
-		$('#'+this.id).on("click", function(e){
+		$('#'+cvs.id).on("click", function(e){
 			if (!p.getElementByPoint(e.pageX, e.pageY)){
-				c.focus_clear();				
+				cvs.focus_clear();				
 			};
 		});
 	};
 
 	this.panselect_set = function(){
-		var c = this;
+		var cvs = this;
 		var p = this.paper;
 
 		_.each(this.robjects, function(robject){
 			robject.click_set();
 		});
 
-		$('#'+c.id).on("mousedown", function(edown){
+		$('#'+cvs.id).on("mousedown", function(edown){
 			var temp = {x:edown.pageX, y:edown.pageY}
-			if (!p.getElementByPoint(edown.pageX, edown.pageY)){
-				$('#'+c.id).on("mousemove", function(emove){
-					c.pan(emove.pageX - temp.x, emove.pageY - temp.y);
+
+			var downon = p.getElementByPoint(edown.pageX, edown.pageY);
+
+			if(downon){
+				if(cvs.map && cvs.map.id == downon.id){
+					downon = false;
+				};
+			};
+
+			if (!downon){
+				$('#'+cvs.id).on("mousemove", function(emove){
+					cvs.pan(emove.pageX - temp.x, emove.pageY - temp.y);
 					temp.x = emove.pageX;
 					temp.y = emove.pageY;
 				})
 				.on("mouseup", function(){
-					$('#'+c.id).unbind("mousemove").unbind("mouseup");
-					c.focus_clear();
+					$('#'+cvs.id).unbind("mousemove").unbind("mouseup");
+					cvs.focus_clear();
 				});
 			};
 		});
@@ -127,6 +144,11 @@ function canvas(config){
 	this.focus_clear = function(){
 		if (this.focus != null){
 			this.focus.focus_clear();
+			if(this.focus.isFurniture){
+				$("#"+this.id).trigger("furnitureModified");
+			}else{
+				$("#"+this.id).trigger("layoutModified");
+			}
 			this.focus = null;
 		};
 	};
@@ -142,8 +164,8 @@ function canvas(config){
 	};
 
 	this.draw = function(){
-		var c = this;
-		_.each(this.robjects, function(robject){
+		var cvs = this;
+		_.each(cvs.robjects, function(robject){
 			if(robject.element == null){
 				robject.draw();
 				if(robject.isFurniture){
@@ -168,19 +190,18 @@ function canvas(config){
 	};
 
 	this.ruler_set = function(){
-
+		var cvs = this;
 		if(this.ruler != null){this.ruler.remove();};
-		this.ruler = new ruler({canvas:this});
+		this.ruler = new ruler({canvas:cvs});
 
-		c = this;
-		$("#"+c.id).on("mousedown", function(e){
-			c.ruler.start(e.pageX, e.pageY);
-	        $("#"+c.id).on('mousemove', function(e) {
-	            c.ruler.end(e.pageX, e.pageY);
+		$("#"+cvs.id).on("mousedown", function(e){
+			cvs.ruler.start(e.pageX, e.pageY);
+	        $("#"+cvs.id).on('mousemove', function(e) {
+	            cvs.ruler.end(e.pageX, e.pageY);
 	        });
 	    });
 
-	    $("#"+c.id).on("mouseup",function(e) {
+	    $("#"+cvs.id).on("mouseup",function(e) {
 	        $(this).off('mousemove');
 	    });
 	};
@@ -201,27 +222,27 @@ function canvas(config){
 		return pixel/this.pixelsPerFoot;
 	};
 
-	this.convertToData_floorplan = function(){
-		var data = {objects:[]};
-		_.each(this.robjects, function(robject){if(!robject.isFurniture){
-			data.objects.push(robject.convertToData());
-		}});
+	this.convertToData_layout = function(){
+		var data = [];
+		_.each(this.layout(), function(layout){
+			data.push(layout.convertToData());
+		});
 		return data;
 	};
 
 	this.convertToData_furnishing = function(){
-		var data = {objects:[]};
-		_.each(this.robjects, function(robject){if(robject.isFurniture){
-			data.objects.push(robject.convertToData());
-		}});
+		var data = [];
+		_.each(this.furniture(), function(furniture){
+			data.push(furniture.convertToData());
+		});
 		return data;
 	};
 
 	this.furnishing_clear = function(){
-		_.each(this.robjects, function(robject){if(robject.isFurniture){
-			robject.remove();
-		}});
-		this.robjects = _.filter(this.robjects, function(robject){return !robject.isFurniture })
+		_.each(this.furniture(), function(furniture){
+			furniture.remove();
+		});
+		this.robjects = this.layout();
 	};
 };
 
@@ -895,7 +916,7 @@ function ruler(data){
 	};
 
 	this.angle = function(){
-		return Raphael.deg(Math.atan(this.pixelLengthX()/this.pixelLengthY()))
+		return Raphael.deg(Math.atan(this.pixelLengthY()/this.pixelLengthX()))
 	};
 
 	this.remove = function(){

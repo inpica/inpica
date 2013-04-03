@@ -5,6 +5,7 @@ from django.shortcuts import render_to_response
 from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
 from django.views.decorators.csrf import csrf_exempt
+import json
 
 from django.contrib.auth.models import User
 
@@ -42,7 +43,28 @@ def Floorplan(request, id):
 @login_required
 @csrf_exempt
 def MapUpload(request, id):
-	floorplan = m.Floorplan.objects.get(pk=id)
 	if request.method == "POST":
-		return HttpResponse("Works")
+		floorplan = m.Floorplan.objects.get(pk=id)
+		floorplan.mapxFeet = float(request.POST.get("mapxFeet"))
+		floorplan.mapyFeet = float(request.POST.get("mapyFeet"))
+		floorplan.map = request.FILES["file"]
+		floorplan.save()
+		data = {
+			"type":"image",
+			"src":floorplan.map.url,
+			"dim":{"x":0, "y":0, "r":0, "w":floorplan.mapxFeet, "h":floorplan.mapyFeet}
+		}
+		return HttpResponse(json.dumps(data), mimetype='application/json')
+	return HttpResponse("Error - this was not uploaded correctly.")
+
+@login_required
+@csrf_exempt
+def SaveLayout(request, id):
+	if request.method == "POST":
+		floorplan = m.Floorplan.objects.get(pk=id)
+		floorplan.jsonObjects = request.body
+		floorplan.save()
+		return HttpResponse('')
+		#TODO - save each object individually to FloorplanObjectInstance
+	
 
