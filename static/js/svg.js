@@ -768,6 +768,7 @@ function outerarc(data){
 
 function image(data){
 	this.id = null;
+	this.mid = null;//model id of furniture.
 	this.canvas = data.canvas;
 	this.originalData = data;
 	this.type = "image";
@@ -792,6 +793,10 @@ function image(data){
 		this.element = i;
 		this.element.data("robject",this);
 		this.id = i.id;
+
+		if(this.originalData.mid){
+			this.mid = this.originalData.mid;
+		};
 	};
 
 	this.remove = function(){

@@ -68,3 +68,10 @@ def SaveLayout(request, id):
 		#TODO - save each object individually to FloorplanObjectInstance
 	
 
+@login_required
+def FurnitureInfoProp(request, id):
+	return HttpResponse("TODO: Furniture Properies box showing info only")
+
+@login_required
+def FurnitureEditProp(request, id):
+	return HttpResponse("TODO: Furniture Properties box showing edit properties")

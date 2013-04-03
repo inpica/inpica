@@ -1,0 +1,49 @@
+#picker-wrapper{
+	position:absolute;
+	left:0px;
+	top:0px;
+	width:400px;
+	overflow: hidden;
+}
+#picker-wrapper .object img{
+	max-width:100px;
+}
+#canvas-wrapper{
+	position:absolute;
+	top:0px;
+	left:402px;
+	width: -webkit-calc(100% - 406px);/*chrome*/
+	width: calc(100% - 406px);/*ie9,ie10*/
+	height:500px;
+	border:2px solid #CCC;
+	overflow: hidden;
+}
+#canvas-wrapper .toolbar{
+	position: absolute;
+	height:40px;
+	width:100%;
+	background-color:#FAFAFA;
+	z-index: 100;
+}
+#main-canvas{
+	position:absolute;
+}
+#main-canvas svg{
+	background-color: #F3F3F3;
+}
+#zoom{
+	float: right;
+	width:200px;
+	margin:10px;
+}
+#map-uploader-wrapper{
+	position:absolute;
+	top:510px;
+	left:402px;
+}
+
+
+
+#furniture-picker{
+	background-color:#DDD;
+}

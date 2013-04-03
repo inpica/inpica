@@ -22,6 +22,8 @@ urlpatterns = patterns('',
     url(r'^floorplan/map-upload/(?P<id>\d+)$', 'main.views.MapUpload'),
     url(r'^floorplan/save/layout/(?P<id>\d+)$', 'main.views.SaveLayout'),
 
+    url(r'^furniture/prop/(?P<id>\d+)$', 'main.views.FurnitureInfoProp'),
+
     
     url(r'^dashboard$', 'main.views.Dashboard'),
 
