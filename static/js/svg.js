@@ -6,30 +6,18 @@ function canvas(config){
 	this.id = config.id;
 	this.w = config.w;
 	this.h = config.h;
-	this.panx = config.panx;
-	this.pany = config.pany;
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> floorplan
-	this.xoffset = config.xoffset;//x pixels the canvas' left CSS prop. Only matters for ruler
-	this.yoffset = config.yoffset;//x pixels the canvas' top CSS prop. Only matters for ruler
+	this.pan = config.pan;
+	this.panOffset = config.panOffset;
+	this.dropPoint = config.dropPoint;
+	this.wrapperPosition = config.wrapperPosition;//matter for ruler
 	this.focus = null;
 	this.robjects = [];
 	this.ruler = null;
 	this.map = null; //this is a robject but specifically for the map
+	this.furnitureModified = false;
 	this.init = function(){
 		this.paper = new Raphael(document.getElementById(this.id), this.w, this.h);
-		this.pan(0,0);
-<<<<<<< HEAD
-=======
-	this.focus = null;
-	this.robjects = [];
-	this.init = function(){
-		this.paper = new Raphael(document.getElementById(this.id), this.w, this.h);
->>>>>>> svg library
-=======
->>>>>>> floorplan
+		$("#" + this.id + ' svg').css({"left":this.pan.x+this.panOffset.x+"px", "top":this.pan.y+this.panOffset.y+"px"});
 		this.paper.customAttributes.arc = function (xloc, yloc, value, total, R) {
 		    var alpha = 360 / total * value,
 		        a = (90 - alpha) * Math.PI / 180,
@@ -53,20 +41,12 @@ function canvas(config){
 		};
 	};
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 	this.addObjects = function(objects, isEditable, isFurniture){
 		var cvs = this;
 		var rs = this.robjects;
-		_.each(objects, function(object){
+		var clonedObjects = $.extend(true, {}, objects);//do not want to pass reference
+		_.each(clonedObjects, function(object){
 			object.canvas = cvs;
-=======
-	this.addObjects = function(objects, isEditable, isFurniture){
-		var c = this;
-		var rs = this.robjects;
-		_.each(objects, function(object){
-			object.canvas = c;
->>>>>>> floorplan
 			robject = ObjectToRobject(object);
 			robject.isEditable = isEditable;
 			robject.isFurniture = isFurniture;
@@ -75,7 +55,7 @@ function canvas(config){
 	};
 
 	this.addMap = function(map){
-		if(this.map != null){this.map.remove()};
+		this.removeMap();
 		map.canvas = this;
 		robject = ObjectToRobject(map);
 		robject.isEditable = false;
@@ -85,7 +65,10 @@ function canvas(config){
 		this.map.toBack();
 	};
 
-<<<<<<< HEAD
+	this.removeMap = function(){
+		if(this.map != null){this.map.remove()};
+	};
+
 	this.furniture = function(){
 		return _.filter(this.robjects, function(robject){return robject.isFurniture })
 	};
@@ -102,25 +85,12 @@ function canvas(config){
 
 	this.select_set = function(){
 		var cvs = this;
-=======
-=======
-	this.removeFurnishing = function(){
-		_.each(this.robjects, function(robject){if(robject.isFurniture){
-			robject.remove();
-		}});
-	};
-
->>>>>>> floorplan
-	this.select_set = function(){
-		var c = this;
->>>>>>> svg library
 		var p = this.paper;
 		_.each(this.robjects, function(robject){
 			robject.click_set();
 		})
-<<<<<<< HEAD
 		$('#'+cvs.id).on("click", function(e){
-			if (!p.getElementByPoint(e.pageX, e.pageY)){
+			if (!p.getElementByPoint(e.clientX, e.clientY)){
 				cvs.focus_clear();				
 			};
 		});
@@ -128,16 +98,16 @@ function canvas(config){
 
 	this.panselect_set = function(){
 		var cvs = this;
-		var p = this.paper;
+		var cvselement = $('#'+cvs.id)
 
 		_.each(this.robjects, function(robject){
 			robject.click_set();
 		});
 
-		$('#'+cvs.id).on("mousedown", function(edown){
-			var temp = {x:edown.pageX, y:edown.pageY}
+		cvselement.on("mousedown", function(edown){
+			var temp = {x:edown.clientX, y:edown.clientY}
 
-			var downon = p.getElementByPoint(edown.pageX, edown.pageY);
+			var downon = cvs.paper.getElementByPoint(edown.clientX, edown.clientY);
 
 			if(downon){
 				if(cvs.map && cvs.map.id == downon.id){
@@ -146,52 +116,19 @@ function canvas(config){
 			};
 
 			if (!downon){
-				$('#'+cvs.id).on("mousemove", function(emove){
-					cvs.pan(emove.pageX - temp.x, emove.pageY - temp.y);
-					temp.x = emove.pageX;
-					temp.y = emove.pageY;
+				cvselement.on("mousemove", function(emove){
+					cvs.panCanvas(emove.clientX - temp.x, emove.clientY - temp.y);
+					temp.x = emove.clientX;
+					temp.y = emove.clientY;
 				})
 				.on("mouseup", function(){
-					$('#'+cvs.id).unbind("mousemove").unbind("mouseup");
+					cvselement.off("mousemove").off("mouseup");
 					cvs.focus_clear();
 				});
-=======
-		$('#'+this.id).on("click", function(e){
-			if (!p.getElementByPoint(e.pageX, e.pageY)){
-				c.focus_clear();				
->>>>>>> svg library
 			};
 		});
 	};
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-	this.panselect_set = function(){
-		var c = this;
-		var p = this.paper;
-
-		_.each(this.robjects, function(robject){
-			robject.click_set();
-		});
-
-		$('#'+c.id).on("mousedown", function(edown){
-			var temp = {x:edown.pageX, y:edown.pageY}
-			if (!p.getElementByPoint(edown.pageX, edown.pageY)){
-				$('#'+c.id).on("mousemove", function(emove){
-					c.pan(emove.pageX - temp.x, emove.pageY - temp.y);
-					temp.x = emove.pageX;
-					temp.y = emove.pageY;
-				})
-				.on("mouseup", function(){
-					$('#'+c.id).unbind("mousemove").unbind("mouseup");
-					c.focus_clear();
-				});
-			};
-		});
-	};
-
->>>>>>> floorplan
 	this.panselect_last = function(){
 		//this is used when a user adds an object to the canvas from the picker. probably better way to do it but this is easiest.
 		_.last(this.robjects).click_set();
@@ -201,45 +138,49 @@ function canvas(config){
 		_.each(this.robjects, function(robject){
 			robject.click_clear();
 		});
-		$('#'+this.id).unbind("mousedown");
+		$('#'+this.id).off("mousedown");
 	};
 
-	this.pan = function(xpix, ypix){
-		this.panx += xpix;
-		this.pany += ypix;
-		$("#" + this.id + ' svg').css({"left":this.panx+"px", "top":this.pany+"px"});
+	this.panCanvas = function(xpix, ypix){
+		this.pan.x += xpix;
+		this.pan.y += ypix;
+		$("#" + this.id + ' svg').css({"left":this.pan.x+this.panOffset.x+"px", "top":this.pan.y+this.panOffset.y+"px"});
 	};
 
-<<<<<<< HEAD
 	this.focus_clear = function(){
 		if (this.focus != null){
 			this.focus.focus_clear();
 			if(this.focus.isFurniture){
+				this.furnitureModified = true;
 				$("#"+this.id).trigger("furnitureModified");
 			}else{
 				$("#"+this.id).trigger("layoutModified");
 			}
-=======
-=======
->>>>>>> floorplan
-	this.focus_clear = function(){
-		if (this.focus != null){
-			this.focus.focus_clear();
->>>>>>> svg library
 			this.focus = null;
+			$("#"+this.id).trigger("focusClear");
 		};
 	};
 
 	this.focus_set = function(robject){
-		this.focus_clear();
+		if(this.focus && this.focus.id != robject.id){
+			this.focus_clear();
+		}
 		this.focus = robject;
 		this.focus.focus();
+		$("#"+this.id).trigger("focusSet");
 	};
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 	this.focus_last = function(){
 		this.focus_set(_.last(this.robjects));
+	};
+
+	this.focus_remove = function(){
+		if(this.focus != null){
+			var focusid = this.focus.id;
+			this.focus.remove();
+			this.robjects = _.reject(this.robjects, function(r){ return r.id == focusid});
+			this.focus_clear();
+		};
 	};
 
 	this.draw = function(){
@@ -254,39 +195,6 @@ function canvas(config){
 				};
 			};
 		});
-=======
-	this.draw = function(objects){
-		//list of objects (JSON)
-		var c = this;
-		var rs = this.robjects;
-		_.each(objects, function(object){
-			object.canvas = c;
-			rs.push(ObjectToRobject(object));
-		});
-=======
-	this.focus_last = function(){
-		this.focus_set(_.last(this.robjects));
-	};
->>>>>>> floorplan
-
-	this.draw = function(){
-		var c = this;
-		_.each(this.robjects, function(robject){
-<<<<<<< HEAD
-			robject.draw();
-		})
->>>>>>> svg library
-=======
-			if(robject.element == null){
-				robject.draw();
-				if(robject.isFurniture){
-					robject.toFront();
-				}else{
-					robject.toBack();
-				};
-			};
-		});
->>>>>>> floorplan
 	};
 
 	this.zoom = function(pixelsPerFoot){
@@ -296,17 +204,12 @@ function canvas(config){
 			robject.redraw();
 			robject.click_set();
 		});
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> floorplan
 		if(this.map != null){
 			this.map.redraw().toBack();	
 		};
 	};
 
 	this.ruler_set = function(){
-<<<<<<< HEAD
 		var cvs = this;
 		if(this.ruler != null){this.ruler.remove();};
 		this.ruler = new ruler({canvas:cvs});
@@ -319,21 +222,6 @@ function canvas(config){
 	    });
 
 	    $("#"+cvs.id).on("mouseup",function(e) {
-=======
-
-		if(this.ruler != null){this.ruler.remove();};
-		this.ruler = new ruler({canvas:this});
-
-		c = this;
-		$("#"+c.id).on("mousedown", function(e){
-			c.ruler.start(e.pageX, e.pageY);
-	        $("#"+c.id).on('mousemove', function(e) {
-	            c.ruler.end(e.pageX, e.pageY);
-	        });
-	    });
-
-	    $("#"+c.id).on("mouseup",function(e) {
->>>>>>> floorplan
 	        $(this).off('mousemove');
 	    });
 	};
@@ -344,11 +232,6 @@ function canvas(config){
 		}
 		this.ruler = null;
 		$("#"+this.id).off("mouseup").off("mousedown");
-<<<<<<< HEAD
-=======
->>>>>>> svg library
-=======
->>>>>>> floorplan
 	};
 
 	this.feetToPixel = function(feet){
@@ -358,56 +241,31 @@ function canvas(config){
 	this.pixelToFeet = function(pixel){
 		return pixel/this.pixelsPerFoot;
 	};
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 	this.convertToData_layout = function(){
 		var data = [];
 		_.each(this.layout(), function(layout){
 			data.push(layout.convertToData());
 		});
-=======
-
-	this.convertToData_floorplan = function(){
-		var data = {objects:[]};
-		_.each(this.robjects, function(robject){if(!robject.isFurniture){
-			data.objects.push(robject.convertToData());
-		}});
->>>>>>> floorplan
 		return data;
 	};
 
 	this.convertToData_furnishing = function(){
-<<<<<<< HEAD
 		var data = [];
 		_.each(this.furniture(), function(furniture){
 			data.push(furniture.convertToData());
 		});
-=======
-		var data = {objects:[]};
-		_.each(this.robjects, function(robject){if(robject.isFurniture){
-			data.objects.push(robject.convertToData());
-		}});
->>>>>>> floorplan
 		return data;
 	};
 
 	this.furnishing_clear = function(){
-<<<<<<< HEAD
+		this.furnitureModified = false;
+		this.focus_clear();
 		_.each(this.furniture(), function(furniture){
 			furniture.remove();
 		});
 		this.robjects = this.layout();
 	};
-=======
->>>>>>> svg library
-=======
-		_.each(this.robjects, function(robject){if(robject.isFurniture){
-			robject.remove();
-		}});
-		this.robjects = _.filter(this.robjects, function(robject){return !robject.isFurniture })
-	};
->>>>>>> floorplan
 };
 
 function outerpath(data){
@@ -418,14 +276,7 @@ function outerpath(data){
 	this.dim = data.dim;
 	this.element = null; //Raphael Element
 	this.transform = null;
-<<<<<<< HEAD
-<<<<<<< HEAD
 	this.isEditable = null;
-=======
->>>>>>> svg library
-=======
-	this.isEditable = null;
->>>>>>> floorplan
 	this.pixelLength = function(){return this.element.getTotalLength();};
 	this.startPoint = function(){return Raphael.getPointAtLength(this.mapedPath(), 0);};
 	this.endPoint = function(){return Raphael.getPointAtLength(this.mapedPath(), 9999);};
@@ -438,11 +289,17 @@ function outerpath(data){
 
 	this.draw = function(){
 
-		
-		leftoffset = -this.canvas.feetToPixel(this.dim.l)/2;
+		var pathStart = {
+			x:this.canvas.dropPoint.x - this.canvas.feetToPixel(this.dim.l)/2,
+			y:this.canvas.dropPoint.y
+		};
+		var pathEnd = {
+			x:this.canvas.dropPoint.x + this.canvas.feetToPixel(this.dim.l)/2,
+			y:this.canvas.dropPoint.y	
+		}
 
-		op = this.canvas.paper.path('M'+leftoffset+',0L'+this.canvas.feetToPixel(this.dim.l)/2+',0').attr("stroke-width",this.canvas.pixelsPerFoot/1.5);
-		ft = this.canvas.paper.freeTransform(op, {keepRatio:true, scale:false, drag:true, draw:['bbox'], snap:{rotate:10}, distance:1.3}).hideHandles();
+		op = this.canvas.paper.path('M'+pathStart.x+','+pathStart.y+'L'+pathEnd.x+','+pathEnd.y).attr("stroke-width",this.canvas.pixelsPerFoot/2).attr("stroke", "#333");
+		ft = this.canvas.paper.freeTransform(op, {keepRatio:true, scale:false, drag:true, draw:['bbox'], snap:{rotate:5}, distance:1.3, attrs:{fill:"red", stroke:"red"}}).hideHandles();
 		ft.attrs.rotate = this.dim.r;
 		ft.attrs.translate = {
 			x: this.canvas.feetToPixel(this.dim.x),
@@ -457,30 +314,18 @@ function outerpath(data){
 
 	};
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> floorplan
 	this.remove = function(){
 		if(this.element != null){
 			this.element.remove();
 		};
 	};
 
-<<<<<<< HEAD
-=======
->>>>>>> svg library
-=======
->>>>>>> floorplan
 	this.redraw = function(){
+		this.transform.hideHandles();
 		this.element.remove();
 		this.draw();
 	};
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> floorplan
 	this.toFront = function(){
 		this.element.toFront();
 	};
@@ -490,11 +335,6 @@ function outerpath(data){
 		if(this.canvas.map != null){this.canvas.map.toBack()};
 	};
 
-<<<<<<< HEAD
-=======
->>>>>>> svg library
-=======
->>>>>>> floorplan
 	this.click_set = function(){
 		this.element.click(function(){
 			var robject = this.data("robject");
@@ -509,11 +349,13 @@ function outerpath(data){
 	this.focus = function(){
 		//TODO - additional things that happen when object put in focus
 		this.ft();
+		this.element.attr({"stroke":"#ab6565"});
 	};
 
 	this.focus_clear = function(){
 		//TODO - additional things that happen when object put out of focus
 		this.ft_clear();
+		this.element.attr({"stroke":"#333"});
 	};
 
 	this.ft = function(){
@@ -521,11 +363,11 @@ function outerpath(data){
 	};
 
 	this.ft_clear = function(){
-		focus = this;
-		focus_length = this.pixelLength();
-		focus_id = this.id;
-		focus_startPoint = this.startPoint();
-		focus_endPoint = this.endPoint();
+		var focus = this;
+		var focus_length = this.pixelLength();
+		var focus_id = this.id;
+		var focus_startPoint = this.startPoint();
+		var focus_endPoint = this.endPoint();
 		_.each(this.canvas.robjects, function(robject){
 			if((robject.type == "outerpath" && robject.id != focus_id) || robject.type == "outerarc"){
 				var intersect = Raphael.pathIntersection(Raphael.mapPath(focus.element.attr("path"), focus.element.matrix), Raphael.mapPath(robject.element.attr("path"), robject.element.matrix));
@@ -551,14 +393,19 @@ function outerpath(data){
 			};
 		});
 
-		this.updateDim();
+		this.updateDim({
+			x:this.canvas.pixelToFeet(this.transform.attrs.translate.x),
+			y:this.canvas.pixelToFeet(this.transform.attrs.translate.y),
+			r:this.transform.attrs.rotate
+		});
 		focus.transform.hideHandles();
 	};
 
-	this.updateDim = function(){
-		this.dim.x = this.canvas.pixelToFeet(this.transform.attrs.translate.x);
-		this.dim.y = this.canvas.pixelToFeet(this.transform.attrs.translate.y);
-		this.dim.r = this.transform.attrs.rotate;
+	this.updateDim = function(params){
+		this.dim.x = params.x != undefined ? params.x : this.dim.x;
+		this.dim.y = params.y != undefined ? params.y : this.dim.y;
+		this.dim.r = params.r != undefined ? params.r : this.dim.r;
+		this.dim.l = params.l != undefined ? params.l : this.dim.l;
 	};
 
 	this.convertToData = function(){
@@ -566,6 +413,28 @@ function outerpath(data){
 			type:"outerpath",
 			dim:this.dim
 		}
+	};
+
+	this.prop = function(){
+		var template = '<div class="prop" robjectid="<%= r.id %>" type="outerpath"> \
+			<div class="close">Close</div> \
+			<div class="propimg"></div> \
+			<div class="measure"> \
+				<div class="measure-group"> \
+					<label>Feet</label><input type="number" class="feet" value="<% print(MeasureToFeetInch(r.dim.l).feet) %>" <% if(!r.isEditable){ %>disabled="disabled"<%}%> /> \
+				</div> \
+				<div class="measure-group"> \
+					<label>Inches</label><input type="number" class="inches" value="<% print(MeasureToFeetInch(r.dim.l).inches) %>" <% if(!r.isEditable){ %>disabled="disabled"<%}%> /> \
+				</div> \
+			</div> \
+			<% if(r.isEditable){ %> \
+				<div class="controls"> \
+					<input type="button" class="remove" value="Remove" /> \
+					<input type="button" class="apply" value="Apply" /> \
+				</div> \
+			<%}%> \
+		</div>';
+		return $(_.template(template)({r:this}));
 	};
 };
 
@@ -577,23 +446,24 @@ function innerpath(data){
 	this.dim = data.dim;
 	this.element = null; //Raphael Element
 	this.transform = null;
-<<<<<<< HEAD
-<<<<<<< HEAD
 	this.isEditable = null;
-=======
->>>>>>> svg library
-=======
-	this.isEditable = null;
->>>>>>> floorplan
 	this.pixelLength = function(){return this.element.getTotalLength();};
 	this.startPoint = function(){return Raphael.getPointAtLength(Raphael.mapPath(this.element.attr("path"), this.element.matrix), 0);};
 	this.endPoint = function(){return Raphael.getPointAtLength(Raphael.mapPath(this.element.attr("path"), this.element.matrix), 9999);};
 
 	this.draw = function(){
 
-		leftoffset = -this.canvas.feetToPixel(this.dim.l)/2;
-		ip = this.canvas.paper.path('M'+leftoffset+',0L'+this.canvas.feetToPixel(this.dim.l)/2+',0').attr("stroke-width",this.canvas.pixelsPerFoot/2).attr("stroke", "blue");
-		ft = this.canvas.paper.freeTransform(ip, {keepRatio:true, scale:false, drag:true, draw:['bbox'], snap:{rotate:10}, distance:1.3}).hideHandles();
+		var pathStart = {
+			x:this.canvas.dropPoint.x - this.canvas.feetToPixel(this.dim.l)/2,
+			y:this.canvas.dropPoint.y
+		};
+		var pathEnd = {
+			x:this.canvas.dropPoint.x + this.canvas.feetToPixel(this.dim.l)/2,
+			y:this.canvas.dropPoint.y	
+		}
+
+		ip = this.canvas.paper.path('M'+pathStart.x+','+pathStart.y+'L'+pathEnd.x+','+pathEnd.y).attr("stroke-width",this.canvas.pixelsPerFoot/2.5).attr("stroke", "#555");
+		ft = this.canvas.paper.freeTransform(ip, {keepRatio:true, scale:false, drag:true, draw:['bbox'], snap:{rotate:5}, distance:1.3, attrs:{fill:"red", stroke:"red"}}).hideHandles();
 		ft.attrs.rotate = this.dim.r;
 		ft.attrs.translate = {
 			x: this.canvas.feetToPixel(this.dim.x),
@@ -607,30 +477,18 @@ function innerpath(data){
 		this.id = ip.id;
 	};
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> floorplan
 	this.remove = function(){
 		if(this.element != null){
 			this.element.remove();
 		};
 	};
 
-<<<<<<< HEAD
-=======
->>>>>>> svg library
-=======
->>>>>>> floorplan
 	this.redraw = function(){
+		this.transform.hideHandles();
 		this.element.remove();
 		this.draw();
 	};
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> floorplan
 	this.toFront = function(){
 		this.element.toFront();
 	};
@@ -641,11 +499,6 @@ function innerpath(data){
 
 	};
 
-<<<<<<< HEAD
-=======
->>>>>>> svg library
-=======
->>>>>>> floorplan
 	this.click_set = function(){
 		this.element.click(function(){
 			var robject = this.data("robject");
@@ -660,11 +513,13 @@ function innerpath(data){
 	this.focus = function(){
 		//TODO - additional things that happen when object put in focus
 		this.ft();
+		this.element.attr({"stroke":"#ab6565"});
 	};
 
 	this.focus_clear = function(){
 		//TODO - additional things that happen when object put out of focus
 		this.ft_clear();
+		this.element.attr({"stroke":"#555"});
 	};
 
 	this.ft = function(){
@@ -700,14 +555,19 @@ function innerpath(data){
 			};
 		});
 		
-		this.updateDim()
+		this.updateDim({
+			x:this.canvas.pixelToFeet(this.transform.attrs.translate.x),
+			y:this.canvas.pixelToFeet(this.transform.attrs.translate.y),
+			r:this.transform.attrs.rotate
+		});
 		focus.transform.hideHandles();
 	};
 
-	this.updateDim = function(){
-		this.dim.x = this.canvas.pixelToFeet(this.transform.attrs.translate.x);
-		this.dim.y = this.canvas.pixelToFeet(this.transform.attrs.translate.y);
-		this.dim.r = this.transform.attrs.rotate;
+	this.updateDim = function(params){
+		this.dim.x = params.x != undefined ? params.x : this.dim.x;
+		this.dim.y = params.y != undefined ? params.y : this.dim.y;
+		this.dim.r = params.r != undefined ? params.r : this.dim.r;
+		this.dim.l = params.l != undefined ? params.l : this.dim.l;
 	};
 
 	this.convertToData = function(){
@@ -715,6 +575,28 @@ function innerpath(data){
 			type:"innerpath",
 			dim:this.dim
 		}
+	};
+
+	this.prop = function(){
+		var template = '<div class="prop" robjectid="<%= r.id %>" type="innerpath"> \
+			<div class="close">Close</div> \
+			<div class="propimg"></div> \
+			<div class="measure"> \
+				<div class="measure-group"> \
+					<label>Feet</label><input type="number" class="feet" value="<% print(MeasureToFeetInch(r.dim.l).feet) %>" <% if(!r.isEditable){ %>disabled="disabled"<%}%> /> \
+				</div> \
+				<div class="measure-group"> \
+					<label>Inches</label><input type="number" class="inches" value="<% print(MeasureToFeetInch(r.dim.l).inches) %>" <% if(!r.isEditable){ %>disabled="disabled"<%}%> /> \
+				</div> \
+			</div> \
+			<% if(r.isEditable){ %> \
+				<div class="controls"> \
+					<input type="button" class="remove" value="Remove" /> \
+					<input type="button" class="apply" value="Apply" /> \
+				</div> \
+			<%}%> \
+		</div>';
+		return $(_.template(template)({r:this}));
 	};
 };
 
@@ -730,14 +612,7 @@ function multi(data){
 	this.robjects = [];
 	this.bbox = null;
 	this.areaPaths = [];
-<<<<<<< HEAD
-<<<<<<< HEAD
 	this.isEditable = null;
-=======
->>>>>>> svg library
-=======
-	this.isEditable = null;
->>>>>>> floorplan
 
 	this.draw = function(){
 		var c = this.canvas;
@@ -765,7 +640,7 @@ function multi(data){
 		})
 
 
-		ft = this.canvas.paper.freeTransform(set, {keepRatio:true, scale:false, drag:true, draw:['bbox'], snap:{rotate:10}, distance:1.3}).hideHandles();
+		ft = this.canvas.paper.freeTransform(set, {keepRatio:true, scale:false, drag:true, draw:['bbox'], snap:{rotate:5}, distance:1.3, attrs:{fill:"red", stroke:"red"}}).hideHandles();
 		ft.attrs.rotate = this.dim.r;
 		ft.attrs.translate = {
 			x: this.canvas.feetToPixel(this.dim.x),
@@ -778,30 +653,18 @@ function multi(data){
 
 	};
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> floorplan
 	this.remove = function(){
 		if(this.set != null){
 			this.set.remove();
 		};
 	};
 
-<<<<<<< HEAD
-=======
->>>>>>> svg library
-=======
->>>>>>> floorplan
 	this.redraw = function(){
+		this.transform.hideHandles();
 		this.set.remove();
 		this.draw();
 	};
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> floorplan
 	this.toFront = function(){
 		this.set.toFront();
 	};
@@ -812,11 +675,6 @@ function multi(data){
 
 	};
 
-<<<<<<< HEAD
-=======
->>>>>>> svg library
-=======
->>>>>>> floorplan
 	this.click_set = function(){
 		this.bbox.click(function(){
 			var robject = this.data("robject");
@@ -875,14 +733,7 @@ function outerarc(data){
 	this.dim = data.dim;
 	this.element = null; //Raphael Element
 	this.transform = null;
-<<<<<<< HEAD
-<<<<<<< HEAD
 	this.isEditable = null;
-=======
->>>>>>> svg library
-=======
-	this.isEditable = null;
->>>>>>> floorplan
 	this.pixelLength = function(){
 		//this is not exact length but the triangle length to help with better positioning in this.ft_clear().
 		return 2*Math.sqrt(Math.pow(this.canvas.feetToPixel(this.dim.w)/2, 2) + Math.pow(this.canvas.feetToPixel(this.dim.h),2));
@@ -901,8 +752,8 @@ function outerarc(data){
 		var angle = 2*Math.asin(this.canvas.feetToPixel(this.dim.w)/(2*radius));
 		var percentage = (angle*100)/(2*Math.PI);
 
-		a = this.canvas.paper.path().attr("arc", [0, 0, percentage, 100, radius]).attr("stroke-width",this.canvas.pixelsPerFoot/1.5).attr("stroke", "orange");
-		ft = this.canvas.paper.freeTransform(a, {keepRatio:true, scale:false, drag:true, draw:['bbox'], snap:{rotate:10}, distance:1.3}).hideHandles();
+		a = this.canvas.paper.path().attr("arc", [this.canvas.dropPoint.x, this.canvas.dropPoint.y, percentage, 100, radius]).attr("stroke-width",this.canvas.pixelsPerFoot/2).attr("stroke", "#333");
+		ft = this.canvas.paper.freeTransform(a, {keepRatio:true, scale:false, drag:true, draw:['bbox'], snap:{rotate:5}, distance:1.3, attrs:{fill:"red", stroke:"red"}}).hideHandles();
 		ft.attrs.rotate = this.dim.r;
 		ft.attrs.translate = {
 		 	x: this.canvas.feetToPixel(this.dim.x),
@@ -917,30 +768,18 @@ function outerarc(data){
 
 	};
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> floorplan
 	this.remove = function(){
 		if(this.element != null){
 			this.element.remove();
 		};
 	};
 
-<<<<<<< HEAD
-=======
->>>>>>> svg library
-=======
->>>>>>> floorplan
 	this.redraw = function(){
+		this.transform.hideHandles();
 		this.element.remove();
 		this.draw();
 	};
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> floorplan
 	this.toFront = function(){
 		this.element.toFront();
 	};
@@ -950,11 +789,6 @@ function outerarc(data){
 		if(this.canvas.map != null){this.canvas.map.toBack()};
 	};
 
-<<<<<<< HEAD
-=======
->>>>>>> svg library
-=======
->>>>>>> floorplan
 	this.click_set = function(){
 		this.element.click(function(){
 			var robject = this.data("robject");
@@ -969,11 +803,13 @@ function outerarc(data){
 	this.focus = function(){
 		//TODO - additional things that happen when object put in focus
 		this.ft();
+		this.element.attr({"stroke":"#ab6565"});
 	};
 
 	this.focus_clear = function(){
 		//TODO - additional things that happen when object put out of focus
 		this.ft_clear();
+		this.element.attr({"stroke":"#333"});
 	};
 
 	this.ft = function(){
@@ -1012,14 +848,20 @@ function outerarc(data){
 			};
 		});
 
-		this.updateDim();
+		this.updateDim({
+			x:this.canvas.pixelToFeet(this.transform.attrs.translate.x),
+			y:this.canvas.pixelToFeet(this.transform.attrs.translate.y),
+			r:this.transform.attrs.rotate
+		});
 		this.transform.hideHandles();
 	};
 
-	this.updateDim = function(){
-		this.dim.x = this.canvas.pixelToFeet(this.transform.attrs.translate.x);
-		this.dim.y = this.canvas.pixelToFeet(this.transform.attrs.translate.y);
-		this.dim.r = this.transform.attrs.rotate;
+	this.updateDim = function(params){
+		this.dim.x = params.x != undefined ? params.x : this.dim.x;
+		this.dim.y = params.y != undefined ? params.y : this.dim.y;
+		this.dim.r = params.r != undefined ? params.r : this.dim.r;
+		this.dim.w = params.w != undefined ? params.w : this.dim.w;
+		this.dim.h = params.h != undefined ? params.h : this.dim.h;
 	};
 
 	this.convertToData = function(){
@@ -1028,14 +870,45 @@ function outerarc(data){
 			dim:this.dim
 		}
 	};
+
+	this.prop = function(){
+		var template = '<div class="prop" robjectid="<%= r.id %>" type="outerarc"> \
+			<div class="close">Close</div> \
+			<div class="propimg"></div> \
+			<div class="measure"> \
+				<div class="w"> \
+					<p>Width</p> \
+					<div class="measure-group"> \
+						<label>Feet</label><input type="number" class="feet" value="<% print(MeasureToFeetInch(r.dim.w).feet) %>" <% if(!r.isEditable){ %>disabled="disabled"<%}%> /> \
+					</div> \
+					<div class="measure-group"> \
+						<label>Inches</label><input type="number" class="inches" value="<% print(MeasureToFeetInch(r.dim.w).inches) %>" <% if(!r.isEditable){ %>disabled="disabled"<%}%> /> \
+					</div> \
+				</div> \
+				<div class="h"> \
+					<p>Height</p> \
+					<div class="measure-group"> \
+						<label>Feet</label><input type="number" class="feet" value="<% print(MeasureToFeetInch(r.dim.h).feet) %>" <% if(!r.isEditable){ %>disabled="disabled"<%}%> /> \
+					</div> \
+					<div class="measure-group"> \
+						<label>Inches</label><input type="number" class="inches" value="<% print(MeasureToFeetInch(r.dim.h).inches) %>" <% if(!r.isEditable){ %>disabled="disabled"<%}%> /> \
+					</div> \
+				</div> \
+			</div> \
+			<% if(r.isEditable){ %> \
+				<div class="controls"> \
+					<input type="button" class="remove" value="Remove" /> \
+					<input type="button" class="apply" value="Apply" /> \
+				</div> \
+			<%}%> \
+		</div>';
+		return $(_.template(template)({r:this}));
+	};
 };
 
 function image(data){
 	this.id = null;
-<<<<<<< HEAD
 	this.mid = null;//model id of furniture.
-=======
->>>>>>> svg library
 	this.canvas = data.canvas;
 	this.originalData = data;
 	this.type = "image";
@@ -1043,19 +916,12 @@ function image(data){
 	this.src = data.src;
 	this.element = null; //Raphael Element
 	this.transform = null;
-<<<<<<< HEAD
-<<<<<<< HEAD
 	this.isEditable = null;
-=======
->>>>>>> svg library
-=======
-	this.isEditable = null;
->>>>>>> floorplan
 
 	this.draw = function(){
 
-		var i = this.canvas.paper.image(this.src, 0, 0, this.canvas.feetToPixel(this.dim.w), this.canvas.feetToPixel(this.dim.h));
-		ft = this.canvas.paper.freeTransform(i, {keepRatio:true, scale:false, drag:true, draw:['bbox'], snap:{rotate:10}, distance:1.3}).hideHandles();
+		var i = this.canvas.paper.image(this.src, this.canvas.dropPoint.x, this.canvas.dropPoint.y, this.canvas.feetToPixel(this.dim.w), this.canvas.feetToPixel(this.dim.h));
+		ft = this.canvas.paper.freeTransform(i, {keepRatio:true, scale:false, drag:true, draw:['bbox'], snap:{rotate:5}, distance:1.3, attrs:{fill:"red", stroke:"red"}}).hideHandles();
 		ft.attrs.rotate = this.dim.r;
 		ft.attrs.translate = {
 		 	x: this.canvas.feetToPixel(this.dim.x),
@@ -1067,7 +933,6 @@ function image(data){
 		this.element = i;
 		this.element.data("robject",this);
 		this.id = i.id;
-<<<<<<< HEAD
 
 		if(this.originalData.mid){
 			this.mid = this.originalData.mid;
@@ -1078,23 +943,12 @@ function image(data){
 		if(this.element != null){
 			this.element.remove();
 		};
-=======
->>>>>>> svg library
-	};
-
-	this.remove = function(){
-		if(this.element != null){
-			this.element.remove();
-		};
 	};
 
 	this.redraw = function(){
+		this.transform.hideHandles();
 		this.element.remove();
 		this.draw();
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> floorplan
 		return this;
 	};
 
@@ -1105,11 +959,6 @@ function image(data){
 	this.toBack = function(){
 		this.element.toBack();
 		if(this.canvas.map != null && this.canvas.map.id != this.element.id){this.canvas.map.toBack()};
-<<<<<<< HEAD
-=======
->>>>>>> svg library
-=======
->>>>>>> floorplan
 	};
 
 	this.click_set = function(){
@@ -1138,19 +987,21 @@ function image(data){
 	};
 
 	this.ft_clear = function(){
-		this.updateDim();
+		this.updateDim({
+			x:this.canvas.pixelToFeet(this.transform.attrs.translate.x),
+			y:this.canvas.pixelToFeet(this.transform.attrs.translate.y),
+			r:this.transform.attrs.rotate
+		});
 		this.transform.hideHandles();
 	};
 
-	this.updateDim = function(){
-		this.dim.x = this.canvas.pixelToFeet(this.transform.attrs.translate.x);
-		this.dim.y = this.canvas.pixelToFeet(this.transform.attrs.translate.y);
-		this.dim.r = this.transform.attrs.rotate;
+	this.updateDim = function(params){
+		this.dim.x = params.x != undefined ? params.x : this.dim.x;
+		this.dim.y = params.y != undefined ? params.y : this.dim.y;
+		this.dim.r = params.r != undefined ? params.r : this.dim.r;
+		this.dim.w = params.w != undefined ? params.w : this.dim.w;
+		this.dim.h = params.h != undefined ? params.h : this.dim.h;
 	};
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> floorplan
 
 	this.convertToData = function(){
 		return {
@@ -1159,60 +1010,65 @@ function image(data){
 			src:this.src
 		}
 	};
-<<<<<<< HEAD
-=======
->>>>>>> svg library
-=======
->>>>>>> floorplan
+
+	this.prop = function(){
+		var template = '<div class="prop" robjectid="<%= r.id %>" type="outerarc"> \
+			<div class="close">Close</div> \
+			<div class="propimg"></div> \
+			<div class="measure"> \
+				<div class="w"> \
+					<p>Width</p> \
+					<div class="measure-group"> \
+						<label>Feet</label><input type="number" class="feet" value="<% print(MeasureToFeetInch(r.dim.w).feet) %>" <% if(!r.isEditable){ %>disabled="disabled"<%}%> /> \
+					</div> \
+					<div class="measure-group"> \
+						<label>Inches</label><input type="number" class="inches" value="<% print(MeasureToFeetInch(r.dim.w).inches) %>" <% if(!r.isEditable){ %>disabled="disabled"<%}%> /> \
+					</div> \
+				</div> \
+				<div class="h"> \
+					<p>Height</p> \
+					<div class="measure-group"> \
+						<label>Feet</label><input type="number" class="feet" value="<% print(MeasureToFeetInch(r.dim.h).feet) %>" <% if(!r.isEditable){ %>disabled="disabled"<%}%> /> \
+					</div> \
+					<div class="measure-group"> \
+						<label>Inches</label><input type="number" class="inches" value="<% print(MeasureToFeetInch(r.dim.h).inches) %>" <% if(!r.isEditable){ %>disabled="disabled"<%}%> /> \
+					</div> \
+				</div> \
+			</div> \
+			<% if(r.isEditable){ %> \
+				<div class="controls"> \
+					<input type="button" class="remove" value="Remove" /> \
+					<input type="button" class="apply" value="Apply" /> \
+				</div> \
+			<%}%> \
+		</div>';
+		return $(_.template(template)({r:this}));
+	};
 };
 
 function ruler(data){
 	this.canvas = data.canvas;
-<<<<<<< HEAD
-<<<<<<< HEAD
 	this.startPoint = null;
 	this.endPoint = null;
 	this.element = null;
 
 	this.generatePathstring = function(){
-		return "M" + (this.startPoint.x - this.canvas.xoffset) + ',' + (this.startPoint.y - this.canvas.yoffset)+ "L" + (this.endPoint.x - this.canvas.xoffset) + "," + (this.endPoint.y - this.canvas.yoffset);
+		return "M" + (this.startPoint.x) + ',' + (this.startPoint.y)+ "L" + (this.endPoint.x) + "," + (this.endPoint.y);
 	};
 
 	this.start = function(x,y){
 		if(this.element != null){this.remove();};
-=======
-	startPoint = null;
-	endPoint = null;
-=======
-	this.startPoint = null;
-	this.endPoint = null;
->>>>>>> floorplan
-	this.element = null;
-
-	this.generatePathstring = function(){
-		return "M" + (this.startPoint.x - this.canvas.xoffset) + ',' + (this.startPoint.y - this.canvas.yoffset)+ "L" + (this.endPoint.x - this.canvas.xoffset) + "," + (this.endPoint.y - this.canvas.yoffset);
-	};
-<<<<<<< HEAD
-	this.init = function(x, y){
->>>>>>> svg library
-=======
-
-	this.start = function(x,y){
-		if(this.element != null){this.remove();};
->>>>>>> floorplan
 		this.startPoint = this.endPoint = {
-			x:x,
-			y:y
+			x:x + this.canvas.pan.x + this.canvas.panOffset.x - this.canvas.wrapperPosition.x,
+			y:y + this.canvas.pan.y + this.canvas.panOffset.y - this.canvas.wrapperPosition.y
 		}
-<<<<<<< HEAD
-<<<<<<< HEAD
 		this.element = this.canvas.paper.path(this.generatePathstring()).attr("stroke-width", 5).attr("stroke", "red").toFront();
 	};
 
 	this.end = function(x,y){
 		this.endPoint = {
-			x:x,
-			y:y
+			x:x + this.canvas.pan.x + this.canvas.panOffset.x - this.canvas.wrapperPosition.x,
+			y:y + this.canvas.pan.y + this.canvas.panOffset.y - this.canvas.wrapperPosition.y
 		};
 		this.redraw();
 	};
@@ -1252,46 +1108,22 @@ function ruler(data){
 	this.remove = function(){
 		this.element.remove();
 	};
-=======
-		this.element = this.canvas.paper.path(this.generatePathstring()).attr("stroke-width", 5).attr("stroke", "#CCC");
-=======
-		this.element = this.canvas.paper.path(this.generatePathstring()).attr("stroke-width", 5).attr("stroke", "red").toFront();
->>>>>>> floorplan
-	};
-
-	this.end = function(x,y){
-		this.endPoint = {
-			x:x,
-			y:y
-		};
-		this.redraw();
-	};
-
-	this.redraw = function(){
-		this.element.attr("path", this.generatePathstring());
-	};
-
-	this.pixelLength = function(){
-		return DistanceBetween(this.startPoint, this.endPoint);
-	};
-
-	this.feetLength = function(){
-		return this.canvas.pixelToFeet(this.pixelLength());
-	};
-<<<<<<< HEAD
->>>>>>> svg library
 };
-=======
-
-	this.remove = function(){
-		this.element.remove();
-	};
-}
->>>>>>> floorplan
 
 function DistanceBetween(point1, point2){
 	return Math.sqrt(Math.pow(point2.x-point1.x, 2) + Math.pow(point2.y-point1.y, 2))
 }
+
+function MeasureToFeetInch(measure){
+	return {
+		feet: Math.floor(measure),
+		inches: (Math.floor(measure)%1)*12
+	}
+};
+
+function FeetInchToMeasure(feet, inch){
+	return parseInt(feet) + (parseInt(inch)/12);
+};
 
 function GenerateAreaPaths(robjects){//list of robjects
 	/*

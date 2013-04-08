@@ -1,14 +1,15 @@
 var c;//canvas
+var activeFurnishing = null;
 
 var canvas_config = {
 	pixelsPerFoot:floorplan.pixelsPerFoot,
 	id:'main-canvas',
 	w:4000,
 	h:2250,
-	panx:floorplan.panx,
-	pany:floorplan.pany,
-	xoffset:402,
-	yoffset:0
+	pan:floorplan.pan,//css left and top values of canvas
+	panOffset:floorplan.panOffset,//additional css left and top values of canvas that are not stored in db. Used to provide margins on canvas
+	dropPoint:floorplan.dropPoint,//top left point where all objects are dropped
+	wrapperPosition:{x:0, y:100}//css left and top of wrapper. Used for ruler
 };
 
 $(document).ready(function(){
@@ -18,14 +19,15 @@ $(document).ready(function(){
 	c.init();
 	if(layout_data.map){c.addMap(layout_data.map)};
 	c.addObjects(layout_data.objects, layout_data.isEditable, false);
-	if(furnishing_data.objects){
-		c.addObjects(furnishing_data.objects, furnishing_data.isEditable, true);
-	};
-	c.draw();
-	c.panselect_set();
+	if(!ViewDefaultFurnishing()){//Views the default furnshing. If none found, then draw canvas.
+		c.draw();
+		c.panselect_set();
+	}
 
-	//zoom control
+
+	//Toolbar Controls/////////////////////////////////////////////////////////////////
 	$('#zoom').slider({
+		orientation:"vertical",
 		value:floorplan.pixelsPerFoot,
 		min:5,
 		max:40,
@@ -35,6 +37,33 @@ $(document).ready(function(){
 		}
 	});
 
+	$("#clear-furnishing").on("click", function(){
+		c.furnishing_clear();
+		activeFurnishing = null;
+		$('.furnishing-list .furnishing').attr("active", 0);
+		ResetAddFurnishing_Title();
+	});
+
+	$("#undo-changes").on("click", function(){
+		if(activeFurnishing != null){
+			ViewFurnishing(activeFurnishing.id);
+			ResetAddFurnishing_Title();
+		};
+	});
+	////////////////////////////////////////////////////////////////////////////////////////////
+	
+
+
+	//Picker////////////////////////////////////////////////////////////////////////////////////
+	$("#picker-tabs .tab").on("click", function(){
+		$("#picker-tabs .tab").attr("active", 0);
+		$(this).attr("active", 1);
+		$("#picker-wrapper .picker").hide().filter("#"+$(this).attr("ref")).show();
+	});
+
+	$("#picker-tabs .tab[active='1']").trigger("click");
+
+
 	//adding objects to canvas
 	$('#layout-picker .object').on("click", function(){
 		object = $(this);
@@ -43,19 +72,19 @@ $(document).ready(function(){
 			case "innerpath":
 				c.addObjects([{
 					type:object.attr("type"),
-					dim:{x:10, y:10, r:0, l:object.attr("l")}
+					dim:{x:5, y:5, r:0, l:object.attr("l")}
 				}], true, false);
 				break;
 			case "outerarc":
 				c.addObjects([{
 					type:object.attr("type"),
-					dim:{x:10, y:10, r:0, w:object.attr("w"), h:object.attr("h")}
+					dim:{x:5, y:5, r:0, w:object.attr("w"), h:object.attr("h")}
 				}], true, false);
 				break;
 			case "image":
 				c.addObjects([{
 					type:object.attr("type"),
-					dim:{x:10, y:10, r:0, w:object.attr("w"), h:object.attr("h")},
+					dim:{x:5, y:5, r:0, w:object.attr("w"), h:object.attr("h")},
 					src:object.attr("src")
 				}], true, false);
 				break;
@@ -78,8 +107,25 @@ $(document).ready(function(){
 		c.focus_last();
 	});
 
+	$("#map-upload-control").on("click", function(){
+		$("#map-uploader").show();
+	});
+
+	$("#map-remove-control").on("click", function(){
+		$.ajax({
+			type:"POST",
+			url:"/floorplan/map-remove/"+floorplan.id,
+			success:function(){
+				c.removeMap();
+				$("#map-remove-control").hide();
+			}
+		})
+	});
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+	//Main Canvas Events/////////////////////////////////////////////////////////////////////////////////////////
 	$("#main-canvas").on("layoutModified", function(){
-		console.log(c.convertToData_layout());
 		$.ajax({
 			type:"POST",
 			url:'/floorplan/save/layout/'+floorplan.id,
@@ -89,17 +135,150 @@ $(document).ready(function(){
 	});
 
 	$("#main-canvas").on("furnitureModified", function(){
-		alert("furniture moved")
-		//$.post('floorplan/save/furnishing/'+floorplan.id, c.convertToData_layout());
+		ShowAddFurnishing_Title();
 	});
 
-	//TEMP-REMOVE WHEN DONE////////////////////////////////////////////////
-	$('#data').on("click", function(){
-		c.furnishing_clear();
+	$("#main-canvas").on("focusSet", function(){
+		$("#prop-wrapper").empty().css({right:"-100px", display:"block", opacity:0}).append(c.focus.prop()).animate({right:"50px", opacity:1}, 200);
 	});
-	///////////////////////////////////////////////////////////////////////
+
+	$("#main-canvas").on("focusClear", function(){
+		$("#prop-wrapper").hide();
+	});
+	/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+	//Prop///////////////////////////////////////////////////////////////////////////////////////////////////////
+	$("#prop-wrapper").on("click", ".controls .remove", function(){
+		c.focus_remove();
+	});
+
+	$("#prop-wrapper").on("click", ".controls .apply", function(){
+		var newDim = {};
+		switch($(this).parents(".prop").attr("type")){
+			case "outerpath":
+			case "innerpath":
+				newDim = {
+					l: FeetInchToMeasure($("#prop-wrapper .prop .measure .feet").val(), $("#prop-wrapper .prop .measure .inches").val())
+				}
+				break;
+			case "outerarc":
+			case "image":
+				newDim = {
+					w: FeetInchToMeasure($("#prop-wrapper .prop .measure .w .feet").val(), $("#prop-wrapper .prop .measure .w .inches").val()),
+					h: 	FeetInchToMeasure($("#prop-wrapper .prop .measure .h .feet").val(), $("#prop-wrapper .prop .measure .h .inches").val()),
+				}
+		};
+		c.focus.updateDim(newDim);
+		c.focus.redraw();
+		c.focus.click_set();
+		c.focus_set(c.focus);
+	});
+
+	$("#prop-wrapper").on("click", ".close", function(){
+		c.focus_clear();
+	});
+
+	/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
+
+	$("#submit-furnishing").on("click", SubmitFurnishing);
+
 
 });//document.ready
+
+function ResetAddFurnishing(){
+	$("#add-furnishing .comment").val('');
+	ResetAddFurnishing_Title();
+};
+
+function ResetAddFurnishing_Title(){
+	$("#add-furnishing .title").val('').hide();
+	$("#add-furnishing .instructions").show("fast");	
+};
+
+function ShowAddFurnishing_Title(){
+	$("#add-furnishing .title").show("fast");
+	$("#add-furnishing .instructions").hide();	
+};
+
+function SubmitFurnishing(){
+
+	submitFurnishing = $('#submit-furnishing').off("click");
+
+	var submitData = {
+		title:$("#add-furnishing .title").val(),
+		comment:$("#add-furnishing .comment").val(),
+		objects:c.convertToData_furnishing(),
+	}
+	$.ajax({
+		type:"POST",
+		url:'/floorplan/save/furnishing/'+floorplan.id,
+		contentType: 'application/json',
+		data:JSON.stringify(submitData),
+		success:function(data){
+			var list = floorplan.isOwner ? $("#owner-furnishing-list") : $("#user-furnishing-list")
+			list.prepend(data);
+			var furnishingid = $(data).attr("furnishingid");
+			furnishing_data.push({
+				id:furnishingid,
+				objects:submitData.objects,
+				isDefault:false,
+				isEditable:true
+			});
+			console.log(furnishingid);
+			ResetAddFurnishing();
+			ViewFurnishing(furnishingid);
+			submitFurnishing.on("click", SubmitFurnishing)
+		}
+	});
+};
+
+function ViewDefaultFurnishing(){//returns true if found, false otherwise
+	var fd = _.find(furnishing_data, function(f_d){return f_d.isDefault == true});
+	if(fd){
+		ViewFurnishing(fd.id);
+		return true;
+	};
+	return false;
+};
+
+function ViewFurnishing(id){
+
+	ResetAddFurnishing_Title();
+
+	$('.furnishing-list .furnishing').attr("active", 0);
+	$('.furnishing-list .furnishing[furnishingid="'+id+'"]').attr("active", 1);
+
+	activeFurnishing = _.find(furnishing_data, function(f_d){return f_d.id == id});
+	c.furnishing_clear();
+	if(activeFurnishing){
+		c.addObjects(activeFurnishing.objects, activeFurnishing.isEditable, true);
+	}
+	c.draw();
+	c.panselect_clear();
+	c.panselect_set();
+};
+
+function DeleteFurnishing(id){
+	if(activeFurnishing && activeFurnishing.id == id){
+		c.furnishing_clear();
+	};
+	$.ajax({
+		type:"POST",
+		url:"/floorplan/delete/furnishing/"+id,
+		success:function(){
+			$('.furnishing-list .furnishing[furnishingid="'+id+'"]').remove();
+		}
+	})
+};
+
+function SetDefaultFurnishing(id){
+	$.ajax({
+		type:"POST",
+		url:"/floorplan/set-default/furnishing/"+id,
+	});
+};
 
 
 
@@ -109,6 +288,7 @@ $(document).ready(function(){
 var mapc = null;
 var map_canvas_width = 700;
 var map_canvas_height = null;
+var mapfileuploaded = false;
 
 $(document).ready(function(){
 
@@ -128,10 +308,14 @@ $(document).ready(function(){
     
 
     $("#map-uploader-submit").on("click", function(){
-    	//TODO: Check if file uploaded and ruler measurements are in
-    	var rfeet = parseInt($("#map-uploader .feet").val());
-    	var rinches = parseInt($("#map-uploader .inches").val());
-    	var rmeasure = rfeet + (rinches/12);
+
+    	var map_feet = $("#map-uploader .feet").val();
+    	var map_inches = $("#map-uploader .inches").val();
+    	if(!mapfileuploaded || map_feet == undefined || map_inches == undefined || !mapc.ruler.pixelLength() || FeetInchToMeasure(map_feet, map_inches) <= 0){
+    		alert("You must upload a floorplan image, draw a line on the image, and enter the feet/inches specifying the length of that line in relation to the floorplan.");
+    		return;
+    	}
+    	var rmeasure = FeetInchToMeasure(map_feet, map_inches);
 
     	var rangle = mapc.ruler.angle();
 
@@ -161,24 +345,31 @@ $(document).ready(function(){
     		processData: false,
   			contentType: false,
   			success:MapUploadHandler
-    	})
+    	});
+
+    	$('#map-uploader-cancel').trigger("click");
     });
+
+	$('#map-uploader-cancel').on("click", function(){
+		$("#map-uploader").hide();
+	});
 
 });//document.ready
 
 function mapFileOnload(e) {
     var img = new Image;
     img.src = e.target.result;
+    mapfileuploaded = true;
 
     map_canvas_height = (map_canvas_width*img.height)/img.width;
     mapc = new canvas({
         pixelsPerFoot: 10,
         w:map_canvas_width,
         h:map_canvas_height,
-        panx:0,
-        pany:0,
-        xoffset:402,
-        yoffset:525,
+        pan:{x:0, y:0},
+        panOffset:{x:0, y:0},
+        dropPoint:{x:0, y:0},
+        wrapperPosition:{x:470, y:385},
         id:"map-uploader-canvas"
     });
 
@@ -190,5 +381,7 @@ function mapFileOnload(e) {
 };
 
 function MapUploadHandler(data){
+	$("#map-remove-control").show();
     c.addMap(data);
+    
 };

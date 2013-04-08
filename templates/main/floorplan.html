@@ -1,117 +1,82 @@
 {%extends 'layout/master.html' %}
-<<<<<<< HEAD
 {%load maintags%}
 {%block title%}{{floorplan.title}}{%endblock%}
-=======
-{%block title%}Floorplan{%endblock%}
->>>>>>> floorplan
 {%block body%}
 
-	<style>
-		body{
-			position:relative;
-			padding:0px;
-			margin:0px;
-		}
-<<<<<<< HEAD
-	</style>
 	<link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/floorplan.css"/>
-=======
-		#picker-wrapper{
-			position:absolute;
-			left:0px;
-			top:0px;
-			width:400px;
-			overflow: hidden;
-		}
-		#picker-wrapper .object img{
-			max-width:100px;
-		}
-		#canvas-wrapper{
-			position:absolute;
-			top:0px;
-			left:402px;
-			width: -webkit-calc(100% - 406px);/*chrome*/
-			width: calc(100% - 406px);/*ie9,ie10*/
-			height:500px;
-			border:2px solid #CCC;
-			overflow: hidden;
-		}
-		#canvas-wrapper .toolbar{
-			position: absolute;
-			height:40px;
-			width:100%;
-			background-color:#FAFAFA;
-			z-index: 100;
-		}
-		#main-canvas{
-			position:absolute;
-		}
-		#main-canvas svg{
-			background-color: #F3F3F3;
-		}
-		#zoom{
-			float: right;
-			width:200px;
-			margin:10px;
-		}
-		#map-uploader-wrapper{
-			position:absolute;
-			top:510px;
-			left:0px;
-		}
-	</style>
->>>>>>> floorplan
 
 	<div id="picker-wrapper">
 		{%if isOwner%}
-			<div id="picker-tab-layout" {%if not furnishing.jsonObjects%}active='1'{%endif%}>Layout</div>
-			<div id="picker-tab-furniture" {%if furnishing.jsonObjects%}active='1'{%endif%}>Furniture</div>
-		{%endif%}
-<<<<<<< HEAD
-		{%if isOwner %}
+			<div id='picker-tabs'>
+				<div id="picker-tab-layout" ref="layout-picker" class="tab" {%if not furnishings %}active='1'{%endif%}>Layout</div>
+				<div id="picker-tab-furniture" ref="furniture-picker" class="tab" {%if furnishings%}active='1'{%endif%}>Furniture</div>
+			</div>
+			{%include 'snippet/map-uploader.html'%}
 			{%include 'snippet/layout-picker.html'%}
 		{%endif%}
 		{% FurniturePicker True %}
-=======
-		{%if isOwner and not furnishing.jsonObjects%}
-			{%include 'snippet/layout-picker.html'%}
-		{%else%}
-			<div>PUT TEMPLATE TAG FOR FURNITURE PICKER HERE</div>
-		{%endif%}
->>>>>>> floorplan
 	</div>
-
-	<div id="map-uploader-wrapper">
-		{%include 'snippet/map-uploader.html'%}
-	</div>	
 
 	<div id="canvas-wrapper">
 		<div class="toolbar">
-			<input id="data" type="button" value="data" />
 			<div id="zoom"></div>
+			<div id="clear-furnishing" class="tool">Clear All Furnitures</div>
+			<div id="undo-changes" class="tool">Undo All Changes</div>
 		</div>
-		<div id="main-canvas">
+		<div id="main-canvas"></div>
+		<div id="prop-wrapper"></div>
+	</div>
+
+	<div id="content-wrapper">
+		<div id="furnishings">
+
+			<div id="add-furnishing">
+				<textarea class="comment" placeholder="Comment..."></textarea>
+				<div id="furnishing-section">
+					<p class="instructions">Add, remove and/or move furniture on the floorplan to save furnishing with comment.</p>
+					<input type="text" class="title" placeholder="Furnishing Title..." />
+				</div>
+				<input id="submit-furnishing" type="button" value="Save" />
+			</div>
+
+			<h2>{{user.username}}'s Comments &amp; Furnishings</h2>
+			<table id="owner-furnishing-list" class="furnishing-list">
+				{%for furnishing in furnishings %}{%if furnishing.user == floorplan.user%}
+					{%include 'snippet/furnishing.html'%}
+				{%endif%}{%endfor%}
+			</table>
+			<h2>Comments &amp; Suggested Furnishings</h2>
+			<table id="user-furnishing-list" class="furnishing-list">
+				{%for f in furnishings %}{%if f.user != floorplan.user%}
+					{%include 'snippet/furnishing.html'%}
+				{%endif%}{%endfor%}
+			</table>
 		</div>
 	</div>
 
-<<<<<<< HEAD
 	<script type="text/javascript">
 
 		//data used in sourced javascript files
 
 		var floorplan = {
+			isOwner:{%if isOwner%}true{%else%}false{%endif%},
 			id:{{floorplan.id}},
 			pixelsPerFoot:{{floorplan.scalePixelsPerFoot}},
-			panx:{{floorplan.panX}},
-			pany:{{floorplan.panY}},
+			pan:{x:{{floorplan.panX}}, y:{{floorplan.panY}}},
+			panOffset:{x:-600, y:-300},
+			dropPoint:{x:1025, y:325}
 		};
 
-		var furnishing_data = {
-			id:{{furnishing.id}},
-			isEditable:{%if furnishing.user == user %}true{%else%}false{%endif%},
-			objects:{{furnishing.jsonObjects|default_if_none:"null"|safe}}
-		};
+		var furnishing_data = [
+			{%for f in furnishings%}
+			{
+				id:{{f.id}},
+				isEditable:{%if f.user == user %}true{%else%}false{%endif%},
+				isDefault:{%if f.isDefault%}true{%else%}false{%endif%},
+				objects:{{f.jsonObjects|default_if_none:"null"|safe}}
+			},
+			{%endfor%}
+		]
 
 		var layout_data = {
 			isEditable:{%if isOwner%}true{%else%}false{%endif%},
@@ -125,96 +90,5 @@
 
 	</script>
 	<script type="text/javascript" src="{{STATIC_URL}}js/floorplan.js"></script>
-=======
-	<script>
-		var canvas_config = {
-			pixelsPerFoot:{{floorplan.scalePixelsPerFoot}},
-			id:'main-canvas',
-			w:4000,
-			h:2250,
-			panx:{{floorplan.panX}},
-			pany:{{floorplan.panY}},
-			xoffset:402,
-			yoffset:0
-		};
-
-		var canvas_data = {//TEMP, this is here just for testing. remove entire object when ready
-			objects:[
-				{
-					type:"outerpath",
-					dim:{x:12, y:6, r:0, l:10}
-				},
-				{
-					type:"innerpath",
-					dim:{x:10, y:15, r:30, l:10}
-				},
-				{
-					type:"outerarc",
-					dim:{x:30, y:10, r:0, w:4, h:1.3}
-				},
-				{
-					type:"image",
-					dim:{x:10, y:10, r:10, w:6, h:3},
-					src:"{{STATIC_URL}}image/furniture/symbol/couch.png"
-				}
-			],
-		};
-
-		var floorplan_data = {
-			isEditable:{%if isOwner%}true{%else%}false{%endif%},
-			objects:{{floorplan.jsonObjects|default:"null"}}
-		};
-
-		$(document).ready(function(){
-
-			//init and draw canvas
-			var c = new canvas(canvas_config);
-			c.init();
-			c.addObjects(canvas_data.objects, true, true)
-			c.draw()
-			c.panselect_set();
-
-			//adding objects to canvas
-			$('#layout-picker .object').on("click", function(){
-				object = $(this);
-				switch(object.attr("type")){
-					case "outerpath":
-					case "innerpath":
-						c.addObjects([{
-							type:object.attr("type"),
-							dim:{x:10, y:10, r:0, l:object.attr("l")}
-						}], true, false);
-						break;
-					case "outerarc":
-					case "image":
-						c.addObjects([{
-							type:object.attr("type"),
-							dim:{x:10, y:10, r:0, w:object.attr("w"), h:object.attr("h")}
-						}], true, false);
-				};
-				c.draw();
-				c.panselect_last();
-				c.focus_last();
-			});
-
-			//zoom control
-			$('#zoom').slider({
-				value:{{floorplan.scalePixelsPerFoot}},
-				min:5,
-				max:40,
-				step:5,
-				slide: function(event, ui){
-					c.zoom(ui.value);
-				}
-			});
-
-			//TEMP-REMOVE WHEN DONE
-			$('#data').on("click", function(){
-				c.furnishing_clear();
-			});
-
-		});//document.ready
-	</script>
->>>>>>> floorplan
 
 {%endblock%}

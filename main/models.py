@@ -8,72 +8,33 @@ from datetime import datetime
 class UserDetails(models.Model):
 	'''
 	Additional user information (if needed)
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> account management
 	confirmCode = when user creates account, confirmCode is emailed to them so that they can activate their account
 	'''
 	user = models.OneToOneField(User, primary_key=True)
 	confirmCode = models.CharField(max_length=40, null=True)
-<<<<<<< HEAD
-=======
-	'''
-	user = models.OneToOneField(User, primary_key=True)
->>>>>>> svg library
-=======
->>>>>>> account management
 
 
 
 def FloorplanMap_Filename(instance, filename):
-<<<<<<< HEAD
 	return '/'.join(['image/floorplan/map', str(instance.id) + '.' + filename.split('.')[-1]])
-=======
-	return '/'.join(['image/floorplan/map', str(instance.id) + filename.split('.')[-1]])
->>>>>>> svg library
 
 class Floorplan(models.Model):
 	'''
 	User generated floor plans. jsonObjects represents a JSON of all Layout objects composing the Floorplan - used for performance boost. map represents the floorplan map uploaded by the user (this may be null). Users can only upload 1 map per floorplan. All maps are positioned in the same x,y top left coordinate for simplification.
 	scalePixelsPerFoot = zoom setting in pixels per foot 
-<<<<<<< HEAD
-<<<<<<< HEAD
 	panX = x pixels canvas is panned left
 	panY = y pixels canvas is panned up
-=======
-	panX = x feel canvas is panned left
-	panY = y feet canvas is panned up
->>>>>>> svg library
-=======
-	panX = x pixels canvas is panned left
-	panY = y pixels canvas is panned up
->>>>>>> floorplan
 	'''
 	id = models.AutoField(primary_key=True)
 	user = models.ForeignKey(User, db_index=True)
 	title = models.CharField(max_length=255)
 	jsonObjects = models.CharField(max_length=9999, null=True)
-<<<<<<< HEAD
-<<<<<<< HEAD
 	scalePixelsPerFoot = models.IntegerField(default=20)
 	panX = models.IntegerField(default=0)
 	panY = models.IntegerField(default=0)
 	map = models.ImageField(upload_to=FloorplanMap_Filename, null=True)
 	mapxFeet = models.FloatField(null=True)
 	mapyFeet = models.FloatField(null=True)
-=======
-	scalePixelsPerFoot = models.IntegerField()
-	panX = models.IntegerField()
-	panY = models.IntegerField()
-=======
-	scalePixelsPerFoot = models.IntegerField(default=20)
-	panX = models.IntegerField(default=0)
-	panY = models.IntegerField(default=0)
->>>>>>> floorplan
-	map = models.ImageField(upload_to=FloorplanMap_Filename, null=True)
-	mapPixelsPerFoot = models.IntegerField(null=True)
->>>>>>> svg library
 	RCD = models.DateTimeField(default=datetime.now)
 	RUD = models.DateTimeField(default=datetime.now)
 
@@ -107,23 +68,8 @@ class Furnishing(models.Model):
 	title = models.CharField(max_length=255, null=True)	
 	furnitures = models.ManyToManyField('Furniture', through='FurnitureFurnishing')
 	jsonObjects = models.CharField(max_length=9999, null=True)
-<<<<<<< HEAD
-<<<<<<< HEAD
 	comment = models.CharField(max_length=4000, null=True)
 	isDefault = models.BooleanField(default=False)
-=======
-	scalePixelsPerFoot = models.IntegerField()
-	panX = models.IntegerField()
-	panY = models.IntegerField()
-	comment = models.CharField(max_length=4000, null=True)
->>>>>>> svg library
-=======
-	#scalePixelsPerFoot = models.IntegerField()
-	#panX = models.IntegerField()
-	#panY = models.IntegerField()
-	comment = models.CharField(max_length=4000, null=True)
-	isDefault = models.BooleanField(default=False)
->>>>>>> floorplan
 	RCD = models.DateTimeField(default=datetime.now)
 	RUD = models.DateTimeField(default=datetime.now)
 
@@ -230,10 +176,6 @@ class FloorplanCameraPic(models.Model):
 	comment = models.CharField(max_length=4000, null=True)
 	RCD = models.DateTimeField(default=datetime.now)
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> account management
 
 
 class Bookmarklet(models.Model):
@@ -241,8 +183,3 @@ class Bookmarklet(models.Model):
 	uuid = models.CharField(max_length=40)
 	EOL = models.DateTimeField() #End of Life
 	RCD = models.DateTimeField(datetime.now)
-<<<<<<< HEAD
-=======
->>>>>>> svg library
-=======
->>>>>>> account management

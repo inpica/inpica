@@ -1,19 +1,12 @@
 from django.conf.urls import patterns, include, url
-<<<<<<< HEAD
 from django.conf import settings
 from django.conf.urls.static import static
-=======
->>>>>>> init django project (using django 1.5)
 
 # Uncomment the next two lines to enable the admin:
 # from django.contrib import admin
 # admin.autodiscover()
 
 urlpatterns = patterns('',
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> account management
 
     url(r'^$', 'main.views.Index'),
 
@@ -22,24 +15,16 @@ urlpatterns = patterns('',
     url(r'^logout$', 'account.views.Logout'),
     url(r'^account/create$', 'account.views.Create'),
     url(r'^account/confirm/(?P<id>\d+)$', 'account.views.Confirm'),
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> floorplan
     
     #Main################################################
     url(r'^floorplan/(?P<id>\d+)$', 'main.views.Floorplan'),
     url(r'^floorplan/new$', 'main.views.NewFloorplan'),
     url(r'^floorplan/map-upload/(?P<id>\d+)$', 'main.views.MapUpload'),
-<<<<<<< HEAD
+    url(r'^floorplan/map-remove/(?P<id>\d+)$', 'main.views.MapRemove'),
     url(r'^floorplan/save/layout/(?P<id>\d+)$', 'main.views.SaveLayout'),
-=======
-
-    
-    url(r'^dashboard$', 'main.views.Dashboard'),
-
-
->>>>>>> floorplan
+    url(r'^floorplan/save/furnishing/(?P<id>\d+)$', 'main.views.SaveFurnishing'),
+    url(r'^floorplan/delete/furnishing/(?P<id>\d+)$', 'main.views.DeleteFurnishing'),
+    url(r'^floorplan/set-default/furnishing/(?P<id>\d+)$', 'main.views.SetDefaultFurnishing'),
 
     url(r'^furniture/prop/(?P<id>\d+)$', 'main.views.FurnitureInfoProp'),
 
@@ -51,29 +36,10 @@ urlpatterns = patterns('',
 
 
 
-=======
-    # Examples:
-    # url(r'^$', 'inpica.views.home', name='home'),
-    # url(r'^inpica/', include('inpica.foo.urls')),
->>>>>>> init django project (using django 1.5)
-=======
-
-
-
-
->>>>>>> account management
 
     # Uncomment the admin/doc line below to enable admin documentation:
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
     # Uncomment the next line to enable the admin:
     # url(r'^admin/', include(admin.site.urls)),
-<<<<<<< HEAD
-<<<<<<< HEAD
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-=======
-)
->>>>>>> init django project (using django 1.5)
-=======
-)
->>>>>>> account management

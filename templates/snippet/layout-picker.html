@@ -1,9 +1,10 @@
 <div class="picker" id="layout-picker">
 	<div class="filter">
-		<input type="text" class="name-filter" />
+		<input type="text" class="name-filter" placeholder="Search..." />
 	</div>
 	<div class="map">
-		<input id="map-upload-control" type="button" value="Upload Floorplan" />
+		<div id="map-upload-control">Upload Floorplan Map</div>
+		{%if floorplan.map%}<div id="map-remove-control">Remove</div>{%endif%}
 	</div>
 	<div class="list">
 		<div class="object" l="6" type="outerpath">

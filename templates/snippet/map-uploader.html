@@ -1,59 +1,27 @@
 <div id="map-uploader">
-	<form method="post" action="/floorplan/map-upload/{{ floorplan.id }}" enctype="multipart/form-data">
-		<input type="file" id="map-file" />
-		<input type="number" class="feet" />
-		<input type="number" class="inches" />
-	</form>
-<<<<<<< HEAD
-		<input id="map-uploader-submit" type="button" value="Submit" />
+	<table id="map-uploader-top">
+		<tr>
+			<td class="Instructions">
+				<h2>Instructions</h2>
+				<p>1. Open your floorplan image file. 2. Click and drag a line tracing anything on the floorplan which you know the length of. 3. Enter the feet/inches of that line. 4. Submit</p>
+				<input type="file" id="map-file" />
+			</td>
+			
+			<td class="measure">
+				<div class="measure-group">
+					<label>Feet</div>
+					<input type="number" class="feet" value="0" />
+				</div>
+				<div class="measure-group">
+					<label>Inches</div>
+					<input type="number" class="inches" value="0" />
+				</div>
+			</td>
+			<td>
+				<input id="map-uploader-submit" type="button" value="Submit" />
+				<input id="map-uploader-cancel" type="button" value="Cancel" />
+			</td>
+		</tr>
+	</table>
 	<div id="map-uploader-canvas"></div>
 </div>
-=======
-		<input type="button" value="Submit" />
-	<div id="map-uploader-canvas"></div>
-</div>
-
-<script type="text/javascript">
-
-$(document).ready(function(){
-
-	$('#map-file').change(function(e){
-		var file = e.target.files[0],
-            imageType = /image.*/;
-
-        if (!file.type.match(imageType)){
-            alert("This is not an image file!");
-        };
-
-        var reader = new FileReader();
-        reader.onload = mapFileOnload;
-        reader.readAsDataURL(file);  
-	});
-
-	function mapFileOnload(e) {
-		var img = new Image;
-		img.src = e.target.result;
-
-		var canvas_width = 700;
-		var canvas_height = (canvas_width*img.height)/img.width;
-
-		var mapc = new canvas({
-			pixelsPerFoot: 10,
-			w:canvas_width,
-			h:canvas_height,
-			panx:0,
-			pany:0,
-			xoffset:0,
-			yoffset:525,
-			id:"map-uploader-canvas"
-		});
-		mapc.init();
-		mapc.addObjects([{type:"image",src:e.target.result, dim:{x:0,y:0,r:0,w:canvas_width/10, h:canvas_height/10}}], true, false)
-		mapc.draw();
-		mapc.ruler_set();
-    };
-
-});//document.ready
-
-</script>
->>>>>>> floorplan
