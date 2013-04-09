@@ -92,6 +92,7 @@ $(document).ready(function(){
 		c.draw();
 		c.panselect_last();
 		c.focus_last();
+		$("#main-canvas").trigger("layoutModified");
 	});
 
 	$('#furniture-picker .list .object').on("click", function(){
@@ -105,6 +106,7 @@ $(document).ready(function(){
 		c.draw();
 		c.panselect_last();
 		c.focus_last();
+		$("#main-canvas").trigger("furnitureModified");
 	});
 
 	$("#map-upload-control").on("click", function(){
@@ -120,6 +122,29 @@ $(document).ready(function(){
 				$("#map-remove-control").hide();
 			}
 		})
+	});
+
+	$("#layout-picker .filter .search-filter").on("keyup", function(){
+		var search_query = $(this).val().toLowerCase().replace(/^\s+|\s+$/g, '').replace(" ", "|");
+		var objects_list = $("#layout-picker .list .object");
+		PickerFilter(search_query, objects_list, "search")
+	});
+
+	$("#furniture-picker .filter .search-filter").on("keyup", function(){
+		var search_query = $(this).val().toLowerCase().replace(/^\s+|\s+$/g, '').replace(" ", "|");
+		var objects_list = $("#furniture-picker .list .object");
+		PickerFilter(search_query, objects_list, "search")
+	});
+
+	$("#furniture-picker .filter .category-filter").on("change", function(){
+		var search_query = $(this).val().toLowerCase();
+		var objects_list = $("#furniture-picker .list .object");
+		if(search_query == "all"){
+			objects_list.attr("category-filter", 1);
+		}else{
+			PickerFilter(search_query, objects_list, "category");
+		}
+		
 	});
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -165,8 +190,8 @@ $(document).ready(function(){
 			case "outerarc":
 			case "image":
 				newDim = {
-					w: FeetInchToMeasure($("#prop-wrapper .prop .measure .w .feet").val(), $("#prop-wrapper .prop .measure .w .inches").val()),
-					h: 	FeetInchToMeasure($("#prop-wrapper .prop .measure .h .feet").val(), $("#prop-wrapper .prop .measure .h .inches").val()),
+					w: FeetInchToMeasure($("#prop-wrapper .prop .w .feet").val(), $("#prop-wrapper .prop .w .inches").val()),
+					h: 	FeetInchToMeasure($("#prop-wrapper .prop .h .feet").val(), $("#prop-wrapper .prop .h .inches").val()),
 				}
 		};
 		c.focus.updateDim(newDim);
@@ -280,7 +305,21 @@ function SetDefaultFurnishing(id){
 	});
 };
 
-
+function PickerFilter(searchQuery, objectsList, filterType){
+	var filterSetAttr = filterType + "-filter";
+	var filterMatchAttr = filterType + "-filter-match";
+	if(!searchQuery){
+		objectsList.attr(filterSetAttr, 1);
+	}else{
+		objectsList.attr(filterSetAttr, 0);
+		var re = new RegExp('.*('+searchQuery+').*','i');
+		objectsList.each(function(){
+			if(re.test($(this).attr(filterMatchAttr))){
+				$(this).attr(filterSetAttr, 1);
+			}
+		});
+	};
+};
 
 
 //Map Uploader///////////////////////////////////////////////////////////////////////////////////////////////////////
