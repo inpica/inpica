@@ -37,38 +37,70 @@
 
 #furniture-picker, #layout-picker{
 	float:left;
-	padding:20px;
 	-moz-box-shadow: -4px 4px 9px #c6d2de;
 	box-shadow: -4px 4px 9px #c6d2de;
 	overflow: auto;
 	background-color: #FFF;
-	height:360px;
-	width:260px;
+	height:400px;
+	width:300px;
 	border-left:1px solid #c6d2de;
 	display:none;
 }
 
-#picker-wrapper .object, #layout-picker .map{
+#layout-picker .filter, #layout-picker .map, #furniture-picker .filter{
 	float:left;
+	width: -webkit-calc(100% - 20px);
+	width: calc(100% - 20px);
 	clear: left;
-	width:260px;
-	margin:5px 0px;
+	margin-left:20px;
+	margin-top:10px;
+}
+
+#layout-picker .filter, #layout-picker .map{
+	height:50px;
+}
+
+#furniture-picker .filter{
+	height:100px;
+}
+
+#layout-picker .list, #furniture-picker .list{
+	float:left;
+	clear:left;
+	overflow:auto;
+	height:270px;
+	width:100%;
+}
+
+#furniture-picker .list{
+	height: 290px;
+}
+
+#picker-wrapper .object{
+	display:none;
+	height:90px;
+}
+
+#layout-picker .object[search-filter="1"], #furniture-picker .object[search-filter="1"][category-filter="1"]{
+	display:block;
 }
 
 #picker-wrapper .object:hover{
-	background-color: #d9e8e6;
+	background-color: #464F58;
 	cursor: pointer;
+	-moz-box-shadow: 0px 0px 40px #DDD;
+	box-shadow: 0px 0px 40px #DDD;
 }
 
 #picker-wrapper .object:hover p{
-	color:#000;
+	color:#FFF;
 }
 
 #picker-wrapper .object img{
 	max-width:80px;
 	max-height:80px;
 	float:left;
-	margin:10px 30px 10px 10px;
+	margin:10px 30px 10px 20px;
 }
 
 #picker-wrapper .object p{
@@ -77,8 +109,13 @@
 	color:#666;
 }
 
-#picker-wrapper input{
+#picker-wrapper .filter input{
 	padding:6px;
+	width:240px;
+}
+
+#furniture-picker .filter select{
+	width:193px;
 }
 
 #layout-picker .map div{
@@ -102,8 +139,23 @@
 }
 
 #layout-picker .map div#map-remove-control{
-	width:60px;
+	width:75px;
 	color:#333;
+}
+
+#furniture-picker .filter .category-filter-wrapper label{
+	color:#666;
+	font-size:12px;
+	padding-right:10px;
+}
+
+#furniture-picker .filter .category-filter{
+	padding:5px;
+	color:#666;
+}
+
+#furniture-picker .filter .category-filter .pinned{
+	color:red;
 }
 
 #canvas-wrapper{
@@ -117,7 +169,8 @@
 	overflow: hidden;
 	border-bottom: 1px solid #d1d1d1;
 	-moz-box-shadow: 0px 4px 9px #c6d2de;
-	box-shadow: 0px 4px 9px #c6d2de;
+	/*box-shadow: 0px 4px 9px #c6d2de;*/
+	box-shadow: 0px 0px 400px #7490ac;
 	background-color: #f8f9fA;
 	/*background-color: #F5F5F5;*/
 }
@@ -175,16 +228,26 @@
 	margin-bottom:10px;
 }
 
-#map-uploader-top td.measure{
+.measure{
 	width:100px;
-	padding:20px;
+	padding:10px;
 }
 
-#map-uploader-top td.measure input{
+.measure-group{
+	float:left;
 	width:50px;
+}
+
+.measure label{
+	font-size: 12px;
+	display: block;
+}
+
+.measure input{
+	width:40px;
 	padding:5px;
 	margin-bottom:10px;
-	font-size:20px;
+	font-size:14px;
 }
 
 #map-uploader-top input[type="button"]{
@@ -270,6 +333,27 @@
 	-moz-box-shadow: 4px 4px 9px #c6d2de;
 	box-shadow: 4px 4px 9px #c6d2de;
 	border:1px solid #d9e8e6;
+}
+
+#prop-wrapper .close{
+	text-align: right;
+	color:#333;
+	font-weight:bold;
+}
+
+#prop-wrapper .close:hover{
+	cursor:pointer;
+	color:#FFF;
+}
+
+#prop-wrapper .propimg img{
+	max-width: 100px;
+	max-height:100px;
+}
+
+#prop-wrapper .measure h2{
+	margin-bottom:5px;
+	font-size:18px;
 }
 
 #furnishings .furnishing-list{

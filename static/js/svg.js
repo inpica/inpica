@@ -150,10 +150,10 @@ function canvas(config){
 	this.focus_clear = function(){
 		if (this.focus != null){
 			this.focus.focus_clear();
-			if(this.focus.isFurniture){
+			if(this.focus.isFurniture && this.focus.modified){
 				this.furnitureModified = true;
 				$("#"+this.id).trigger("furnitureModified");
-			}else{
+			}else if(this.focus.modified){
 				$("#"+this.id).trigger("layoutModified");
 			}
 			this.focus = null;
@@ -162,12 +162,15 @@ function canvas(config){
 	};
 
 	this.focus_set = function(robject){
+		var isNewFocus = (this.focus == null) || (this.focus.id != robject.id);
 		if(this.focus && this.focus.id != robject.id){
 			this.focus_clear();
 		}
 		this.focus = robject;
 		this.focus.focus();
-		$("#"+this.id).trigger("focusSet");
+		if(isNewFocus){
+			$("#"+this.id).trigger("focusSet");
+		}
 	};
 
 	this.focus_last = function(){
@@ -277,6 +280,7 @@ function outerpath(data){
 	this.element = null; //Raphael Element
 	this.transform = null;
 	this.isEditable = null;
+	this.modified = false;
 	this.pixelLength = function(){return this.element.getTotalLength();};
 	this.startPoint = function(){return Raphael.getPointAtLength(this.mapedPath(), 0);};
 	this.endPoint = function(){return Raphael.getPointAtLength(this.mapedPath(), 9999);};
@@ -402,10 +406,14 @@ function outerpath(data){
 	};
 
 	this.updateDim = function(params){
-		this.dim.x = params.x != undefined ? params.x : this.dim.x;
-		this.dim.y = params.y != undefined ? params.y : this.dim.y;
-		this.dim.r = params.r != undefined ? params.r : this.dim.r;
-		this.dim.l = params.l != undefined ? params.l : this.dim.l;
+		var uX = params.x != undefined ? params.x : this.dim.x;
+		var uY = params.y != undefined ? params.y : this.dim.y;
+		var uR = params.r != undefined ? params.r : this.dim.r;
+		var uL = params.l != undefined ? params.l : this.dim.l;
+		if(uX != this.dim.x){this.modified = true; this.dim.x = uX};
+		if(uY != this.dim.y){this.modified = true; this.dim.y = uY};
+		if(uR != this.dim.r){this.modified = true; this.dim.r = uR};
+		if(uL != this.dim.l){this.modified = true; this.dim.l = uL};
 	};
 
 	this.convertToData = function(){
@@ -417,9 +425,10 @@ function outerpath(data){
 
 	this.prop = function(){
 		var template = '<div class="prop" robjectid="<%= r.id %>" type="outerpath"> \
-			<div class="close">Close</div> \
+			<div class="close">X</div> \
 			<div class="propimg"></div> \
 			<div class="measure"> \
+				<h2>Length</h2> \
 				<div class="measure-group"> \
 					<label>Feet</label><input type="number" class="feet" value="<% print(MeasureToFeetInch(r.dim.l).feet) %>" <% if(!r.isEditable){ %>disabled="disabled"<%}%> /> \
 				</div> \
@@ -447,6 +456,7 @@ function innerpath(data){
 	this.element = null; //Raphael Element
 	this.transform = null;
 	this.isEditable = null;
+	this.modified = false;
 	this.pixelLength = function(){return this.element.getTotalLength();};
 	this.startPoint = function(){return Raphael.getPointAtLength(Raphael.mapPath(this.element.attr("path"), this.element.matrix), 0);};
 	this.endPoint = function(){return Raphael.getPointAtLength(Raphael.mapPath(this.element.attr("path"), this.element.matrix), 9999);};
@@ -564,10 +574,14 @@ function innerpath(data){
 	};
 
 	this.updateDim = function(params){
-		this.dim.x = params.x != undefined ? params.x : this.dim.x;
-		this.dim.y = params.y != undefined ? params.y : this.dim.y;
-		this.dim.r = params.r != undefined ? params.r : this.dim.r;
-		this.dim.l = params.l != undefined ? params.l : this.dim.l;
+		var uX = params.x != undefined ? params.x : this.dim.x;
+		var uY = params.y != undefined ? params.y : this.dim.y;
+		var uR = params.r != undefined ? params.r : this.dim.r;
+		var uL = params.l != undefined ? params.l : this.dim.l;
+		if(uX != this.dim.x){this.modified = true; this.dim.x = uX};
+		if(uY != this.dim.y){this.modified = true; this.dim.y = uY};
+		if(uR != this.dim.r){this.modified = true; this.dim.r = uR};
+		if(uL != this.dim.l){this.modified = true; this.dim.l = uL};
 	};
 
 	this.convertToData = function(){
@@ -579,9 +593,10 @@ function innerpath(data){
 
 	this.prop = function(){
 		var template = '<div class="prop" robjectid="<%= r.id %>" type="innerpath"> \
-			<div class="close">Close</div> \
+			<div class="close">X</div> \
 			<div class="propimg"></div> \
 			<div class="measure"> \
+				<h2>Length</h2> \
 				<div class="measure-group"> \
 					<label>Feet</label><input type="number" class="feet" value="<% print(MeasureToFeetInch(r.dim.l).feet) %>" <% if(!r.isEditable){ %>disabled="disabled"<%}%> /> \
 				</div> \
@@ -734,6 +749,7 @@ function outerarc(data){
 	this.element = null; //Raphael Element
 	this.transform = null;
 	this.isEditable = null;
+	this.modified = false;
 	this.pixelLength = function(){
 		//this is not exact length but the triangle length to help with better positioning in this.ft_clear().
 		return 2*Math.sqrt(Math.pow(this.canvas.feetToPixel(this.dim.w)/2, 2) + Math.pow(this.canvas.feetToPixel(this.dim.h),2));
@@ -818,11 +834,11 @@ function outerarc(data){
 
 	this.ft_clear = function(){
 
-		focus = this;
-		focus_length = this.pixelLength();
-		focus_id = this.id;
-		focus_startPoint = this.startPoint();
-		focus_endPoint = this.endPoint();
+		var focus = this;
+		var focus_length = this.pixelLength();
+		var focus_id = this.id;
+		var focus_startPoint = this.startPoint();
+		var focus_endPoint = this.endPoint();
 		_.each(this.canvas.robjects, function(robject){
 			if((robject.type == "outerarc" && robject.id != focus_id) || robject.type == "outerpath"){
 				var intersect = Raphael.pathIntersection(Raphael.mapPath(focus.element.attr("path"), focus.element.matrix), Raphael.mapPath(robject.element.attr("path"), robject.element.matrix));
@@ -857,11 +873,16 @@ function outerarc(data){
 	};
 
 	this.updateDim = function(params){
-		this.dim.x = params.x != undefined ? params.x : this.dim.x;
-		this.dim.y = params.y != undefined ? params.y : this.dim.y;
-		this.dim.r = params.r != undefined ? params.r : this.dim.r;
-		this.dim.w = params.w != undefined ? params.w : this.dim.w;
-		this.dim.h = params.h != undefined ? params.h : this.dim.h;
+		var uX = params.x != undefined ? params.x : this.dim.x;
+		var uY = params.y != undefined ? params.y : this.dim.y;
+		var uR = params.r != undefined ? params.r : this.dim.r;
+		var uW = params.w != undefined ? params.w : this.dim.w;
+		var uH = params.h != undefined ? params.h : this.dim.h;
+		if(uX != this.dim.x){this.modified = true; this.dim.x = uX};
+		if(uY != this.dim.y){this.modified = true; this.dim.y = uY};
+		if(uR != this.dim.r){this.modified = true; this.dim.r = uR};
+		if(uW != this.dim.w){this.modified = true; this.dim.w = uW};
+		if(uH != this.dim.h){this.modified = true; this.dim.h = uH};
 	};
 
 	this.convertToData = function(){
@@ -873,26 +894,24 @@ function outerarc(data){
 
 	this.prop = function(){
 		var template = '<div class="prop" robjectid="<%= r.id %>" type="outerarc"> \
-			<div class="close">Close</div> \
+			<div class="close">X</div> \
 			<div class="propimg"></div> \
-			<div class="measure"> \
-				<div class="w"> \
-					<p>Width</p> \
-					<div class="measure-group"> \
-						<label>Feet</label><input type="number" class="feet" value="<% print(MeasureToFeetInch(r.dim.w).feet) %>" <% if(!r.isEditable){ %>disabled="disabled"<%}%> /> \
-					</div> \
-					<div class="measure-group"> \
-						<label>Inches</label><input type="number" class="inches" value="<% print(MeasureToFeetInch(r.dim.w).inches) %>" <% if(!r.isEditable){ %>disabled="disabled"<%}%> /> \
-					</div> \
+			<div class="measure w"> \
+				<h2>Width</h2> \
+				<div class="measure-group"> \
+					<label>Feet</label><input type="number" class="feet" value="<% print(MeasureToFeetInch(r.dim.w).feet) %>" <% if(!r.isEditable){ %>disabled="disabled"<%}%> /> \
 				</div> \
-				<div class="h"> \
-					<p>Height</p> \
-					<div class="measure-group"> \
-						<label>Feet</label><input type="number" class="feet" value="<% print(MeasureToFeetInch(r.dim.h).feet) %>" <% if(!r.isEditable){ %>disabled="disabled"<%}%> /> \
-					</div> \
-					<div class="measure-group"> \
-						<label>Inches</label><input type="number" class="inches" value="<% print(MeasureToFeetInch(r.dim.h).inches) %>" <% if(!r.isEditable){ %>disabled="disabled"<%}%> /> \
-					</div> \
+				<div class="measure-group"> \
+					<label>Inches</label><input type="number" class="inches" value="<% print(MeasureToFeetInch(r.dim.w).inches) %>" <% if(!r.isEditable){ %>disabled="disabled"<%}%> /> \
+				</div> \
+			</div> \
+			<div class="measure h"> \
+				<h2>Height</h2> \
+				<div class="measure-group"> \
+					<label>Feet</label><input type="number" class="feet" value="<% print(MeasureToFeetInch(r.dim.h).feet) %>" <% if(!r.isEditable){ %>disabled="disabled"<%}%> /> \
+				</div> \
+				<div class="measure-group"> \
+					<label>Inches</label><input type="number" class="inches" value="<% print(MeasureToFeetInch(r.dim.h).inches) %>" <% if(!r.isEditable){ %>disabled="disabled"<%}%> /> \
 				</div> \
 			</div> \
 			<% if(r.isEditable){ %> \
@@ -917,6 +936,7 @@ function image(data){
 	this.element = null; //Raphael Element
 	this.transform = null;
 	this.isEditable = null;
+	this.modified = false;
 
 	this.draw = function(){
 
@@ -996,11 +1016,16 @@ function image(data){
 	};
 
 	this.updateDim = function(params){
-		this.dim.x = params.x != undefined ? params.x : this.dim.x;
-		this.dim.y = params.y != undefined ? params.y : this.dim.y;
-		this.dim.r = params.r != undefined ? params.r : this.dim.r;
-		this.dim.w = params.w != undefined ? params.w : this.dim.w;
-		this.dim.h = params.h != undefined ? params.h : this.dim.h;
+		var uX = params.x != undefined ? params.x : this.dim.x;
+		var uY = params.y != undefined ? params.y : this.dim.y;
+		var uR = params.r != undefined ? params.r : this.dim.r;
+		var uW = params.w != undefined ? params.w : this.dim.w;
+		var uH = params.h != undefined ? params.h : this.dim.h;
+		if(uX != this.dim.x){this.modified = true; this.dim.x = uX};
+		if(uY != this.dim.y){this.modified = true; this.dim.y = uY};
+		if(uR != this.dim.r){this.modified = true; this.dim.r = uR};
+		if(uW != this.dim.w){this.modified = true; this.dim.w = uW};
+		if(uH != this.dim.h){this.modified = true; this.dim.h = uH};
 	};
 
 	this.convertToData = function(){
@@ -1013,26 +1038,24 @@ function image(data){
 
 	this.prop = function(){
 		var template = '<div class="prop" robjectid="<%= r.id %>" type="outerarc"> \
-			<div class="close">Close</div> \
-			<div class="propimg"></div> \
-			<div class="measure"> \
-				<div class="w"> \
-					<p>Width</p> \
-					<div class="measure-group"> \
-						<label>Feet</label><input type="number" class="feet" value="<% print(MeasureToFeetInch(r.dim.w).feet) %>" <% if(!r.isEditable){ %>disabled="disabled"<%}%> /> \
-					</div> \
-					<div class="measure-group"> \
-						<label>Inches</label><input type="number" class="inches" value="<% print(MeasureToFeetInch(r.dim.w).inches) %>" <% if(!r.isEditable){ %>disabled="disabled"<%}%> /> \
-					</div> \
+			<div class="close">X</div> \
+			<div class="propimg"><img src="<%= r.src %>"/></div> \
+			<div class="measure w"> \
+				<h2>Width</h2> \
+				<div class="measure-group"> \
+					<label>Feet</label><input type="number" class="feet" value="<% print(MeasureToFeetInch(r.dim.w).feet) %>" <% if(!r.isEditable){ %>disabled="disabled"<%}%> /> \
 				</div> \
-				<div class="h"> \
-					<p>Height</p> \
-					<div class="measure-group"> \
-						<label>Feet</label><input type="number" class="feet" value="<% print(MeasureToFeetInch(r.dim.h).feet) %>" <% if(!r.isEditable){ %>disabled="disabled"<%}%> /> \
-					</div> \
-					<div class="measure-group"> \
-						<label>Inches</label><input type="number" class="inches" value="<% print(MeasureToFeetInch(r.dim.h).inches) %>" <% if(!r.isEditable){ %>disabled="disabled"<%}%> /> \
-					</div> \
+				<div class="measure-group"> \
+					<label>Inches</label><input type="number" class="inches" value="<% print(MeasureToFeetInch(r.dim.w).inches) %>" <% if(!r.isEditable){ %>disabled="disabled"<%}%> /> \
+				</div> \
+			</div> \
+			<div class="measure h"> \
+				<h2>Height</h2> \
+				<div class="measure-group"> \
+					<label>Feet</label><input type="number" class="feet" value="<% print(MeasureToFeetInch(r.dim.h).feet) %>" <% if(!r.isEditable){ %>disabled="disabled"<%}%> /> \
+				</div> \
+				<div class="measure-group"> \
+					<label>Inches</label><input type="number" class="inches" value="<% print(MeasureToFeetInch(r.dim.h).inches) %>" <% if(!r.isEditable){ %>disabled="disabled"<%}%> /> \
 				</div> \
 			</div> \
 			<% if(r.isEditable){ %> \

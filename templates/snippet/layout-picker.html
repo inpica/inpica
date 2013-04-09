@@ -1,21 +1,21 @@
 <div class="picker" id="layout-picker">
 	<div class="filter">
-		<input type="text" class="name-filter" placeholder="Search..." />
+		<input type="text" class="search-filter" placeholder="Search..." />
 	</div>
 	<div class="map">
 		<div id="map-upload-control">Upload Floorplan Map</div>
 		{%if floorplan.map%}<div id="map-remove-control">Remove</div>{%endif%}
 	</div>
 	<div class="list">
-		<div class="object" l="6" type="outerpath">
+		<div class="object" l="6" type="outerpath" search-filter-match="exterior wall" search-filter="1">
 			<img src="{{STATIC_URL}}image/floorplan/symbol/ewall.jpg" />
 			<p>Exterior Wall</p>
 		</div>
-		<div class="object" l="6" type="innerpath">
+		<div class="object" l="6" type="innerpath" search-filter-match="interior wall" search-filter="1">
 			<img src="{{STATIC_URL}}image/floorplan/symbol/ewall.jpg" />
 			<p>Interior Wall</p>
 		</div>
-		<div class="object" w="6" h="2" type="outerarc">
+		<div class="object" w="6" h="2" type="outerarc" search-filter-match="exterior arched wall" search-filter="1">
 			<img src="{{STATIC_URL}}image/floorplan/symbol/ewall.jpg" />
 			<p>Exterior Arched Wall</p>
 		</div>

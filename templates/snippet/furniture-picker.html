@@ -1,11 +1,24 @@
 <div class="picker" id="furniture-picker">
 	<div class="filter">
-		<input type="text" class="name-filter" placeholder="Search Furnitures..."/>
-	</div>
-	<div class="pin">
+		<input type="text" class="search-filter" placeholder="Search Furnitures..."/>
+		<div class="category-filter-wrapper">
+			<label>Category</label>
+			<select class="category-filter">
+				<option value="all" default="default">All</option>
+				<option value="pin" class="pinned">Pinned</option>
+				<option value="bathroom">Bathroom</option>
+				<option value="bedroom">Bedroom</option>
+				<option value="dining">Dining Room</option>
+				<option value="hallways">Hallways</option>
+				<option value="kitchen">Kitchen</option>
+				<option value="living">Living Room</option>
+				<option value="rec">Rec Room</option>
+				<option value="study">Study</option>
+			</select>
+		</div>
 	</div>
 	<div class="list">
-		<div class="object" type="image" w="6" h="2" src="{{STATIC_URL}}image/furniture/symbol/couch.png">
+		<div class="object" type="image" w="6" h="2" src="{{STATIC_URL}}image/furniture/symbol/couch.png" search-filter-match="couch" category-filter-match="dining" search-filter="1" category-filter="1">
 			<img src="{{STATIC_URL}}image/furniture/symbol/couch.png" />
 			<p>Couch</p>
 		</div>
