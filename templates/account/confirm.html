@@ -1,5 +1,8 @@
 {%extends 'layout/master.html' %}
 {%block title%}Confirm Account{%endblock%}
+{%block head%}
+<meta http-equiv="refresh" content="5;url=http://127.0.0.1:61002/">
+{%endblock%}
 {%block body%}
 	<h1>Confirm</h1>
 	{%if confirmed%}
@@ -7,4 +10,6 @@
 	{%else%}
 	<p>There was an error confirming your account.</p>
 	{%endif%}
+	<p>You are being redirected to the main page. If you do not wish to wait click here</p>
+	<a href="/">Click here</a>
 {%endblock%}

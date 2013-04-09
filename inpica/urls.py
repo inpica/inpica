@@ -9,6 +9,9 @@ from django.conf.urls.static import static
 urlpatterns = patterns('',
 
     url(r'^$', 'main.views.Index'),
+    url(r'^home/login$', 'main.views.Login'),
+    url(r'^home/logout$', 'main.views.Logout'),
+    url(r'^home/create$', 'main.views.Create'),
 
 	#Account#############################################
     url(r'^login$', 'account.views.Login'),
@@ -28,8 +31,8 @@ urlpatterns = patterns('',
     url(r'^dashboard$', 'main.views.Dashboard'),
 
 
-
-
+    url(r'^furniture/builder$','main.views.FurnitureBuilder'),
+    url(r'^furniture/builder-submit$','main.views.FurnitureBuilderSubmit'),
 
 
 
