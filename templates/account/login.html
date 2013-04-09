@@ -1,13 +1,22 @@
-{%extends 'layout/master.html' %}
-{%block title%}Inpica Login{%endblock%}
-{%block body%}
-	<h1>Login</h1>
-	<form method="post" action="/login">
-		{%if errormsg%}
-			<div>{{errormsg}}</div>
-		{%endif%}
-		{%csrf_token%}
-		{{form.as_p}}
-		<input type="submit" value="Login"/>
-	</form>
-{%endblock%}
+<form id="loginform" method="post" action="">
+	{%csrf_token%}
+	<table id="login-table">
+		<tr>
+			{%if login_errormsg != None%}
+			<td colspan="3" class="errormsg" id="mainerror">{{ login_errormsg }}</td>
+			{%endif%}
+		</tr>
+		<tr>
+			<td class="login-label">Username or Email</td><td>{{login_form.auth}}</td>{%if login_form.auth.errors%}<td class="errormsg">{{login_form.auth.errors}}</td>{%endif%}
+		</tr>
+		<tr>
+			<td class="login-label">Password</td><td>{{login_form.password}}</td><td class="errormsg">{{login_form.password.errors}}</td>
+		</tr>
+		<tr>
+			<td colspan ="3" class="buttondisplay">
+				<a class="loginbutton" href="javascript:void(0)" onclick="logincheck();">Login</a>
+				<a class="loginbutton" href="javascript:void(0)" id="register" onclick="popup();">Register</a>
+			</td>
+		</tr>
+	</table>
+</form>

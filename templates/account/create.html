@@ -1,17 +1,13 @@
-{%extends 'layout/master.html' %}
-{%block title%}Create Account{%endblock%}
-{%block body%}
-	<h1>Create</h1>
-	{%if created%}
-	<p>Thank you for creating an account. An confirmation email has been sent to you.</p>
-	{%else%}
-	<form method="post" action="">
-		{%if errormsg%}
-			<div>{{errormsg}}</div>
-		{%endif%}
-		{%csrf_token%}
-		{{form.as_p}}
-		<input type="submit" value="Create"/>
-	</form>
+<form id="createform" method="post" action="">
+	{%if create_errormsg%}
+		<div>{{create_errormsg}}</div>
 	{%endif%}
-{%endblock%}
+	{%csrf_token%}
+	<table >
+		<tr><td class="createlabel">Username</td><td>{{create_form.username}}</td><td class="createerror">{{create_form.username.errors}}</td></tr>
+		<tr><td class="createlabel">Email</td><td>{{create_form.email}}</td><td class="createerror">{{create_form.email.errors}}</td></tr>
+		<tr><td class="createlabel">Password</td><td>{{create_form.password}}</td><td class="createerror">{{create_form.password.errors}}</td></tr>
+		<tr><td class="createlabel">Confirm Password</td><td>{{create_form.passwordConfirm}}</td><td class="createerror">{{create_form.passwordConfirm.errors}}</td></tr>
+		<tr><td colspan="3" class="buttondisplay"><a class="loginbutton" href="javascript:void(0)" onclick="createuser();">Create</a><a class="loginbutton" href="javascript:void(0)" id="cancel" onclick="cancelOperation();">Cancel</a></td></tr>
+	</table>
+</form>
