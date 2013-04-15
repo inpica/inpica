@@ -153,7 +153,7 @@ function canvas(config){
 			if(this.focus.isFurniture && this.focus.modified){
 				this.furnitureModified = true;
 				$("#"+this.id).trigger("furnitureModified");
-			}else if(this.focus.modified){
+			}else if(this.focus.modified && this.focus.isEditable){
 				$("#"+this.id).trigger("layoutModified");
 			}
 			this.focus = null;
@@ -1032,40 +1032,54 @@ function image(data){
 		return {
 			type:"image",
 			dim:this.dim,
-			src:this.src
+			src:this.src,
+			mid: this.mid ? this.mid : null
 		}
 	};
 
 	this.prop = function(){
-		var template = '<div class="prop" robjectid="<%= r.id %>" type="outerarc"> \
-			<div class="close">X</div> \
-			<div class="propimg"><img src="<%= r.src %>"/></div> \
-			<div class="measure w"> \
-				<h2>Width</h2> \
-				<div class="measure-group"> \
-					<label>Feet</label><input type="number" class="feet" value="<% print(MeasureToFeetInch(r.dim.w).feet) %>" <% if(!r.isEditable){ %>disabled="disabled"<%}%> /> \
+		if(this.mid){
+			var propHTML = '<div>Error</div>';
+			$.ajax({
+				type:"POST",
+				url:"/furniture/prop/"+this.mid,
+				async:false,
+				success:function(data){
+					propHTML = data;
+				}
+			});
+			return $(propHTML);
+		} else{
+			var template = '<div class="prop" robjectid="<%= r.id %>" type="image"> \
+				<div class="close">X</div> \
+				<div class="propimg"><img src="<%= r.src %>"/></div> \
+				<div class="measure w"> \
+					<h2>Width</h2> \
+					<div class="measure-group"> \
+						<label>Feet</label><input type="number" class="feet" value="<% print(MeasureToFeetInch(r.dim.w).feet) %>" <% if(!r.isEditable){ %>disabled="disabled"<%}%> /> \
+					</div> \
+					<div class="measure-group"> \
+						<label>Inches</label><input type="number" class="inches" value="<% print(MeasureToFeetInch(r.dim.w).inches) %>" <% if(!r.isEditable){ %>disabled="disabled"<%}%> /> \
+					</div> \
 				</div> \
-				<div class="measure-group"> \
-					<label>Inches</label><input type="number" class="inches" value="<% print(MeasureToFeetInch(r.dim.w).inches) %>" <% if(!r.isEditable){ %>disabled="disabled"<%}%> /> \
+				<div class="measure h"> \
+					<h2>Height</h2> \
+					<div class="measure-group"> \
+						<label>Feet</label><input type="number" class="feet" value="<% print(MeasureToFeetInch(r.dim.h).feet) %>" <% if(!r.isEditable){ %>disabled="disabled"<%}%> /> \
+					</div> \
+					<div class="measure-group"> \
+						<label>Inches</label><input type="number" class="inches" value="<% print(MeasureToFeetInch(r.dim.h).inches) %>" <% if(!r.isEditable){ %>disabled="disabled"<%}%> /> \
+					</div> \
 				</div> \
-			</div> \
-			<div class="measure h"> \
-				<h2>Height</h2> \
-				<div class="measure-group"> \
-					<label>Feet</label><input type="number" class="feet" value="<% print(MeasureToFeetInch(r.dim.h).feet) %>" <% if(!r.isEditable){ %>disabled="disabled"<%}%> /> \
-				</div> \
-				<div class="measure-group"> \
-					<label>Inches</label><input type="number" class="inches" value="<% print(MeasureToFeetInch(r.dim.h).inches) %>" <% if(!r.isEditable){ %>disabled="disabled"<%}%> /> \
-				</div> \
-			</div> \
-			<% if(r.isEditable){ %> \
-				<div class="controls"> \
-					<input type="button" class="remove" value="Remove" /> \
-					<input type="button" class="apply" value="Apply" /> \
-				</div> \
-			<%}%> \
-		</div>';
-		return $(_.template(template)({r:this}));
+				<% if(r.isEditable){ %> \
+					<div class="controls"> \
+						<input type="button" class="remove" value="Remove" /> \
+						<input type="button" class="apply" value="Apply" /> \
+					</div> \
+				<%}%> \
+			</div>';
+			return $(_.template(template)({r:this}));
+		}
 	};
 };
 

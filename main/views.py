@@ -109,9 +109,8 @@ def SetDefaultFurnishing(request, id):
 		return HttpResponse("Success")
 
 @login_required
-def FurnitureInfoProp(request, id):
-	return HttpResponse("TODO: Furniture Properies box showing info only")
-
-@login_required
-def FurnitureEditProp(request, id):
-	return HttpResponse("TODO: Furniture Properties box showing edit properties")
+@csrf_exempt
+def FurnitureProp(request, id):
+	if request.method == "POST":
+		furniture = m.Furniture.objects.get(pk=id)
+		return render_to_response("snippet/furniture-prop.html", {"furniture":furniture}, context_instance=RequestContext(request));

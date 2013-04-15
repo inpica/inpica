@@ -10,4 +10,8 @@ def FurnitureBuilder(x, y, z):
 
 @register.inclusion_tag('snippet/furniture-picker.html', takes_context=True)
 def FurniturePicker(context, includePins):
-	return {"includePins":includePins, "STATIC_URL":context['STATIC_URL']}
+	if includePins:
+		furnitures = m.Furniture.objects.filter(user=context["user"])
+	else:
+		furnitures = None
+	return {"furnitures":furnitures, "user":context["user"],"STATIC_URL":context['STATIC_URL']}

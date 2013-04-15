@@ -96,12 +96,12 @@ $(document).ready(function(){
 	});
 
 	$('#furniture-picker .list .object').on("click", function(){
-		//TODO - check if current furnishing is the users. if so, then let them add to the current furnishing. If not, then create a new furnishing and then COPY all other furnitures to that furnishing and let them add.
 		object = $(this);
 		c.addObjects([{
 			type:"image",
 			dim:{x:10, y:10, r:0, w:object.attr("w"), h:object.attr("h")},
-			src:object.attr("src")
+			src:object.attr("src"),
+			mid: object.attr("mid") ? object.attr("mid") : null 
 		}], true, true);
 		c.draw();
 		c.panselect_last();
