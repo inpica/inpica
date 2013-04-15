@@ -13,15 +13,12 @@ def FurnitureBuilder(x, y, z):
 
 @register.inclusion_tag('snippet/furniture-picker.html', takes_context=True)
 def FurniturePicker(context, includePins):
-<<<<<<< HEAD
 	return {"includePins":includePins, "STATIC_URL":context['STATIC_URL']}
-=======
 	if includePins:
 		furnitures = m.Furniture.objects.filter(user=context["user"])
 	else:
 		furnitures = None
 	return {"furnitures":furnitures, "user":context["user"],"STATIC_URL":context['STATIC_URL']}
->>>>>>> origin/Arian
 
 @register.inclusion_tag('snippet/furniture-dashboard.html',takes_context=True)
 def FurnitureDashboard(context, pageNumber):
@@ -34,8 +31,4 @@ def FurnitureDashboard(context, pageNumber):
 		furniture = paginator_furniture.page(1)
 	except EmptyPage:
 		furniture = paginator_furniture.page(paginator_furniture.num_pages)
-<<<<<<< HEAD
 	return {'furniture':furniture, "STATIC_URL":context['STATIC_URL']}
-=======
-	return {'furniture':furniture, "STATIC_URL":context['STATIC_URL']}
->>>>>>> origin/Arian

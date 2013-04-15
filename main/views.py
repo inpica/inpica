@@ -19,17 +19,9 @@ from django.core.mail import send_mail
 from django.core.mail import EmailMultiAlternatives
 
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-<<<<<<< HEAD
-'''@login_required
-def Index(request):
-	#For now, when a user logs in they go straight to the dashboard.
-	return Dashboard(request)'''
+
 
 def Index(request):
-=======
-
-def Index(request):
->>>>>>> origin/Arian
 	login_form = main.forms.Login()
 	create_form = main.forms.Create()
 	return render_to_response('main/home.html', {"login_form":login_form, "create_form":create_form}, context_instance=RequestContext(request))
@@ -101,10 +93,6 @@ def Confirm(request, id):
 	except m.UserDetails.DoesNotExist:
 		pass
 	return render_to_response('account/confirm.html', {"confirmed":False}, context_instance=RequestContext(request))
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/Arian
 
 @login_required
 def Dashboard(request):
@@ -217,7 +205,6 @@ def FurnitureBuilder(request):
 	return render_to_response('snippet/furniture-builder.html', {"form":form}, context_instance=RequestContext(request))
 
 @login_required
-<<<<<<< HEAD
 def FurnitureEditProp(request, id):
 	return HttpResponse("TODO: Furniture Properties box showing edit properties")
 
@@ -232,7 +219,4 @@ def FurnitureBuilder(request):
 @login_required
 def FurnitureBuilderSubmit(request):
 	return None
-=======
-def FurnitureBuilderSubmit(request):
-	return None
->>>>>>> origin/Arian
+
