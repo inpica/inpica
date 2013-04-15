@@ -3,11 +3,11 @@
 		<div>{{create_errormsg}}</div>
 	{%endif%}
 	{%csrf_token%}
-	<table >
+	<table id="create-table">
 		<tr><td class="createlabel">Username</td><td>{{create_form.username}}</td><td class="createerror">{{create_form.username.errors}}</td></tr>
 		<tr><td class="createlabel">Email</td><td>{{create_form.email}}</td><td class="createerror">{{create_form.email.errors}}</td></tr>
 		<tr><td class="createlabel">Password</td><td>{{create_form.password}}</td><td class="createerror">{{create_form.password.errors}}</td></tr>
 		<tr><td class="createlabel">Confirm Password</td><td>{{create_form.passwordConfirm}}</td><td class="createerror">{{create_form.passwordConfirm.errors}}</td></tr>
-		<tr><td colspan="3" class="buttondisplay"><a class="loginbutton" href="javascript:void(0)" onclick="createuser();">Create</a><a class="loginbutton" href="javascript:void(0)" id="cancel" onclick="cancelOperation();">Cancel</a></td></tr>
+		<tr><td colspan="3" class="buttondisplay"><a class="loginbutton" href="javascript:void(0)" onclick="createuser();">Create</a>&nbsp;&nbsp;<a class="loginbutton" href="javascript:void(0)" id="cancel" onclick="cancelOperation();">Cancel</a></td></tr>
 	</table>
 </form>

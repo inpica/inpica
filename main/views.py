@@ -12,11 +12,13 @@ from django.contrib.auth.models import User
 
 import main.models as m
 
+import main.templatetags.maintags as maintags
 import main.forms
 import uuid
 from django.core.mail import send_mail
 from django.core.mail import EmailMultiAlternatives
 
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 '''@login_required
 def Index(request):
 	#For now, when a user logs in they go straight to the dashboard.
@@ -97,10 +99,13 @@ def Confirm(request, id):
 
 @login_required
 def Dashboard(request):
-	floorplans = m.Floorplan.objects.filter(user=request.user)
-	return render_to_response('main/dashboard.html',
-		{"floorplans":floorplans},
-		context_instance=RequestContext(request))
+	floorplans = m.Floorplan.objects.filter(user=request.user).order_by('-RUD')
+	return render_to_response('main/dashboard.html',{"floorplans":floorplans},context_instance=RequestContext(request))
+
+@login_required
+@csrf_exempt
+def FurnitureDashboard(request, page):
+	return render_to_response('snippet/furniture-dashboard.html', maintags.FurnitureDashboard(RequestContext(request),page))
 
 @login_required
 def NewFloorplan(request):
@@ -199,8 +204,9 @@ def FurnitureEditProp(request, id):
 def FurnitureBuilder(request):
 	body = request.POST.get("body")
 	#scrape = Jacob(body)
-	scrape = {'w':10,'h':10}
-	return render_to_response('snippet/furniture-builder.html', {"scrape":scrape}, context_instance=RequestContext(request))
+	scrape = {'w':10,'h':10,'title':'TITLE','symbolPath':'image/furniture/symbol/couch.png'}
+	form = main.forms.FurnitureBuilder(initial=scrape)
+	return render_to_response('snippet/furniture-builder.html', {"form":form}, context_instance=RequestContext(request))
 
 @login_required
 def FurnitureBuilderSubmit(request):

@@ -4,8 +4,11 @@ from django.core.validators import RegexValidator
 from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User
 from django.forms.widgets import PasswordInput
+
+from django.forms import ModelForm
 import re
 
+import main.models as m
 class Login(forms.Form):
 	auth = forms.CharField(label="Username or Email")
 	password = forms.CharField(widget=PasswordInput)
@@ -40,3 +43,10 @@ class Create(forms.Form):
 			raise ValidationError('The email "%s" already exists in our system, please select another or log in with that email.'%(email))
 		except User.DoesNotExist:
 			return email
+
+class FurnitureBuilder(ModelForm):
+	error_css_class='error'
+	required_css_class ='required'
+	class Meta:
+		model = m.Furniture
+		fields = ("title","symbolPath","h","w")

@@ -31,9 +31,8 @@ urlpatterns = patterns('',
 
     url(r'^furniture/prop/(?P<id>\d+)$', 'main.views.FurnitureInfoProp'),
 
-    
     url(r'^dashboard$', 'main.views.Dashboard'),
-
+    url(r'^dashboard/furniture/(?P<page>\d+)$', 'main.views.FurnitureDashboard'),
 
     url(r'^furniture/builder$','main.views.FurnitureBuilder'),
     url(r'^furniture/builder-submit$','main.views.FurnitureBuilderSubmit'),

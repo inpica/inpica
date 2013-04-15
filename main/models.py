@@ -87,6 +87,7 @@ class Furniture(models.Model):
 	user = models.ForeignKey(User, db_index=True)
 	title = models.CharField(max_length=255)
 	url = models.CharField(max_length=255, null=True, db_index=True)
+	symbolPath = models.CharField(max_length=255, null=True)
 	symbol = models.ImageField(upload_to=FurnitureSymbol_Filename, null=True)
 	RCD = models.DateTimeField(default=datetime.now)
 	bucket = models.CharField(max_length=255, choices=[('PIN','Pin Board'), ('MY', 'My Furniture')], db_index=True)

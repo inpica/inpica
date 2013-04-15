@@ -1,0 +1,51 @@
+
+<div class="pagination_furniture">
+		<span class="step-links">
+	        {% if furniture.has_previous %}
+	            <span onClick="renderpage({{ furniture.previous_page_number }})">previous</span>
+	        {% endif %}
+
+	        <span class="current">
+	            Page {{ furniture.number }} of {{ furniture.paginator.num_pages }}.
+	        </span>
+
+	        {% if furniture.has_next %}
+	        	<span onClick="renderpage({{ furniture.next_page_number }})">next</span>
+	        {% endif %}
+    	</span>
+</div>
+<p class="tablecaption">Furniture</p>
+	<table id="floorplans">
+		<tr>
+			<th></th>
+			<th>Title</th>
+			<th>Pic</th>
+			<th>Created On</th>
+			<th>Bucket</th>
+			<th>Height</th>
+			<th>Width</th>
+		</tr>
+	{%for f in furniture%}
+			<tr>
+				<td class="symbol"><img src="{{STATIC_URL}}{{f.symbol}}"/></td>
+				<td>{{f.title}}</td>
+				<td><div class="external-img"><img class="small-image" src="{{f.url}}"/><img class="big-image" src="{{f.url}}"/></div>
+				<div class="external-img"><img class="small-image" src="http://www.ikea.com/us/en/images/products/vejmon-coffee-table__0089487_PE221828_S4.JPG"/><img class="big-image" src="http://www.ikea.com/us/en/images/products/vejmon-coffee-table__0089487_PE221828_S4.JPG"/></td>
+				<td>{{f.RCD}}</td>
+				<td>{{f.bucket}}</td>
+				<td>{{f.h}}</td>
+				<td>{{f.w}}</td>
+			</tr>
+	{%endfor%}
+	</table>
+<script type="text/javascript">
+	function renderpage(page){
+		$.ajax({
+			type: 'POST',
+			url:'/dashboard/furniture/'+page,
+			success: function(data){
+				$('#furniture-container').empty().append(data)
+			}
+		})
+	}
+</script>

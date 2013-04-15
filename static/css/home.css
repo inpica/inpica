@@ -26,6 +26,12 @@
 	font-weight: normal;
 	font-style: normal;
 }
+@font-face{
+	font-family: 'Baramond';
+	src: url('fonts/baramond/BaramondBold.ttf');
+	font-weight: bold;
+	font-style: normal;
+}
 .header{
 	height: 200px;
 }
@@ -53,13 +59,18 @@
 #createform,#createsucess{
 	width:500px;
 	margin:0 auto;
-	background-color: red;
-	color: white;
+	background-color: #FFF7C6;
 	padding: 15px;
 	z-index: 1000;
 	opacity: 1.0;
+	font-family: 'Whipsmart';
+	text-shadow: 0px 1px 1px #666;
+	font-size: 18px;
 }
 
+#createsucess {
+	text-align: center;
+}
 #screen{
 	position: absolute;
 	left: 0;
@@ -70,7 +81,7 @@
 
 
 body{
-	background: #e0e3ec url(../image/home/retina_wood.png) repeat top left;
+	background: #e0e3ec url(../image/home/subtle_grunge.png) repeat top left;
 	font-family: Whipsmart;
 	font-weight: 400;
 	font-size: 15px;
@@ -78,6 +89,20 @@ body{
 }
 
 /* login form */
+#login-wrapper {
+	/*background: #FFF7C6;*/
+	border-radius: 10px;
+    -moz-border-radius: 10px;
+}
+#logged{
+	margin: 0 auto;
+	width: 300px;
+	text-align: center;
+	margin-top: 50px;
+	font-family: 'Whipsmart';
+	text-shadow: 0px 1px 1px #666;
+	font-size: 18px;
+}
 #login-table{
 	margin-top: 30px
 }
@@ -118,6 +143,11 @@ body{
 }
 
 #login-wrapper input:focus {  
+    -webkit-box-shadow: 0px 0px 6px #00b300;  
+    -moz-box-shadow: 0px 0px 6px #00b300;  
+    box-shadow: 0px 0px 6px #00b300;  
+} 
+#createform input:focus {  
     -webkit-box-shadow: 0px 0px 6px #00b300;  
     -moz-box-shadow: 0px 0px 6px #00b300;  
     box-shadow: 0px 0px 6px #00b300;  
@@ -183,10 +213,58 @@ td.errormsg{
 	width: ;
 }
 
+#createform {
+	border-radius: 10px;
+    -moz-border-radius: 10px;
+}
 /*accordina*/
 #accordion{
 	margin:0 auto;
 	width: 800px;
+	font-family: 'Baramond';
+	font-size: 18px;
+
+}
+.ui-accordion-header{
+	font-family: 'Baramond';
+	font-size: 18px;
+	font-weight: bold;
+	background: #d6f9ff; /* Old browsers */
+	background: #f8ffe8; /* Old browsers */
+	background: #f6f8f9; /* Old browsers */
+	/* IE9 SVG, needs conditional override of 'filter' to 'none' */
+	background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2Y2ZjhmOSIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iI2U1ZWJlZSIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjUxJSIgc3RvcC1jb2xvcj0iI2Q3ZGVlMyIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNmNWY3ZjkiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+	background: -moz-linear-gradient(top,  #f6f8f9 0%, #e5ebee 50%, #d7dee3 51%, #f5f7f9 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f6f8f9), color-stop(50%,#e5ebee), color-stop(51%,#d7dee3), color-stop(100%,#f5f7f9)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #f6f8f9 0%,#e5ebee 50%,#d7dee3 51%,#f5f7f9 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  #f6f8f9 0%,#e5ebee 50%,#d7dee3 51%,#f5f7f9 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  #f6f8f9 0%,#e5ebee 50%,#d7dee3 51%,#f5f7f9 100%); /* IE10+ */
+	background: linear-gradient(to bottom,  #f6f8f9 0%,#e5ebee 50%,#d7dee3 51%,#f5f7f9 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f6f8f9', endColorstr='#f5f7f9',GradientType=0 ); /* IE6-8 */
+}
+
+.ui-accordion-header-active{
+	background: #b4e391; /* Old browsers */
+	/* IE9 SVG, needs conditional override of 'filter' to 'none' */
+	background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2I0ZTM5MSIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iIzYxYzQxOSIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNiNGUzOTEiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+	background: -moz-linear-gradient(top,  #b4e391 0%, #61c419 50%, #b4e391 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#b4e391), color-stop(50%,#61c419), color-stop(100%,#b4e391)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #b4e391 0%,#61c419 50%,#b4e391 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  #b4e391 0%,#61c419 50%,#b4e391 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  #b4e391 0%,#61c419 50%,#b4e391 100%); /* IE10+ */
+	background: linear-gradient(to bottom,  #b4e391 0%,#61c419 50%,#b4e391 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b4e391', endColorstr='#b4e391',GradientType=0 ); /* IE6-8 */
+
+}
+.ui-accordion-content{
+	font-family: 'Baramond';
+	font-size: 16px;
+
+}
+
+/*video*/
+.video {
+	margin-top: 50px;
 }
 /* CSS reset */
 /*body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,textarea,p,blockquote,th,td { 
