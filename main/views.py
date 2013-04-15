@@ -7,21 +7,102 @@ from django.core.mail import send_mail
 from django.views.decorators.csrf import csrf_exempt
 import json
 
+from django.contrib.auth import logout, login, authenticate
 from django.contrib.auth.models import User
 
 import main.models as m
 
-@login_required
+import main.templatetags.maintags as maintags
+import main.forms
+import uuid
+from django.core.mail import send_mail
+from django.core.mail import EmailMultiAlternatives
+
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+
 def Index(request):
-	#For now, when a user logs in they go straight to the dashboard.
-	return Dashboard(request)
+	login_form = main.forms.Login()
+	create_form = main.forms.Create()
+	return render_to_response('main/home.html', {"login_form":login_form, "create_form":create_form}, context_instance=RequestContext(request))
+
+
+def Login(request):
+	errormsg = None
+	form = main.forms.Login()
+	if request.method == 'POST':
+		form = main.forms.Login(request.POST)
+		if form.is_valid():
+			try:
+				if '@' in form.cleaned_data['auth']:
+					isEmail = True
+					user = User.objects.get(email=form.cleaned_data['auth'])
+					username = user.username
+				else:
+					isEmail = False
+					username = form.cleaned_data['auth']
+				user = authenticate(username=username, password=form.cleaned_data['password'])
+				if user:
+					if not user.is_active:
+						errormsg = "Your account is not active"
+					else:
+						login(request, user)
+						return render_to_response('account/logged.html', context_instance=RequestContext(request))
+				else:
+					if isEmail:errormsg = "Your email/password is incorrect"
+					else:errormsg = "Your username/password is incorrect"
+			except User.DoesNotExist:
+				errormsg = 'Your email could not be found'
+	print form.errors
+	return render_to_response('account/login.html', {"login_form":form, "login_errormsg":errormsg}, context_instance=RequestContext(request))
+
+def Logout(request):
+	logout(request)
+	return HttpResponseRedirect('/')
+
+def Create(request):
+	form = main.forms.Create()
+	if request.method == 'POST':
+		form = main.forms.Create(request.POST)
+		print form.is_valid()
+		if form.is_valid():
+			user = User.objects.create_user(username=form.cleaned_data['username'], password=form.cleaned_data['password'], email=form.cleaned_data['email'])
+			user.is_active = False
+			user.save()
+			code = uuid.uuid4()
+			userDetails = m.UserDetails.objects.create(user=user, confirmCode=code)
+			confirmURL = 'http://www.inpica.com/account/confirm/%s'%(user.id) + '?c=%s'%(code)
+
+			subject, from_email, to = 'Inpica New Account', 'accounts@inpica.com', form.cleaned_data['email']
+			text_content = 'Thank you for signing up with Inpica! Please go to the following url to confirm your new account: %s'%(confirmURL)
+			html_content = '<p>Thank you for signing up with Inpica! Please go to the following url to confirm your new account: <a href="%s">%s</a></p>'%(confirmURL, confirmURL)
+			msg = EmailMultiAlternatives(subject, text_content, from_email, [to])
+			msg.attach_alternative(html_content, "text/html")
+			msg.send()
+			return render_to_response('account/createsuccess.html')
+	return render_to_response('account/create.html', {'create_form':form}, context_instance=RequestContext(request))
+
+
+def Confirm(request, id):
+	try:
+		ud = m.UserDetails.objects.get(user_id=id)
+		if ud.confirmCode == request.GET.get('c'):
+			ud.user.is_active = True
+			ud.user.save()
+			return render_to_response('account/confirm.html', {"confirmed":True}, context_instance=RequestContext(request))
+	except m.UserDetails.DoesNotExist:
+		pass
+	return render_to_response('account/confirm.html', {"confirmed":False}, context_instance=RequestContext(request))
+
 
 @login_required
 def Dashboard(request):
-	floorplans = m.Floorplan.objects.filter(user=request.user)
-	return render_to_response('main/dashboard.html',
-		{"floorplans":floorplans},
-		context_instance=RequestContext(request))
+	floorplans = m.Floorplan.objects.filter(user=request.user).order_by('-RUD')
+	return render_to_response('main/dashboard.html',{"floorplans":floorplans},context_instance=RequestContext(request))
+
+@login_required
+@csrf_exempt
+def FurnitureDashboard(request, page):
+	return render_to_response('snippet/furniture-dashboard.html', maintags.FurnitureDashboard(RequestContext(request),page))
 
 @login_required
 def NewFloorplan(request):
@@ -113,4 +194,16 @@ def SetDefaultFurnishing(request, id):
 def FurnitureProp(request, id):
 	if request.method == "POST":
 		furniture = m.Furniture.objects.get(pk=id)
-		return render_to_response("snippet/furniture-prop.html", {"furniture":furniture}, context_instance=RequestContext(request));
+		return render_to_response("snippet/furniture-prop.html", {"furniture":furniture}, context_instance=RequestContext(request))
+
+@login_required
+def FurnitureBuilder(request):
+	body = request.POST.get("body")
+	#scrape = Jacob(body)
+	scrape = {'w':10,'h':10,'title':'TITLE','symbolPath':'image/furniture/symbol/couch.png'}
+	form = main.forms.FurnitureBuilder(initial=scrape)
+	return render_to_response('snippet/furniture-builder.html', {"form":form}, context_instance=RequestContext(request))
+
+@login_required
+def FurnitureBuilderSubmit(request):
+	return None
