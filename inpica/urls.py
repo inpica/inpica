@@ -29,7 +29,7 @@ urlpatterns = patterns('',
     url(r'^floorplan/delete/furnishing/(?P<id>\d+)$', 'main.views.DeleteFurnishing'),
     url(r'^floorplan/set-default/furnishing/(?P<id>\d+)$', 'main.views.SetDefaultFurnishing'),
 
-    url(r'^furniture/prop/(?P<id>\d+)$', 'main.views.FurnitureInfoProp'),
+    url(r'^furniture/prop/(?P<id>\d+)$', 'main.views.FurnitureProp'),
 
     url(r'^dashboard$', 'main.views.Dashboard'),
     url(r'^dashboard/furniture/(?P<page>\d+)$', 'main.views.FurnitureDashboard'),

@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from datetime import datetime
+import math
 
 #RCD	Record Creation Date
 #RUD	Record Update Date
@@ -76,7 +77,7 @@ class Furnishing(models.Model):
 
 
 def FurnitureSymbol_Filename(instance, filename):
-	return '/'.join(['image/furniture/symbol', str(instance.id) + filename.split('.')[-1]])
+	return '/'.join(['image/furniture/symbol/custom', str(instance.id) + filename.split('.')[-1]])
 
 
 class Furniture(models.Model):
@@ -93,6 +94,18 @@ class Furniture(models.Model):
 	bucket = models.CharField(max_length=255, choices=[('PIN','Pin Board'), ('MY', 'My Furniture')], db_index=True)
 	h = models.IntegerField(null=True)
 	w = models.IntegerField(null=True)
+
+	def dim(self):
+		return {
+					"w":{
+						"feet":math.floor(self.w),
+						"inches":(self.w%1)*12
+					},
+					"h":{
+						"feet":math.floor(self.h),
+						"inches":(self.h%1)*12
+					}
+				}		
 
 
 

@@ -19,12 +19,17 @@ from django.core.mail import send_mail
 from django.core.mail import EmailMultiAlternatives
 
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+<<<<<<< HEAD
 '''@login_required
 def Index(request):
 	#For now, when a user logs in they go straight to the dashboard.
 	return Dashboard(request)'''
 
 def Index(request):
+=======
+
+def Index(request):
+>>>>>>> origin/Arian
 	login_form = main.forms.Login()
 	create_form = main.forms.Create()
 	return render_to_response('main/home.html', {"login_form":login_form, "create_form":create_form}, context_instance=RequestContext(request))
@@ -96,6 +101,10 @@ def Confirm(request, id):
 	except m.UserDetails.DoesNotExist:
 		pass
 	return render_to_response('account/confirm.html', {"confirmed":False}, context_instance=RequestContext(request))
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/Arian
 
 @login_required
 def Dashboard(request):
@@ -193,10 +202,22 @@ def SetDefaultFurnishing(request, id):
 		return HttpResponse("Success")
 
 @login_required
-def FurnitureInfoProp(request, id):
-	return HttpResponse("TODO: Furniture Properies box showing info only")
+@csrf_exempt
+def FurnitureProp(request, id):
+	if request.method == "POST":
+		furniture = m.Furniture.objects.get(pk=id)
+		return render_to_response("snippet/furniture-prop.html", {"furniture":furniture}, context_instance=RequestContext(request))
 
 @login_required
+def FurnitureBuilder(request):
+	body = request.POST.get("body")
+	#scrape = Jacob(body)
+	scrape = {'w':10,'h':10,'title':'TITLE','symbolPath':'image/furniture/symbol/couch.png'}
+	form = main.forms.FurnitureBuilder(initial=scrape)
+	return render_to_response('snippet/furniture-builder.html', {"form":form}, context_instance=RequestContext(request))
+
+@login_required
+<<<<<<< HEAD
 def FurnitureEditProp(request, id):
 	return HttpResponse("TODO: Furniture Properties box showing edit properties")
 
@@ -211,3 +232,7 @@ def FurnitureBuilder(request):
 @login_required
 def FurnitureBuilderSubmit(request):
 	return None
+=======
+def FurnitureBuilderSubmit(request):
+	return None
+>>>>>>> origin/Arian

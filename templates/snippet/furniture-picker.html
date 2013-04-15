@@ -5,7 +5,7 @@
 			<label>Category</label>
 			<select class="category-filter">
 				<option value="all" default="default">All</option>
-				<option value="pin" class="pinned">Pinned</option>
+				{%if furnitures%}<option value="pin" class="pinned">Pinned</option>{%endif%}
 				<option value="bathroom">Bathroom</option>
 				<option value="bedroom">Bedroom</option>
 				<option value="dining">Dining Room</option>
@@ -18,6 +18,14 @@
 		</div>
 	</div>
 	<div class="list">
+
+		{%for f in furnitures%}
+			<div class="object" type="image" w="{{f.w}}" h="{{f.h}}" src="{{STATIC_URL}}{{f.symbolPath}}" search-filter-match="{{f.title}}" category-filter-match="pinned" search-filter="1" category-filter="1" mid="{{f.id}}">
+				<img src="{{STATIC_URL}}{{f.symbolPath}}" />
+				<p>{{f.title}}</p>
+			</div>
+		{%endfor%}
+
 		<div class="object" type="image" w="6" h="2" src="{{STATIC_URL}}image/furniture/symbol/couch.png" search-filter-match="couch" category-filter-match="dining" search-filter="1" category-filter="1">
 			<img src="{{STATIC_URL}}image/furniture/symbol/couch.png" />
 			<p>Couch</p>
