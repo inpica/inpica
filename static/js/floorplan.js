@@ -63,50 +63,25 @@ $(document).ready(function(){
 
 	$("#picker-tabs .tab[active='1']").trigger("click");
 
-
-	//adding objects to canvas
-	$('#layout-picker .object').on("click", function(){
-		object = $(this);
-		switch(object.attr("type")){
-			case "outerpath":
-			case "innerpath":
-				c.addObjects([{
-					type:object.attr("type"),
-					dim:{x:5, y:5, r:0, l:object.attr("l")}
-				}], true, false);
-				break;
-			case "outerarc":
-				c.addObjects([{
-					type:object.attr("type"),
-					dim:{x:5, y:5, r:0, w:object.attr("w"), h:object.attr("h")}
-				}], true, false);
-				break;
-			case "image":
-				c.addObjects([{
-					type:object.attr("type"),
-					dim:{x:5, y:5, r:0, w:object.attr("w"), h:object.attr("h")},
-					src:object.attr("src")
-				}], true, false);
-				break;
-		};
-		c.draw();
-		c.panselect_last();
-		c.focus_last();
-		$("#main-canvas").trigger("layoutModified");
+	//adding objects to canvas - drag/drop
+	$('#layout-picker .object, #furniture-picker .list .object').draggable({
+		revert:'invalid',
+		helper:"clone",
+		cursor:"move",
 	});
 
-	$('#furniture-picker .list .object').on("click", function(){
+	$("#main-canvas").droppable({
+		drop: function(e, ui){
+			var isFurniture = ui.draggable.attr("isFurniture") ? true : false
+			AddObjectToCanvas(ui.draggable, isFurniture);
+		}
+	});
+
+	//adding objects to canvas - click
+	$('#layout-picker .object, #furniture-picker .list .object').on("click", function(){
 		object = $(this);
-		c.addObjects([{
-			type:"image",
-			dim:{x:10, y:10, r:0, w:object.attr("w"), h:object.attr("h")},
-			src:object.attr("src"),
-			mid: object.attr("mid") ? object.attr("mid") : null 
-		}], true, true);
-		c.draw();
-		c.panselect_last();
-		c.focus_last();
-		$("#main-canvas").trigger("furnitureModified");
+		var isFurniture = object.attr("isFurniture") ? true : false
+		AddObjectToCanvas(object, isFurniture);
 	});
 
 	$("#map-upload-control").on("click", function(){
@@ -319,6 +294,37 @@ function PickerFilter(searchQuery, objectsList, filterType){
 			}
 		});
 	};
+};
+
+
+function AddObjectToCanvas(objectelement, isFurniture){
+
+	switch(objectelement.attr("type")){
+		case "outerpath":
+		case "innerpath":
+			c.addObjects([{
+				type:objectelement.attr("type"),
+				dim:{x:5, y:5, r:0, l:objectelement.attr("l")}
+			}], true, false);
+			break;
+		case "outerarc":
+			c.addObjects([{
+				type:objectelement.attr("type"),
+				dim:{x:5, y:5, r:0, w:objectelement.attr("w"), h:objectelement.attr("h")}
+			}], true, false);
+			break;
+		case "image":
+			c.addObjects([{
+				type:objectelement.attr("type"),
+				dim:{x:5, y:5, r:0, w:objectelement.attr("w"), h:objectelement.attr("h")},
+				src:objectelement.attr("src")
+			}], true, isFurniture);
+			break;
+	};
+	c.draw();
+	c.panselect_last();
+	c.focus_last();
+	isFurniture ? $("#main-canvas").trigger("furnitureModified") : $("#main-canvas").trigger("layoutModified")
 };
 
 
