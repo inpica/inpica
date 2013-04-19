@@ -14,7 +14,19 @@
 	{%block head%}{%endblock%}
 </head>
 <body>
-	<div id="header"></div>
+	<div id="header">
+		<div id="login-wrapper">
+          {%if user.is_authenticated%}
+            {%include 'account/logged.html'%}
+          {%else%}
+            {%include 'account/login.html'%}
+          {%endif%}
+        </div>
+         <div id="createform-wrapper">
+      		{%include 'account/create.html'%}
+    	</div>
+    <div id="screen"></div>
+	</div>
 	{%block body%}{%endblock%}
 	<div id="footer"></div>
 </body>
