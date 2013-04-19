@@ -3,3 +3,4 @@ inpica/settings.py
 templates/*.pyc
 main/*.pyc
 templates/.DS_Store
+.DS_Store
