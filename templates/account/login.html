@@ -1,4 +1,4 @@
-<form id="loginform" method="post" action="">
+<form id="loginform" method="post" action="" class="navbar-form pull-right">
 	{%csrf_token%}
 	<table id="login-table">
 		<tr>
@@ -7,15 +7,22 @@
 			{%endif%}
 		</tr>
 		<tr>
-			<td class="login-label">Username or Email</td><td>{{login_form.auth}}</td>{%if login_form.auth.errors%}<td class="errormsg">{{login_form.auth.errors}}</td>{%endif%}
+			<!-- <td class="login-label">Username or Email</td> -->
+			<td>{{login_form.auth}}</td>{%if login_form.auth.errors%}
+			<td class="errormsg">{{login_form.auth.errors}}</td>{%endif%}
 		</tr>
 		<tr>
-			<td class="login-label">Password</td><td>{{login_form.password}}</td><td class="errormsg">{{login_form.password.errors}}</td>
+			<!-- <td class="login-label">Password</td> -->
+			<td>{{login_form.password}}</td>
+			<td class="errormsg">{{login_form.password.errors}}</td>
 		</tr>
 		<tr>
 			<td colspan ="3" class="buttondisplay">
-				<a class="loginbutton" href="javascript:void(0)" onclick="logincheck();">Login</a>
-				<a class="loginbutton" href="javascript:void(0)" id="register" onclick="popup();">Register</a>
+				<a class="btn" href="javascript:void(0)" onclick="logincheck();">Sign in</a>
+				<a class="btn" href="javascript:void(0)" id="register" onclick="popup();">Register</a>
+
+				<!-- <a class="loginbutton" href="javascript:void(0)" onclick="logincheck();">Login</a>
+				<a class="loginbutton" href="javascript:void(0)" id="register" onclick="popup();">Register</a> -->
 			</td>
 		</tr>
 	</table>
