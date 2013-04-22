@@ -6,23 +6,24 @@
   <link rel="stylesheet" href="{{ STATIC_URL }}css/jquery-ui-1.10.2.custom.css" />
   <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
   <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
-  <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/style.css" />
+  <!-- <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/style.css" /> -->
   <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/home.css" />
 
   <!--  bootstrap responsive calls ========================= -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
+
     <!-- Le styles -->
     <link rel="stylesheet" href="{{ STATIC_URL }}css/bootstrap.css">
     <link rel="stylesheet" href="{{ STATIC_URL }}css/bootstrap-responsive.css">
-    <!-- CSS for Font Awesome Icons -->
     <link rel="stylesheet" href="{{ STATIC_URL }}css/font-awesome.min.css">
 
     <style>
       body { padding-top: 60px; /* 60px to make the container go all the way
       to the bottom of the topbar */ }
     </style>
+    <!-- duplicate -->
+    <!-- // <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script> -->
+    <script src="{{ STATIC_URL }}js/bootstrap.js"></script>
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
@@ -34,20 +35,22 @@
   <script></script>
 </head>
 
-
 <body>
 
-  <!-- NAVIGATION BAR  ================================= -->
+  <!-- NAVIGATION BAR  ==================================== -->
   <div class="navbar navbar-inverse navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container">
+          
           <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="brand" href="#">Inpica</a>
-          <div class="nav-collapse collapse">
+          
+          <a class="brand" href="#">INPICA</a>
+         
+         <!--  <div class="nav-collapse collapse">
             <ul class="nav">
               <li class="active">
                 <a href="#">Home</a>
@@ -58,58 +61,35 @@
               <li>
                 <a href="#contact">Contact</a>
               </li>
-            </ul>
+            </ul> -->
+          <!-- LOGIN FORM   ================================= -->
+          <!-- <div class = "header"> -->
+              <!-- <div class="header-center"> -->
+                <!-- <img src="{{ STATIC_URL }}image/home/title.png" height="160px" width="auto"/> -->
+          <div id="login-wrapper">
+          <!-- <span> -->
+            {%if user.is_authenticated%}
+              {%include 'account/logged.html'%}
+            {%else%}
+              {%include 'account/login.html'%}
+            {%endif%}
+          <!-- </span> -->
+          </div>
+          <!-- </div> </div> -->
+          <div id="createform-wrapper">{%include 'account/create.html'%}
+          </div>
+          <div id="screen"></div>
 
+        </div>  <!-- end container -->
+      </div>  <!-- end navbar-inner -->
+  </div> 
 
-<!--             <form class="navbar-form pull-right">
-              <input class="span2" type="text" placeholder="Email">
-              <input class="span2" type="password" placeholder="Password">
-              <button type="submit" class="btn">
-                Sign in
-              </button>
-            </form> -->
-
-
- 
-  <!-- LOGIN FORM   ================================= -->
-  <!-- <div class = "header"> -->
-      <!-- <div class="header-center"> -->
-        <!-- <img src="{{ STATIC_URL }}image/home/title.png" height="160px" width="auto"/> -->
-        <!-- <div id="login-wrapper"> -->
-          {%if user.is_authenticated%}
-            {%include 'account/logged.html'%}
-          {%else%}
-            {%include 'account/login.html'%}
-          {%endif%}
-        <!-- </div> -->
-      <!-- </div> -->
-  <!-- </div> -->
-  <div id="createform-wrapper">
-      {%include 'account/create.html'%}
-  </div>
-  <div id="screen"></div>
-    
-  <!-- <div class="video">
-  <iframe src="http://player.vimeo.com/video/41619611?wmode=transparent" width="800" height="300" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen wmode="Opaque" style="margin: 0 auto; display: block"></iframe>
-  </div> -->
-
-
-
-
-         </div>
-        </div>
-      </div>
-  </div>
-
-
-
-
-
-  <!-- CAROUSEL AND MKTNG SECTIONS ================================= -->
+  <!-- CAROUSEL  =========================================== -->
   <div id="myCarousel" class="carousel slide" data-pause="remove">
       <div class="carousel-inner">
         <div class="item active">
-          <img src="{{ STATIC_URL }}image/home/homeImageSectional.jpg" class="">
+          <img src="{{ STATIC_URL }}image/home/carouselSectional.jpg" class="">
+            
           <div class="container">
             <div class="carousel-caption">
               <h1 class="">Inspiration for your home.
@@ -119,7 +99,7 @@
                 elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies
                 vehicula ut id elit.
               </p>
-              <a class="btn btn-large btn-primary" href="#">Try it now</a>
+              <a class="btn btn-large btn-primary btn-success" href="#">Try it now</a>
             </div>
           </div>
         </div>
@@ -158,7 +138,9 @@
       </div>
       <a class="left carousel-control" href="#myCarousel" data-slide="prev">‹</a>
       <a class="right carousel-control" href="#myCarousel" data-slide="next">›</a>
-  </div>
+  </div> 
+
+  <!--  MKTNG SECTIONS ===================================== -->
   <div class="container marketing">
       <div class="row">
         <div class="span4">
@@ -167,14 +149,11 @@
           <h2>
             Build floor plan
           </h2>
-          <p>
-            Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Nullam
-            id dolor id nibh ultricies vehicula ut id elit. Morbi leo risus, porta
-            ac consectetur ac, vestibulum at eros. 
+          <p>Just upload an image of your floor plan or sketch it out using our drag and drop tool. its super simple and wont take more than a few minutes! 
           </p>
-          <p>
+          <!-- <p>
             <a class="btn" href="#">View details »</a>
-          </p>
+          </p> -->
         </div>
         <!-- /.span4 -->
         <div class="span4">
@@ -184,14 +163,11 @@
           <h2>
             Pick furniture
           </h2>
-          <p class="">
-            Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget
-            lacinia odio sem nec elit. Cras mattis consectetur purus sit amet fermentum.
-            
+          <p class="">Browse furniture websites and add them to your plan. Use our custom bookmark picker to save images with just 3 clicks.
           </p>
-          <p>
+          <!-- <p>
             <a class="btn" href="#">View details »</a>
-          </p>
+          </p> -->
         </div>
         <!-- /.span4 -->
         <div class="span4">
@@ -200,52 +176,49 @@
           <h2>
             Get suggestions
           </h2>
-          <p>
-            Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas
-            eget quam. Vestibulum id ligula porta felis euismod semper. 
+          <p>Feeling a little lost? get your friends (or your mom) involved! share your floor plans and get those awesome ideas all in one place.
           </p>
-          <p>
+          <!-- <p>
             <a class="btn" href="#">View details »</a>
-          </p>
+          </p> -->
         </div>
       </div>
       <hr class="featurette-divider">
       <div class="featurette">
-        <img class="featurette-image pull-right" src="./ideas/vidicon.png">
+        <!-- <img class="featurette-image pull-right" src="./ideas/vidicon.png"> -->
+        <div class="video">
+            <iframe class="featurette-image pull-right"  src="http://player.vimeo.com/video/41619611?wmode=transparent" width="400" height="200" frameborder="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen wmode="Opaque" style="margin: 0 auto; display: block"></iframe>
+            </div>
         <h1 class="">
           Home design..
           <span class="muted">made easy</span>
         </h1>
         <p class="lead">
-          Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula
-          porta felis euismod semper. 
+          Many of us realize the importance of harmony in our homes, but few know how to go about creating it. While obtaining professional services can be costly and doing it yourself can be exhaustive, Inpica offers a way out. Inpica is a collaborative web platform that re-imagines the way we go about arranging the spaces we live in. By combining the convenience of of virtual design tools and the collective experiences of friends and family, inspiration is only a few clicks away.
+
         </p>
       </div>
       <hr class="featurette-divider">
       <div class="featurette">
-        <img class="featurette-image pull-left" src="./ideas/vidicon.png">
+        <img class="featurette-image pull-left" src="{{ STATIC_URL }}image/home/placeholder.png"/>
         <h1 class="">
           It's that good.
           <span class="muted">see for yourself.</span>
         </h1>
         <p class="lead">
-          Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula
-          porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque
-          nisl consectetur. Fusce dapibus, tellus ac cursus commodo.
+          Never mind those paper cutouts and messy sketches. Whether you are moving or just plain redecorating, our tools let you dream it all up before you start shoving couches around. Take a look at this quick tutorial to learn more.
         </p>
       </div>
       <hr class="featurette-divider">
       <div class="featurette jetstrap-highlighted">
-        <img class="featurette-image pull-right jetstrap-selected" src="./ideas/vidicon.png">
+        <img class="featurette-image pull-right jetstrap-selected img-polaroid" src="./ideas/vidicon.png">
         
         <h1>
           Try it..
           <span class="muted">its free!</span>
         </h1>
         <p class="lead">
-          Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula
-          porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque
-          nisl consectetur. Fusce dapibus, tellus ac cursus commodo.
+          What have you got to loose! we promise not to spam your inbox and guarantee you will love putting your home together with Inpica. Registering will only take a minute then you can be on your way.
         </p>
       </div>
       <hr class="featurette-divider">
@@ -261,11 +234,8 @@
         </p>
       </footer>
   </div>
-  <!-- END CAOUSEL & MKTNG SECTION -->
 
-
-
-  <!-- LOGIN SCRIPT  ================================================= -->
+  <!-- LOGIN SCRIPT  ======================================== -->
   <script type="text/javascript">
     function logincheck(){
       var loginform = $('#loginform');
@@ -275,6 +245,7 @@
         'data': loginform.serialize(),
         'success':function(data){
           loginform.parent().empty().append(data);
+          // loginform.remove().append(data);
         }
       })
     }
@@ -304,11 +275,9 @@
       $('.errorlist').each(function(i,obj){ $(this).remove()});
       $('.errormsg').each(function(i,obj){ $(this).remove()});
     }
-  </script>
-  <!-- duplicate -->
-  <!-- // <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script> -->
-  <script src="assets/js/bootstrap.js"></script>
-  <!-- CUSTOM CSS ON TOP OF BOOTSTRAP ================================ -->
+  </script> 
+  
+  <!-- CUSTOM CSS ON TOP OF BOOTSTRAP ======================= -->
   <style>
     
     /* GLOBAL STYLES
@@ -318,6 +287,7 @@
     body {
       padding-bottom: 40px;
       color: #5a5a5a;
+      font-family: ;
     }
     
     /* CUSTOMIZE THE NAVBAR
@@ -410,7 +380,10 @@
     .carousel-caption .lead {
       margin: 0;
       line-height: 1.25;
-      color: #fff;
+      /*color: #fff;*/
+      /*color:#89c403;*/
+      color:#5A5A5A;
+
       text-shadow: 0 1px 1px rgba(0,0,0,.4);
     }
     .carousel-caption .btn {
@@ -548,7 +521,21 @@
       }
     
     }
-  </style>
+    /*registration form*/
+    .form-signin {
+        max-width: 300px;
+        padding: 19px 29px 29px;
+        margin: 0 auto 20px;
+        background-color: #fff;
+        border: 1px solid #e5e5e5;
+        -webkit-border-radius: 5px;
+           -moz-border-radius: 5px;
+                border-radius: 5px;
+        -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+           -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+                box-shadow: 0 1px 2px rgba(0,0,0,.05);
+      }
+  </style> 
  
 </body>
 </html>

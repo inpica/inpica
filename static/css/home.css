@@ -8,6 +8,12 @@
     font-weight: normal;
     font-style: normal;
 }*/
+
+#loginform{margin-top: 5px}
+#logged{margin-top: 15px}
+
+
+/*FONTS=========================================*/
 @font-face{
 	font-family: 'Whipsmart';
 	src: url('fonts/Whipsmart/Whipsmart.ttf');
@@ -32,21 +38,22 @@
 	font-weight: bold;
 	font-style: normal;
 }
-.header{
+/*.header{
 	height: 200px;
 }
 .header-center{
 	width: 960px;
 	margin: 0 auto;
-}
+}*/
 
-#login-wrapper{
+/*#login-wrapper{
 	width : 450px;
 	float: right;
 	height: 150px;
 	font-size: 18px;
-}
+}*/
 
+/*REGISTRATION FORM WRAPPER=========================*/
 #createform-wrapper{
 	position: fixed;
 	top:35%;
@@ -55,7 +62,7 @@
 	z-index: 100;
 	display: none;
 }
-
+/*
 #createform,#createsucess{
 	width:500px;
 	margin:0 auto;
@@ -66,7 +73,7 @@
 	font-family: 'Whipsmart';
 	text-shadow: 0px 1px 1px #666;
 	font-size: 18px;
-}
+}*/
 
 #createsucess {
 	text-align: center;
@@ -80,13 +87,13 @@
 }
 
 
-body{
+/*body{
 	background: #e0e3ec url(../image/home/subtle_grunge.png) repeat top left;
 	font-family: Whipsmart;
 	font-weight: 400;
 	font-size: 15px;
 	color: #393b40;
-}
+}*/
 
 /* login form */
 #login-wrapper {
@@ -94,7 +101,7 @@ body{
 	border-radius: 10px;
     -moz-border-radius: 10px;
 }
-#logged{
+/*#logged{
 	margin: 0 auto;
 	width: 300px;
 	text-align: center;
@@ -102,19 +109,19 @@ body{
 	font-family: 'Whipsmart';
 	text-shadow: 0px 1px 1px #666;
 	font-size: 18px;
-}
-#login-table{
+}*/
+/*#login-table{
 	margin-top: 30px
-}
+}*/
 
-.login-label{
+/*.login-label{
 	text-align: right;
 	font-family: 'Whipsmart';
 	text-shadow: 0px 1px 1px #666;
 	font-size: 18px;
-}
+}*/
 
-#login-wrapper input {
+/*#login-wrapper input {
 	text-shadow: 0px 1px 0px #fff;
 	padding: 5px;
 	font-size: 12px;
@@ -126,7 +133,7 @@ body{
     -moz-box-shadow: 1px 1px 0px #efefef;  
     box-shadow:  1px 1px 0px #efefef;
     width: 140px;
-}
+}*/
 
 #createform input {
 	text-shadow: 0px 1px 0px #fff;
@@ -142,17 +149,17 @@ body{
     width: 140px;
 }
 
-#login-wrapper input:focus {  
+/*#login-wrapper input:focus {  
     -webkit-box-shadow: 0px 0px 6px #00b300;  
     -moz-box-shadow: 0px 0px 6px #00b300;  
     box-shadow: 0px 0px 6px #00b300;  
-} 
+} */
 #createform input:focus {  
     -webkit-box-shadow: 0px 0px 6px #00b300;  
     -moz-box-shadow: 0px 0px 6px #00b300;  
     box-shadow: 0px 0px 6px #00b300;  
 } 
-
+/*
 .loginbutton {
 	-moz-box-shadow:inset 0px 1px 0px 0px #a4e271;
 	-webkit-box-shadow:inset 0px 1px 0px 0px #a4e271;
@@ -175,49 +182,85 @@ body{
 }.loginbutton:active {
 	position:relative;
 	top:1px;
-}
+}*/
 
 
-/*error messages*/
+/*ERROR MESSAGES===============================*/
 .createerror{
 	height: 50px;
 	width: 200px;
 }
-.errorlist{
+/*.errorlist{
 	list-style-type: none;
 	padding: 0;
 	margin: 0;
 	font-size: 13px;
 	font-family: 'Whipsmart Bold';
-}
+}*/
 
-#mainerror{
+/*#mainerror{
 	padding-left: 80px
+}*/
+
+.errorlist{
+	/*color: red;
+	font-size: 13px;
+	font-family: 'Whipsmart Bold';*/
+	/*width: 150px*/
+	list-style-type: none;
+	  padding: 8px 35px 8px 14px;
+	  margin-bottom: 20px;
+	  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+	  background-color: #fcf8e3;
+	  border: 1px solid #fbeed5;
+	  -webkit-border-radius: 4px;
+	     -moz-border-radius: 4px;
+	          border-radius: 4px;
+	  color: #b94a48;
+	  background-color: #f2dede;
+	  border-color: #eed3d7;
 }
 
-td.errormsg{
-	color: red;
-	font-size: 13px;
-	font-family: 'Whipsmart Bold';
-	width: 150px
+
+#loginform{
+	position:relative;
 }
+
+#loginError, #blankUserErr{
+	position:absolute;
+	top:50px;
+	left:-20px;
+	/*background-color: red;
+	color:#FFF;*/
+}
+
+#blankPassErr{	
+	position:absolute;
+	top:50px;
+	left:200px;
+}
+
+/*#loginform .errorlist{
+	padding:30px;
+	opacity: 0.9;
+}*/
 
 .buttondisplay{
 	padding-left: 80px;
 }
 
 /*create-form*/
-.createlabel{
+./*createlabel{
 	font-size:18px;
 	font-family: Whipsmart;
 	width: ;
-}
+}*/
 
 #createform {
 	border-radius: 10px;
     -moz-border-radius: 10px;
 }
-/*accordina*/
+/*ACCORDION=======================================================*/
 #accordion{
 	margin:0 auto;
 	width: 800px;
@@ -225,6 +268,7 @@ td.errormsg{
 	font-size: 18px;
 
 }
+
 .ui-accordion-header{
 	font-family: 'Baramond';
 	font-size: 18px;

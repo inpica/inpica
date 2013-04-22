@@ -1,29 +1,59 @@
 <form id="loginform" method="post" action="" class="navbar-form pull-right">
+<!-- <form method="post" action="" > -->
+
 	{%csrf_token%}
-	<table id="login-table">
-		<tr>
+<!-- 
+	<table>
+
+		<tr>		
 			{%if login_errormsg != None%}
 			<td colspan="3" class="errormsg" id="mainerror">{{ login_errormsg }}</td>
 			{%endif%}
 		</tr>
 		<tr>
-			<!-- <td class="login-label">Username or Email</td> -->
+			<td class="login-label">Username or Email</td>
 			<td>{{login_form.auth}}</td>{%if login_form.auth.errors%}
 			<td class="errormsg">{{login_form.auth.errors}}</td>{%endif%}
 		</tr>
 		<tr>
-			<!-- <td class="login-label">Password</td> -->
+			<td class="login-label">Password</td>
 			<td>{{login_form.password}}</td>
 			<td class="errormsg">{{login_form.password.errors}}</td>
 		</tr>
 		<tr>
 			<td colspan ="3" class="buttondisplay">
-				<a class="btn" href="javascript:void(0)" onclick="logincheck();">Sign in</a>
-				<a class="btn" href="javascript:void(0)" id="register" onclick="popup();">Register</a>
-
-				<!-- <a class="loginbutton" href="javascript:void(0)" onclick="logincheck();">Login</a>
-				<a class="loginbutton" href="javascript:void(0)" id="register" onclick="popup();">Register</a> -->
+				<a class="loginbutton" href="javascript:void(0)" onclick="logincheck();">Login</a>
+				<a class="loginbutton" href="javascript:void(0)" id="register" onclick="popup();">Register</a>
 			</td>
 		</tr>
 	</table>
+</form> -->
+
+	<!-- if username/ pass are rong then red alert box appear -->
+	{%if login_errormsg != None%}
+	<div id="loginError" class="alert alert-error">
+		<button type="button" class="close" data-dismiss="alert">&times;</button>
+		<span >{{ login_errormsg }}</span>
+	</div>{%endif%}
+	
+	<div >
+		<!-- if username is blank then red alert box appear -->
+		<span>{{login_form.auth}}</span>{%if login_form.auth.errors%}
+		<span id="blankUserErr" class="errormsg">{{login_form.auth.errors}}</span>{%endif%}
+		<!-- if pass is blank then red alert box appear -->
+		<span>{{login_form.password}}</span>
+		<span id="blankPassErr" class="errormsg">{{login_form.password.errors}}</span>
+		<!-- sign in and register buttons -->
+		<a class="btn" href="javascript:void(0)" onclick="logincheck();">Sign in</a>
+		<a class="btn" href="javascript:void(0)" id="register" onclick="popup();">Register</a>
+	
+	</div>
 </form>
+
+<!-- <form class="navbar-form pull-right">
+              <input class="span2" type="text" placeholder="Email">
+              <input class="span2" type="password" placeholder="Password">
+              <button type="submit" class="btn">
+                Sign in
+              </button>
+            </form>
