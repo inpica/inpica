@@ -1,5 +1,17 @@
 {%load maintags%}
 <div id="furniture-builder">
-	{% FurniturePicker False %}
-	{{form.as_p}}
+	<h1>Furniture Picker</h1>
+	<div id="picker-wrapper">
+		{% FurniturePicker False %}
+	</div>
+	
+	<div id="builder-form">
+		{{form.as_p}}
+	</div>
+	
+	<div id="builder-piclist">
+		{%for picurl in picurls%}
+			<img src="{{picurl}}" />
+		{%endfor%}
+	</div>
 </div>

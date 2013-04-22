@@ -1,0 +1,38 @@
+body{
+	position:relative;
+	padding:0px;
+	margin:0px;
+	font-family: Helvetica;
+}
+
+#pin-wrapper{
+	width:960px;
+	padding:30px;
+	margin:100px auto;
+	position: relative;
+	height:600px;
+	background-color: #CCC;
+}
+
+#picker-wrapper{
+	top:100px;
+}
+
+#furniture-picker{
+	display: block !important;
+}
+
+#builder-form{
+	position:absolute;
+	top: 100px;
+	left:400px;
+	background-color: #AAA;
+}
+
+#builder-piclist{
+	width:200px;
+	position:absolute;
+	top: 100px;
+	left:700px;
+	background-color: #AAA;
+}
