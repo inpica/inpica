@@ -220,3 +220,7 @@ def FurnitureBuilder(request):
 def FurnitureBuilderSubmit(request):
 	return None
 
+def Pin(request, id, ss):
+	form = main.forms.FurnitureBuilder(initial={"w":request.GET['w'],"h":request.GET['h'],"title":request.GET['title']})
+	return render_to_response('main/pin.html',{"form": form}, context_instance=RequestContext(request))
+
