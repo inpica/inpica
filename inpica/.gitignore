@@ -1,3 +1,6 @@
 *.pyc
+<<<<<<< HEAD
 *.DS_Store
+=======
+>>>>>>> gaurav
 settings.py

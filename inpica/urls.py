@@ -36,6 +36,7 @@ urlpatterns = patterns('',
 
     url(r'^furniture/builder$','main.views.FurnitureBuilder'),
     url(r'^furniture/builder-submit$','main.views.FurnitureBuilderSubmit'),
+    url(r'^pin/(?P<id>\d+)/(?P<ss>.+)$','main.views.Pin')
 
 
 
