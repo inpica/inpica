@@ -1,53 +1,60 @@
 {%load maintags%}
 <div id="furniture-builder">
 
-	<h1>Furniture Builder</h1>
+	<div class="top">
+		<h1>Furniture Builder</h1>
 
-	<input onclick="FurnitureBuilderSubmit({%if furniturebuilder.isPin%}true{%else%}false{%endif%})" type="button" value="Save"/>
+		<input class="submit" type="button" value="Save"/>
+	</div>
 
-	<div id="picker-wrapper">
-		<h2>What is it?</h2>
-		{% FurniturePicker False %}
-	</div>
-	
-	<div id="builder-form-wrapper">
-		<h2>Information</h2>
-		<div class="form-field">
-			<label>Title</label>
-			{{furniturebuilder.builderform.title}}
+	<div class="body">
+		<div id="picker-wrapper">
+			<h2>What is it?</h2>
+			{% FurniturePicker False %}
 		</div>
-		<div class="form-measure-group">
-			<div id="symbol-scope-wrapper">
-				<img id="symbol-scope" src=""/>
-			</div>
+		
+		<div id="builder-form-wrapper">
+			<h2>Furniture Details</h2>
 			<div class="form-field">
-				<label>Width (inches)</label>
-				{{furniturebuilder.builderform.w}}
+				<label>Title</label>
+				{{furniturebuilder.builderform.title}}
 			</div>
-			<div class="form-field">
-				<label>Length (inches)</label>
-				{{furniturebuilder.builderform.h}}
+			<div class="form-measure-group">
+				<h3>Symbol</h3>
+				<div id="symbol-scope-wrapper">
+					<img id="symbol-scope" src=""/>
+				</div>
+				<div class="form-fields-wrapper">
+					<div class="form-field">
+						<label>Width (inches)</label>
+						{{furniturebuilder.builderform.w}}
+					</div>
+					<div class="form-field">
+						<label>Length (inches)</label>
+						{{furniturebuilder.builderform.h}}
+					</div>
+				</div>
 			</div>
 		</div>
-	</div>
-	
-	<div id="builder-pics-wrapper">
-	<h2>Pics</h2>
-	{%if furniturebuilder.isPin%}
-		<div id="pinpics">
-			{%for picurl in furniturebuilder.picurls%}
-			<div class="pinpic">
-				<img src="{{picurl}}" />
-				<div onclick="$(this).parent().remove();">Delete</div>
+		
+		<div id="builder-pics-wrapper">
+		<h2>Pics</h2>
+		{%if furniturebuilder.isPin%}
+			<div id="pinpics">
+				{%for picurl in furniturebuilder.picurls%}
+				<div class="furniture-pic">
+					<img src="{{picurl}}" />
+					<div class="delete" onclick="$(this).parent().remove();">Delete</div>
+				</div>
+				{%endfor%}
 			</div>
-			{%endfor%}
+		{%else%}
+			<p>TODO - form to upload pics</p>
+			<div id="userpics">
+				<p>TODO - list of pics from user</p>
+			</div>
+		{%endif%}
 		</div>
-	{%else%}
-		<p>TODO - form to upload pics</p>
-		<div id="userpics">
-			<p>TODO - list of pics from user</p>
-		</div>
-	{%endif%}
 	</div>
 </div>
 
@@ -75,6 +82,11 @@ $(document).ready(function(){
 	});
 
 	SetSymbolScope({{furniturebuilder.symbolid}});
+
+	$("#furniture-builder .submit").on("click", function(){
+		FurnitureBuilderSubmit({%if furniturebuilder.isPin%}true{%else%}false{%endif%});
+		$(this).off("click").val("Saving...")
+	});
 })
 
 function SetSymbolScope(symbolid){
@@ -98,10 +110,18 @@ function PickerFilter(searchQuery, objectsList, filterType){
 };
 
 function FurnitureBuilderSubmit(isPin){
+
+	var re_digits = /^\d+$/;
+	var title = $("#id_title").val().replace(/^\s+|\s+$/g, '');
+	var h = $("#id_h").val().replace(/^\s+|\s+$/g, '');
+	var w = $("#id_w").val().replace(/^\s+|\s+$/g, '');
+
 	var formdata = new FormData()
 	formdata.append("title", $("#id_title").val());
-	formdata.append("w", $("#id_w").val());
-	formdata.append("h", $("#id_h").val());
+	title != '' ? formdata.append("title", title) : formdata.append("title", "NO TITLE")
+	re_digits.test(w) ? formdata.append("w", w) : formdata.append("w", 12)
+	re_digits.test(h) ? formdata.append("h", h) : formdata.append("h", 12)
+	
 	formdata.append("symbolPath", $("#symbol-scope").attr("path"));
 	formdata.append("url", "{{furniturebuilder.url}}");
 
@@ -120,12 +140,21 @@ function FurnitureBuilderSubmit(isPin){
 		data:formdata,
 		processData: false,
 		contentType: false,
-		success:SubmitHandler
+		success:function(data){
+			SubmitHandler(data, isPin);
+		}
 	});
 };
 
-function SubmitHandler(data){
-
+function SubmitHandler(data, isPin){
+	$("#furniture-builder .body").empty().append(data);
+	$("#furniture-builder .submit").val("Close").on("click", function(){
+		if(isPin){
+			window.top.document.getElementById('inpica-iframe').runtimeStyle.display='none';
+		} else{
+			$("#furniture-builder").remove();
+		}
+	});
 };
 
 

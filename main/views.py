@@ -221,6 +221,13 @@ def FurnitureBuilderSubmit(request):
 	return None
 
 def Pin(request, id, ss):
+	try:
+		user = User.objects.get(pk=id)
+		if user.userdetails.bookmarkletss != ss:
+			raise Exception("Invalid SS")
+	except:
+		return render_to_response('main/pin-invalid.html', context_instance=RequestContext(request))
+
 	form = main.forms.FurnitureBuilder(initial={"w":request.GET.get("w"),"h":request.GET.get("l"),"title":request.GET.get("title")})
 	return render_to_response('main/pin.html',
 		{"furniturebuilder":{
@@ -236,18 +243,23 @@ def Pin(request, id, ss):
 
 @csrf_exempt
 def PinSave(request, id, ss):
-	#TODO - check if id and ss are a match
+	try:
+		user = User.objects.get(pk=id)
+		if user.userdetails.bookmarkletss != ss:
+			raise Exception("Invalid SS")
+	except:
+		return render_to_response('main/pin-invalid.html', context_instance=RequestContext(request))
 	furniture = m.Furniture()
-	furniture.user = User.objects.get(pk=id)
+	furniture.user = user
 	furniture.title = request.POST.get("title")
 	furniture.url = request.POST.get("url")
 	furniture.symbolPath = request.POST.get("symbolPath")
 	furniture.bucket = "PIN"
-	furniture.h = float(request.POST.get("h"))/12
-	furniture.w = float(request.POST.get("w"))/12
+	furniture.h = float(request.POST.get("h"))/12.0
+	furniture.w = float(request.POST.get("w"))/12.0
 	furniture.save()
 	pics = []
 	for url in request.POST.getlist("picurl"):
 		pics.append(m.FurniturePic(furniture=furniture, url=url))
 	m.FurniturePic.objects.bulk_create(pics)
-	return HttpResponse("Success")
+	return render_to_response("snippet/pin-success.html", context_instance=RequestContext(request))

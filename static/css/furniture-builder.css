@@ -1,11 +1,32 @@
-h1, h2{
+#furniture-builder h1,#furniture-builder h2,#furniture-builder h3{
 	font-weight: normal;
+	color:#555;
+}
+
+#furniture-builder h1{
+	margin:0px 0px 0px 50px;
+	padding-top:30px;
+	color:#FFF;
+}
+
+
+#furniture-builder h2{
+	font-size: 22px;
+	border-bottom: 1px dotted #CCC;
+}
+
+#furniture-builder h3{
+	font-size: 18px;
+	background-color:#d3dee5;
+	border: 1px solid #c1ced7;
+	padding-left:20px;
+	margin-top:30px;
 }
 
 #furniture-builder{
 	width:960px;
 	overflow: auto;
-	background-color: #DDD;
+	background-color: #f3f3f3;
 	height:600px;
 	border: 1px solid #CCC;
 	border-radius: 5px;
@@ -13,8 +34,28 @@ h1, h2{
 	position: relative;
 }
 
+#furniture-builder .top{
+	height:100px;
+	width:100%;
+	background-color: #333;
+	position: relative;
+	box-shadow: 0px 100px 100px 100px #fcfcfc;
+}
+
+#furniture-builder .body{
+	position: relative;
+}
+
+#furniture-builder .submit{
+	position: absolute;
+	right:50px;
+	top:30px;
+	padding:10px 15px;
+	font-size: 22px;
+}
+
 #picker-wrapper{
-	top:100px;
+	top:0px;
 }
 
 #furniture-picker{
@@ -23,19 +64,68 @@ h1, h2{
 
 #builder-form-wrapper{
 	position:absolute;
-	top: 100px;
 	left:380px;
 	height:450px;
+	width:220px;
+}
+
+.form-measure-group #symbol-scope-wrapper{
+	width:220px;
+	margin-top:30px;
+	padding-bottom:30px;
+	background-image: url(/static/image/furniture/builder/symbol-scope-background.png);
+	background-position: bottom right;
+	background-repeat: no-repeat;
+}
+
+.form-measure-group #symbol-scope{
+	max-width:190px;
+}
+
+.form-measure-group .form-field{
+	width:105px;
+	display: inline-block;
+	height:30px;
+	margin-top:20px;
+}
+
+.form-measure-group .form-fields-wrapper input{
+	width:100px;
 }
 
 #builder-pics-wrapper{
 	width:260px;
 	position:absolute;
-	top: 100px;
 	left:660px;
 	height:450px;
 }
 
 #builder-pics-wrapper img{
 	max-width: 250px;
+}
+
+#builder-pics-wrapper .furniture-pic{
+	position: relative;
+	margin:20px 0px;
+}
+
+#builder-pics-wrapper .delete{
+	position: absolute;
+	top:10px;
+	right:10px;
+	background-color: #d8421a;
+	padding:5px 10px;
+	color:#FFF;
+	border: 1px solid #CCC;
+	border-radius: 5px;
+	font-size: 12px
+}
+
+#builder-pics-wrapper .delete:hover{
+	cursor: pointer;
+	background-color: #d81d1d;
+}
+
+#furniture-builder .success-message{
+	padding:30px;
 }

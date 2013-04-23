@@ -20,13 +20,13 @@
 	<div class="list">
 
 		{%for f in furnitures%}
-			<div class="object" isFurniture="1" type="image" w="{{f.w}}" h="{{f.h}}" path="{{f.symbolPath}}" search-filter-match="{{f.title}}" category-filter-match="pinned" search-filter="1" category-filter="1" mid="{{f.id}}">
+			<div class="object" isFurniture="1" type="image" w="{{f.w}}" h="{{f.h}}" staticurl="{{STATIC_URL}}" path="{{f.symbolPath}}" search-filter-match="{{f.title}}" category-filter-match="pinned" search-filter="1" category-filter="1" mid="{{f.id}}">
 				<img src="{{STATIC_URL}}{{f.symbolPath}}" />
 				<p>{{f.title}}</p>
 			</div>
 		{%endfor%}
 
-		<div class="object" isFurniture="1" type="image" w="6" h="2" symbolid="1" path="image/furniture/symbol/couch.png" search-filter-match="couch" category-filter-match="dining" search-filter="1" category-filter="1">
+		<div class="object" isFurniture="1" type="image" w="6" h="2" symbolid="1" staticurl="{{STATIC_URL}}" path="image/furniture/symbol/couch.png" search-filter-match="couch" category-filter-match="dining" search-filter="1" category-filter="1">
 			<img src="{{STATIC_URL}}image/furniture/symbol/couch.png" />
 			<p>Couch</p>
 		</div>
