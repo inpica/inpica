@@ -1,17 +1,133 @@
 {%load maintags%}
 <div id="furniture-builder">
-	<h1>Furniture Picker</h1>
+
+	<h1>Furniture Builder</h1>
+
+	<input onclick="FurnitureBuilderSubmit({%if furniturebuilder.isPin%}true{%else%}false{%endif%})" type="button" value="Save"/>
+
 	<div id="picker-wrapper">
+		<h2>What is it?</h2>
 		{% FurniturePicker False %}
 	</div>
 	
-	<div id="builder-form">
-		{{form.as_p}}
+	<div id="builder-form-wrapper">
+		<h2>Information</h2>
+		<div class="form-field">
+			<label>Title</label>
+			{{furniturebuilder.builderform.title}}
+		</div>
+		<div class="form-measure-group">
+			<div id="symbol-scope-wrapper">
+				<img id="symbol-scope" src=""/>
+			</div>
+			<div class="form-field">
+				<label>Width (inches)</label>
+				{{furniturebuilder.builderform.w}}
+			</div>
+			<div class="form-field">
+				<label>Length (inches)</label>
+				{{furniturebuilder.builderform.h}}
+			</div>
+		</div>
 	</div>
 	
-	<div id="builder-piclist">
-		{%for picurl in picurls%}
-			<img src="{{picurl}}" />
-		{%endfor%}
+	<div id="builder-pics-wrapper">
+	<h2>Pics</h2>
+	{%if furniturebuilder.isPin%}
+		<div id="pinpics">
+			{%for picurl in furniturebuilder.picurls%}
+			<div class="pinpic">
+				<img src="{{picurl}}" />
+				<div onclick="$(this).parent().remove();">Delete</div>
+			</div>
+			{%endfor%}
+		</div>
+	{%else%}
+		<p>TODO - form to upload pics</p>
+		<div id="userpics">
+			<p>TODO - list of pics from user</p>
+		</div>
+	{%endif%}
 	</div>
 </div>
+
+<script type="text/javascript">
+$(document).ready(function(){
+
+	$("#furniture-picker .filter .search-filter").on("keyup", function(){
+		var search_query = $(this).val().toLowerCase().replace(/^\s+|\s+$/g, '').replace(" ", "|");
+		var objects_list = $("#furniture-picker .list .object");
+		PickerFilter(search_query, objects_list, "search")
+	});
+
+	$("#furniture-picker .filter .category-filter").on("change", function(){
+		var search_query = $(this).val().toLowerCase();
+		var objects_list = $("#furniture-picker .list .object");
+		if(search_query == "all"){
+			objects_list.attr("category-filter", 1);
+		}else{
+			PickerFilter(search_query, objects_list, "category");
+		}
+	});
+
+	$("#furniture-picker .object").on("click", function(){
+		$("#symbol-scope").attr("src", "{{STATIC_URL}}" + $(this).attr("path")).attr("path", $(this).attr("path")); 
+	});
+
+	SetSymbolScope({{furniturebuilder.symbolid}});
+})
+
+function SetSymbolScope(symbolid){
+	$("#furniture-picker .object[symbolid='"+symbolid+"']").trigger("click");
+};
+
+function PickerFilter(searchQuery, objectsList, filterType){
+	var filterSetAttr = filterType + "-filter";
+	var filterMatchAttr = filterType + "-filter-match";
+	if(!searchQuery){
+		objectsList.attr(filterSetAttr, 1);
+	}else{
+		objectsList.attr(filterSetAttr, 0);
+		var re = new RegExp('.*('+searchQuery+').*','i');
+		objectsList.each(function(){
+			if(re.test($(this).attr(filterMatchAttr))){
+				$(this).attr(filterSetAttr, 1);
+			}
+		});
+	};
+};
+
+function FurnitureBuilderSubmit(isPin){
+	var formdata = new FormData()
+	formdata.append("title", $("#id_title").val());
+	formdata.append("w", $("#id_w").val());
+	formdata.append("h", $("#id_h").val());
+	formdata.append("symbolPath", $("#symbol-scope").attr("path"));
+	formdata.append("url", "{{furniturebuilder.url}}");
+
+	if(isPin){
+		$("#pinpics .pinpic").each(function(){
+			formdata.append("picurl", $("img", this).attr("src"));
+		})
+	} else{
+		alert("NOT IMPLEMENTED")
+		// formdata.append('file',$("#map-file")[0].files[0])
+	}
+
+	$.ajax({
+		type:"POST",
+		url: isPin ? "/pin/save/{{furniturebuilder.userid}}/{{furniturebuilder.ss}}" : "/furniture/new/{{furniturebuilder.userid}}",
+		data:formdata,
+		processData: false,
+		contentType: false,
+		success:SubmitHandler
+	});
+};
+
+function SubmitHandler(data){
+
+};
+
+
+
+</script>

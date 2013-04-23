@@ -49,4 +49,4 @@ class FurnitureBuilder(ModelForm):
 	required_css_class ='required'
 	class Meta:
 		model = m.Furniture
-		fields = ("title","symbolPath","h","w")
+		fields = ("title","h","w")

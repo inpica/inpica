@@ -14,9 +14,12 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
         'NAME': 'inpica',                      # Or path to database file if using sqlite3.
         'USER': 'root',
-        'PASSWORD': 'inpica',
-        'HOST': '54.225.108.90',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
-        'PORT': '3306',                      # Set to empty string for default.
+        'PASSWORD': '',
+        'HOST': '',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
+        'PORT': ''        
+        #'PASSWORD': 'inpica',
+        #'HOST': '54.225.108.90',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
+        #'PORT': '3306',                      # Set to empty string for default.
     }
 }
 

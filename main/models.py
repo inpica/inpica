@@ -13,6 +13,7 @@ class UserDetails(models.Model):
 	'''
 	user = models.OneToOneField(User, primary_key=True)
 	confirmCode = models.CharField(max_length=40, null=True)
+	bookmarkletss = models.CharField(max_length=40, null=True)
 
 
 
@@ -92,8 +93,8 @@ class Furniture(models.Model):
 	symbol = models.ImageField(upload_to=FurnitureSymbol_Filename, null=True)
 	RCD = models.DateTimeField(default=datetime.now)
 	bucket = models.CharField(max_length=255, choices=[('PIN','Pin Board'), ('MY', 'My Furniture')], db_index=True)
-	h = models.IntegerField(null=True)
-	w = models.IntegerField(null=True)
+	h = models.FloatField(null=True)
+	w = models.FloatField(null=True)
 
 	def dim(self):
 		return {
@@ -192,8 +193,8 @@ class FloorplanCameraPic(models.Model):
 
 
 
-class Bookmarklet(models.Model):
-	user = models.ForeignKey(User, db_index=True)
-	uuid = models.CharField(max_length=40)
-	EOL = models.DateTimeField() #End of Life
-	RCD = models.DateTimeField(datetime.now)
+# class Bookmarklet(models.Model):
+# 	user = models.ForeignKey(User, db_index=True)
+# 	uuid = models.CharField(max_length=40)
+# 	EOL = models.DateTimeField() #End of Life
+# 	RCD = models.DateTimeField(datetime.now)
