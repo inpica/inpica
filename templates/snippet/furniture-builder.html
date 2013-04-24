@@ -111,7 +111,7 @@ function PickerFilter(searchQuery, objectsList, filterType){
 
 function FurnitureBuilderSubmit(isPin){
 
-	var re_digits = /^\d+$/;
+	var re_digits = /^\d+(\.\d*)?$/;
 	var title = $("#id_title").val().replace(/^\s+|\s+$/g, '');
 	var h = $("#id_h").val().replace(/^\s+|\s+$/g, '');
 	var w = $("#id_w").val().replace(/^\s+|\s+$/g, '');
