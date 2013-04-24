@@ -26,9 +26,12 @@
 			</div>
 		{%endfor%}
 
-		<div class="object" isFurniture="1" type="image" w="6" h="2" symbolid="1" staticurl="{{STATIC_URL}}" path="image/furniture/symbol/couch.png" search-filter-match="couch" category-filter-match="dining" search-filter="1" category-filter="1">
-			<img src="{{STATIC_URL}}image/furniture/symbol/couch.png" />
-			<p>Couch</p>
-		</div>
+		{%for df in default_furnitures%}
+			<div class="object" isFurniture="1" type="image" w="{{df.w}}" h="{{df.h}}" symbolid="{{df.symbolid}}" staticurl="{{STATIC_URL}}" path="image/furniture/symbol/{{df.symbolid}}.png" search-filter-match="{{df.searchtags}}" category-filter-match="{{df.category}}" search-filter="1" category-filter="1" title="{{df.title}}">
+				<img src="{{STATIC_URL}}image/furniture/symbol/{{df.symbolid}}.png" />
+				<p>{{df.title}}</p>
+			</div>
+		{%endfor%}
+
 	</div>
 </div>

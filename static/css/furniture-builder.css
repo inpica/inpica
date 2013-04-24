@@ -15,6 +15,11 @@
 	border-bottom: 1px dotted #CCC;
 }
 
+#furniture-builder h2 .hint{
+	font-size: 12px;
+	margin-left:20px;
+}
+
 #furniture-builder h3{
 	font-size: 18px;
 	background-color:#d3dee5;
@@ -71,15 +76,21 @@
 
 .form-measure-group #symbol-scope-wrapper{
 	width:220px;
+	height:130px;
 	margin-top:30px;
 	padding-bottom:30px;
 	background-image: url(/static/image/furniture/builder/symbol-scope-background.png);
 	background-position: bottom right;
 	background-repeat: no-repeat;
+	position:relative;
 }
 
 .form-measure-group #symbol-scope{
+	position: absolute;
+	bottom:30px;
+	left:0px;
 	max-width:190px;
+	max-height:100px;
 }
 
 .form-measure-group .form-field{
@@ -94,14 +105,21 @@
 }
 
 #builder-pics-wrapper{
-	width:260px;
+	width:270px;
 	position:absolute;
 	left:660px;
 	height:450px;
 }
 
+#builder-pics-wrapper .piclist{
+	height:400px;
+	overflow: auto;
+}
+
 #builder-pics-wrapper img{
 	max-width: 250px;
+	border:1px solid #DDD;
+	border-radius: 5px;
 }
 
 #builder-pics-wrapper .furniture-pic{
@@ -109,16 +127,26 @@
 	margin:20px 0px;
 }
 
-#builder-pics-wrapper .delete{
+#builder-pics-wrapper .delete-wrapper{
 	position: absolute;
-	top:10px;
-	right:10px;
+	top:0px;
+	left:0px;
+	width:250px;
+	height:40px;
+	background-color: #DDD;
+	opacity: 0.9;
+}
+
+#builder-pics-wrapper .delete{
+	float:right;
+	margin-right: 10px;
 	background-color: #d8421a;
 	padding:5px 10px;
 	color:#FFF;
 	border: 1px solid #CCC;
 	border-radius: 5px;
-	font-size: 12px
+	font-size: 12px;
+	margin-top:3px;
 }
 
 #builder-pics-wrapper .delete:hover{

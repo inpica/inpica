@@ -318,6 +318,7 @@ function AddObjectToCanvas(objectelement, isFurniture){
 				type:objectelement.attr("type"),
 				dim:{x:5, y:5, r:0, w:objectelement.attr("w"), h:objectelement.attr("h")},
 				src:objectelement.attr("staticurl")+objectelement.attr("path"),
+				title:objectelement.attr("title"),
 				mid: objectelement.attr("mid") ? objectelement.attr("mid") : null
 			}], true, isFurniture);
 			break;

@@ -1,31 +1,45 @@
 <div class="prop" furnitureid="{{furniture.id}}" type="image"> 
-	<p>Pulled via AJAX from server</p>
-	<div class="close">X</div> 
-	<div class="propimg"><img src="{{STATIC_URL}}{{furniture.symbolPath}}"/></div> 
-	<div class="measure w"> 
-		<h2>Width</h2> 
-		<div class="measure-group"> 
-			<label>Feet</label><input type="number" class="feet" value="{{furniture.dim.w.feet}}" {%if furniture.user != user%}disabled="disabled"{%endif%} /> 
+	<div class="close">CLOSE X</div>
+	<div class="prop-body">
+		<div class="title"><h1>{{furniture.title}}</h1></div>
+		<div class="propimg"><img src="{{STATIC_URL}}{{furniture.symbolPath}}"/></div> 
+		<div class="measure w"> 
+			<h2>Width</h2> 
+			<div class="measure-group"> 
+				<label>Feet</label><input type="number" class="feet" value="{{furniture.dim.w.feet}}" {%if furniture.user != user%}disabled="disabled"{%endif%} /> 
+			</div> 
+			<div class="measure-group"> 
+				<label>Inches</label><input type="number" class="inches" value="{{furniture.dim.w.inches}}" {%if furniture.user != user%}disabled="disabled"{%endif%}  /> 
+			</div> 
 		</div> 
-		<div class="measure-group"> 
-			<label>Inches</label><input type="number" class="inches" value="{{furniture.dim.w.inches}}" {%if furniture.user != user%}disabled="disabled"{%endif%}  /> 
+		<div class="measure h"> 
+			<h2>Length</h2> 
+			<div class="measure-group"> 
+				<label>Feet</label><input type="number" class="feet" value="{{furniture.dim.h.feet}}" {%if furniture.user != user%}disabled="disabled"{%endif%} /> 
+			</div> 
+			<div class="measure-group"> 
+				<label>Inches</label><input type="number" class="inches" value="{{furniture.dim.h.inches}}" {%if furniture.user != user%}disabled="disabled"{%endif%} /> 
+			</div> 
 		</div> 
-	</div> 
-	<div class="measure h"> 
-		<h2>Height</h2> 
-		<div class="measure-group"> 
-			<label>Feet</label><input type="number" class="feet" value="{{furniture.dim.h.feet}}" {%if furniture.user != user%}disabled="disabled"{%endif%} /> 
+		<div class="controls"> 
+			<input type="button" class="remove" value="Remove" /> 
+			{%if furniture.user == user%}
+				<input type="button" class="apply" value="Apply" /> 
+			{%else%}
+				<input type="button" class="pin" value="Add To My Furniture" />
+			{%endif%}
 		</div> 
-		<div class="measure-group"> 
-			<label>Inches</label><input type="number" class="inches" value="{{furniture.dim.h.inches}}" {%if furniture.user != user%}disabled="disabled"{%endif%} /> 
-		</div> 
-	</div> 
-	<div class="controls"> 
-		<input type="button" class="remove" value="Remove" /> 
-		{%if furniture.user == user%}
-			<input type="button" class="apply" value="Apply" /> 
-		{%else%}
-			<input type="button" class="pin" value="Add To My Furniture" />
-		{%endif%}
-	</div> 
+		<div class="pics">
+			{%if furniture.bucket != 'MY'%}
+				{%for pic in furniture.furniturepic_set.all%}
+					<div class="pic">
+						<img src="{{pic.url}}" />
+					</div>
+				{%endfor%}
+			{%else%}
+				<p>NOT IMPLEMENTED YET</p>
+			{%endif%}
+		</div>
+		
+	</div>
 </div>

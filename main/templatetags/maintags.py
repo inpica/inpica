@@ -1,6 +1,7 @@
 import main.models as m
 from django import template
 from datetime import datetime
+import main.data
 
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
@@ -17,7 +18,7 @@ def FurniturePicker(context, includePins):
 		furnitures = m.Furniture.objects.filter(user=context["user"])
 	else:
 		furnitures = None
-	return {"furnitures":furnitures, "user":context["user"],"STATIC_URL":context['STATIC_URL']}
+	return {"furnitures":furnitures, "default_furnitures":main.data.default_furnitures, "user":context["user"],"STATIC_URL":context['STATIC_URL']}
 
 @register.inclusion_tag('snippet/furniture-dashboard.html',takes_context=True)
 def FurnitureDashboard(context, pageNumber):

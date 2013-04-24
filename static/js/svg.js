@@ -183,6 +183,7 @@ function canvas(config){
 			this.focus.remove();
 			this.robjects = _.reject(this.robjects, function(r){ return r.id == focusid});
 			this.focus_clear();
+			$("#"+this.id).trigger("layoutModified");
 		};
 	};
 
@@ -281,6 +282,7 @@ function outerpath(data){
 	this.transform = null;
 	this.isEditable = null;
 	this.modified = false;
+	this.title = "Exterior Wall";
 	this.pixelLength = function(){return this.element.getTotalLength();};
 	this.startPoint = function(){return Raphael.getPointAtLength(this.mapedPath(), 0);};
 	this.endPoint = function(){return Raphael.getPointAtLength(this.mapedPath(), 9999);};
@@ -425,23 +427,25 @@ function outerpath(data){
 
 	this.prop = function(){
 		var template = '<div class="prop" robjectid="<%= r.id %>" type="outerpath"> \
-			<div class="close">X</div> \
-			<div class="propimg"></div> \
-			<div class="measure"> \
-				<h2>Length</h2> \
-				<div class="measure-group"> \
-					<label>Feet</label><input type="number" class="feet" value="<% print(MeasureToFeetInch(r.dim.l).feet) %>" <% if(!r.isEditable){ %>disabled="disabled"<%}%> /> \
+			<div class="close">CLOSE X</div> \
+			<div class="prop-body"> \
+				<div class="title"><h1><%= r.title %></h1></div> \
+				<div class="measure"> \
+					<h2>Length</h2> \
+					<div class="measure-group"> \
+						<label>Feet</label><input type="number" class="feet" value="<% print(MeasureToFeetInch(r.dim.l).feet) %>" <% if(!r.isEditable){ %>disabled="disabled"<%}%> /> \
+					</div> \
+					<div class="measure-group"> \
+						<label>Inches</label><input type="number" class="inches" value="<% print(MeasureToFeetInch(r.dim.l).inches) %>" <% if(!r.isEditable){ %>disabled="disabled"<%}%> /> \
+					</div> \
 				</div> \
-				<div class="measure-group"> \
-					<label>Inches</label><input type="number" class="inches" value="<% print(MeasureToFeetInch(r.dim.l).inches) %>" <% if(!r.isEditable){ %>disabled="disabled"<%}%> /> \
+				<% if(r.isEditable){ %> \
+					<div class="controls"> \
+						<input type="button" class="remove" value="Remove" /> \
+						<input type="button" class="apply" value="Apply" /> \
+					</div> \
+				<%}%> \
 				</div> \
-			</div> \
-			<% if(r.isEditable){ %> \
-				<div class="controls"> \
-					<input type="button" class="remove" value="Remove" /> \
-					<input type="button" class="apply" value="Apply" /> \
-				</div> \
-			<%}%> \
 		</div>';
 		return $(_.template(template)({r:this}));
 	};
@@ -457,6 +461,7 @@ function innerpath(data){
 	this.transform = null;
 	this.isEditable = null;
 	this.modified = false;
+	this.title = "Interior Wall";
 	this.pixelLength = function(){return this.element.getTotalLength();};
 	this.startPoint = function(){return Raphael.getPointAtLength(Raphael.mapPath(this.element.attr("path"), this.element.matrix), 0);};
 	this.endPoint = function(){return Raphael.getPointAtLength(Raphael.mapPath(this.element.attr("path"), this.element.matrix), 9999);};
@@ -593,23 +598,25 @@ function innerpath(data){
 
 	this.prop = function(){
 		var template = '<div class="prop" robjectid="<%= r.id %>" type="innerpath"> \
-			<div class="close">X</div> \
-			<div class="propimg"></div> \
-			<div class="measure"> \
-				<h2>Length</h2> \
-				<div class="measure-group"> \
-					<label>Feet</label><input type="number" class="feet" value="<% print(MeasureToFeetInch(r.dim.l).feet) %>" <% if(!r.isEditable){ %>disabled="disabled"<%}%> /> \
+			<div class="prop-body"> \
+				<div class="close">CLOSE X</div> \
+				<div class="title"><h1><%= r.title %></h1></div> \
+				<div class="measure"> \
+					<h2>Length</h2> \
+					<div class="measure-group"> \
+						<label>Feet</label><input type="number" class="feet" value="<% print(MeasureToFeetInch(r.dim.l).feet) %>" <% if(!r.isEditable){ %>disabled="disabled"<%}%> /> \
+					</div> \
+					<div class="measure-group"> \
+						<label>Inches</label><input type="number" class="inches" value="<% print(MeasureToFeetInch(r.dim.l).inches) %>" <% if(!r.isEditable){ %>disabled="disabled"<%}%> /> \
+					</div> \
 				</div> \
-				<div class="measure-group"> \
-					<label>Inches</label><input type="number" class="inches" value="<% print(MeasureToFeetInch(r.dim.l).inches) %>" <% if(!r.isEditable){ %>disabled="disabled"<%}%> /> \
-				</div> \
+				<% if(r.isEditable){ %> \
+					<div class="controls"> \
+						<input type="button" class="remove" value="Remove" /> \
+						<input type="button" class="apply" value="Apply" /> \
+					</div> \
+				<%}%> \
 			</div> \
-			<% if(r.isEditable){ %> \
-				<div class="controls"> \
-					<input type="button" class="remove" value="Remove" /> \
-					<input type="button" class="apply" value="Apply" /> \
-				</div> \
-			<%}%> \
 		</div>';
 		return $(_.template(template)({r:this}));
 	};
@@ -750,6 +757,7 @@ function outerarc(data){
 	this.transform = null;
 	this.isEditable = null;
 	this.modified = false;
+	this.title = "Arched Wall"
 	this.pixelLength = function(){
 		//this is not exact length but the triangle length to help with better positioning in this.ft_clear().
 		return 2*Math.sqrt(Math.pow(this.canvas.feetToPixel(this.dim.w)/2, 2) + Math.pow(this.canvas.feetToPixel(this.dim.h),2));
@@ -894,32 +902,35 @@ function outerarc(data){
 
 	this.prop = function(){
 		var template = '<div class="prop" robjectid="<%= r.id %>" type="outerarc"> \
-			<div class="close">X</div> \
-			<div class="propimg"></div> \
-			<div class="measure w"> \
-				<h2>Width</h2> \
-				<div class="measure-group"> \
-					<label>Feet</label><input type="number" class="feet" value="<% print(MeasureToFeetInch(r.dim.w).feet) %>" <% if(!r.isEditable){ %>disabled="disabled"<%}%> /> \
+			<div class="close">CLOSE X</div> \
+			<div class="prop-body"> \
+				<div class="title"><h1><%= r.title %></h1></div> \
+				<div class="propimg"></div> \
+				<div class="measure w"> \
+					<h2>Width</h2> \
+					<div class="measure-group"> \
+						<label>Feet</label><input type="number" class="feet" value="<% print(MeasureToFeetInch(r.dim.w).feet) %>" <% if(!r.isEditable){ %>disabled="disabled"<%}%> /> \
+					</div> \
+					<div class="measure-group"> \
+						<label>Inches</label><input type="number" class="inches" value="<% print(MeasureToFeetInch(r.dim.w).inches) %>" <% if(!r.isEditable){ %>disabled="disabled"<%}%> /> \
+					</div> \
 				</div> \
-				<div class="measure-group"> \
-					<label>Inches</label><input type="number" class="inches" value="<% print(MeasureToFeetInch(r.dim.w).inches) %>" <% if(!r.isEditable){ %>disabled="disabled"<%}%> /> \
+				<div class="measure h"> \
+					<h2>Length</h2> \
+					<div class="measure-group"> \
+						<label>Feet</label><input type="number" class="feet" value="<% print(MeasureToFeetInch(r.dim.h).feet) %>" <% if(!r.isEditable){ %>disabled="disabled"<%}%> /> \
+					</div> \
+					<div class="measure-group"> \
+						<label>Inches</label><input type="number" class="inches" value="<% print(MeasureToFeetInch(r.dim.h).inches) %>" <% if(!r.isEditable){ %>disabled="disabled"<%}%> /> \
+					</div> \
 				</div> \
+				<% if(r.isEditable){ %> \
+					<div class="controls"> \
+						<input type="button" class="remove" value="Remove" /> \
+						<input type="button" class="apply" value="Apply" /> \
+					</div> \
+				<%}%> \
 			</div> \
-			<div class="measure h"> \
-				<h2>Height</h2> \
-				<div class="measure-group"> \
-					<label>Feet</label><input type="number" class="feet" value="<% print(MeasureToFeetInch(r.dim.h).feet) %>" <% if(!r.isEditable){ %>disabled="disabled"<%}%> /> \
-				</div> \
-				<div class="measure-group"> \
-					<label>Inches</label><input type="number" class="inches" value="<% print(MeasureToFeetInch(r.dim.h).inches) %>" <% if(!r.isEditable){ %>disabled="disabled"<%}%> /> \
-				</div> \
-			</div> \
-			<% if(r.isEditable){ %> \
-				<div class="controls"> \
-					<input type="button" class="remove" value="Remove" /> \
-					<input type="button" class="apply" value="Apply" /> \
-				</div> \
-			<%}%> \
 		</div>';
 		return $(_.template(template)({r:this}));
 	};
@@ -937,6 +948,7 @@ function image(data){
 	this.transform = null;
 	this.isEditable = null;
 	this.modified = false;
+	this.title = data.title;
 
 	this.draw = function(){
 
@@ -1033,7 +1045,8 @@ function image(data){
 			type:"image",
 			dim:this.dim,
 			src:this.src,
-			mid: this.mid ? this.mid : null
+			mid: this.mid ? this.mid : null,
+			title: this.title
 		}
 	};
 
@@ -1051,32 +1064,35 @@ function image(data){
 			return $(propHTML);
 		} else{
 			var template = '<div class="prop" robjectid="<%= r.id %>" type="image"> \
-				<div class="close">X</div> \
-				<div class="propimg"><img src="<%= r.src %>"/></div> \
-				<div class="measure w"> \
-					<h2>Width</h2> \
-					<div class="measure-group"> \
-						<label>Feet</label><input type="number" class="feet" value="<% print(MeasureToFeetInch(r.dim.w).feet) %>" <% if(!r.isEditable){ %>disabled="disabled"<%}%> /> \
+				<div class="close">CLOSE X</div> \
+				<div class="prop-body"> \
+					<div class="title"><h1><%= r.title %></h1></div> \
+					<div class="propimg"><img src="<%= r.src %>"/></div> \
+					<div class="measure w"> \
+						<h2>Width</h2> \
+						<div class="measure-group"> \
+							<label>Feet</label><input type="number" class="feet" value="<% print(MeasureToFeetInch(r.dim.w).feet) %>" <% if(!r.isEditable){ %>disabled="disabled"<%}%> /> \
+						</div> \
+						<div class="measure-group"> \
+							<label>Inches</label><input type="number" class="inches" value="<% print(MeasureToFeetInch(r.dim.w).inches) %>" <% if(!r.isEditable){ %>disabled="disabled"<%}%> /> \
+						</div> \
 					</div> \
-					<div class="measure-group"> \
-						<label>Inches</label><input type="number" class="inches" value="<% print(MeasureToFeetInch(r.dim.w).inches) %>" <% if(!r.isEditable){ %>disabled="disabled"<%}%> /> \
+					<div class="measure h"> \
+						<h2>Length</h2> \
+						<div class="measure-group"> \
+							<label>Feet</label><input type="number" class="feet" value="<% print(MeasureToFeetInch(r.dim.h).feet) %>" <% if(!r.isEditable){ %>disabled="disabled"<%}%> /> \
+						</div> \
+						<div class="measure-group"> \
+							<label>Inches</label><input type="number" class="inches" value="<% print(MeasureToFeetInch(r.dim.h).inches) %>" <% if(!r.isEditable){ %>disabled="disabled"<%}%> /> \
+						</div> \
 					</div> \
+					<% if(r.isEditable){ %> \
+						<div class="controls"> \
+							<input type="button" class="remove" value="Remove" /> \
+							<input type="button" class="apply" value="Apply" /> \
+						</div> \
+					<%}%> \
 				</div> \
-				<div class="measure h"> \
-					<h2>Height</h2> \
-					<div class="measure-group"> \
-						<label>Feet</label><input type="number" class="feet" value="<% print(MeasureToFeetInch(r.dim.h).feet) %>" <% if(!r.isEditable){ %>disabled="disabled"<%}%> /> \
-					</div> \
-					<div class="measure-group"> \
-						<label>Inches</label><input type="number" class="inches" value="<% print(MeasureToFeetInch(r.dim.h).inches) %>" <% if(!r.isEditable){ %>disabled="disabled"<%}%> /> \
-					</div> \
-				</div> \
-				<% if(r.isEditable){ %> \
-					<div class="controls"> \
-						<input type="button" class="remove" value="Remove" /> \
-						<input type="button" class="apply" value="Apply" /> \
-					</div> \
-				<%}%> \
 			</div>';
 			return $(_.template(template)({r:this}));
 		}
@@ -1154,7 +1170,7 @@ function DistanceBetween(point1, point2){
 function MeasureToFeetInch(measure){
 	return {
 		feet: Math.floor(measure),
-		inches: (Math.floor(measure)%1)*12
+		inches: Math.round((measure%1)*12)
 	}
 };
 

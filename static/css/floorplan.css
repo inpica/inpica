@@ -98,14 +98,14 @@
 
 #picker-wrapper .object img{
 	max-width:80px;
-	max-height:80px;
+	max-height:70px;
 	float:left;
 	margin:10px 30px 10px 20px;
 }
 
 #picker-wrapper .object p{
 	padding: 20px;
-	margin: 0px;
+	margin: 0px 0px 0px 140px;
 	color:#666;
 }
 
@@ -229,13 +229,13 @@
 }
 
 .measure{
-	width:100px;
+	width:120px;
 	padding:10px;
 }
 
 .measure-group{
 	float:left;
-	width:50px;
+	width:60px;
 }
 
 .measure label{
@@ -244,7 +244,7 @@
 }
 
 .measure input{
-	width:40px;
+	width:50px;
 	padding:5px;
 	margin-bottom:10px;
 	font-size:14px;
@@ -324,36 +324,89 @@
 	padding:20px;
 	right:50px;
 	top:25px;
-	max-width:300px;
-	max-height:400px;
-	/*background-color: #FFF;*/
+	width:300px;
+	max-height:420px;
 	background-color:#7497bc;
 	display:none;
-	overflow: auto;
 	-moz-box-shadow: 4px 4px 9px #c6d2de;
 	box-shadow: 4px 4px 9px #c6d2de;
 	border:1px solid #d9e8e6;
 }
 
+#prop-wrapper .prop{
+	position: relative;
+}
+
+#prop-wrapper .prop-body{
+	max-height: 420px;
+	overflow: auto;
+}
+
 #prop-wrapper .close{
-	text-align: right;
-	color:#333;
-	font-weight:bold;
+	color:#FFF;
+	position: absolute;
+	right:-30px;
+	top:-30px;
+	font-size: 16px;
+	padding:5px 10px;
+	background-color: #ed522e;
 }
 
 #prop-wrapper .close:hover{
 	cursor:pointer;
-	color:#FFF;
+	background-color: #e54823;
+}
+
+#prop-wrapper .propimg{
+	background-image: url(/static/image/furniture/prop-background.png);
+	width:220px;
+	height:130px;
+	background-repeat: no-repeat;
+	position: relative;
+	display: inline-block;
 }
 
 #prop-wrapper .propimg img{
-	max-width: 100px;
-	max-height:100px;
+	position:absolute;
+	bottom:40px;
+	left:0px;
+	max-width:190px;
+	max-height:90px;
+}
+
+#prop-wrapper .measure{
+	display: inline-block;
+	width:120px;
 }
 
 #prop-wrapper .measure h2{
 	margin-bottom:5px;
 	font-size:18px;
+}
+
+#prop-wrapper .controls{
+	padding:10px 10px;
+	background-color: #5780ab;
+	margin-right: 10px
+}
+
+#prop-wrapper .controls input{
+	padding:5px 10px;
+	font-size: 16px;
+}
+
+#prop-wrapper .pics{
+	width:270px;
+}
+
+#prop-wrapper .pics .pic{
+	margin:10px 0px;
+	border: 1px solid #EEE;
+	border-radius: 5px;
+}
+
+#prop-wrapper .pics .pic img{
+	max-width: 270px;
 }
 
 #furnishings .furnishing-list{

@@ -9,7 +9,7 @@
 
 	<div class="body">
 		<div id="picker-wrapper">
-			<h2>What is it?</h2>
+			<h2>What is it? <span class="hint">(Select One)</span></h2>
 			{% FurniturePicker False %}
 		</div>
 		
@@ -20,7 +20,7 @@
 				{{furniturebuilder.builderform.title}}
 			</div>
 			<div class="form-measure-group">
-				<h3>Symbol</h3>
+				<!--<h3>Symbol</h3>-->
 				<div id="symbol-scope-wrapper">
 					<img id="symbol-scope" src=""/>
 				</div>
@@ -40,17 +40,17 @@
 		<div id="builder-pics-wrapper">
 		<h2>Pics</h2>
 		{%if furniturebuilder.isPin%}
-			<div id="pinpics">
+			<div id="pinpics" class="piclist">
 				{%for picurl in furniturebuilder.picurls%}
 				<div class="furniture-pic">
-					<img src="{{picurl}}" />
-					<div class="delete" onclick="$(this).parent().remove();">Delete</div>
+					<img class="pinpic" src="{{picurl}}" />
+					<div class="delete-wrapper"><div class="delete" onclick="$(this).parents('.furniture-pic').remove();">Delete</div></div>
 				</div>
 				{%endfor%}
 			</div>
 		{%else%}
 			<p>TODO - form to upload pics</p>
-			<div id="userpics">
+			<div id="userpics" class="piclist">
 				<p>TODO - list of pics from user</p>
 			</div>
 		{%endif%}
@@ -126,7 +126,7 @@ function FurnitureBuilderSubmit(isPin){
 	formdata.append("url", "{{furniturebuilder.url}}");
 
 	if(isPin){
-		$("#pinpics .pinpic").each(function(){
+		$("#pinpics .furniture-pic").each(function(){
 			formdata.append("picurl", $("img", this).attr("src"));
 		})
 	} else{

@@ -232,7 +232,7 @@ def Pin(request, id, ss):
 	return render_to_response('main/pin.html',
 		{"furniturebuilder":{
 			"builderform":form,
-			"symbolid":request.GET.get('symbolid', 1),
+			"symbolid":request.GET.get('symbolid', 1001),
 			"url":request.GET.get("url"),
 			"isPin":True,
 			"picurls":request.GET.getlist("picurl"),
