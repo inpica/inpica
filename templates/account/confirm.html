@@ -4,12 +4,16 @@
 <meta http-equiv="refresh" content="5;url=http://127.0.0.1:61002/">
 {%endblock%}
 {%block body%}
-	<h1>Confirm</h1>
+	<link rel="stylesheet" href="{{ STATIC_URL }}css/bootstrap.css">
+	<link rel="stylesheet" href="{{ STATIC_URL }}css/bootstrap-responsive.css">
+	
 	{%if confirmed%}
-	<p>Thank you. Your account has been confirmed and activated</p>
+	<h3>Welcome to Inpica!</h3>
+	<p>Your account has been confirmed and activated. </p>
 	{%else%}
-	<p>There was an error confirming your account.</p>
+	<h3>Uh-oh..</h3>
+	<p>There was an error confirming your account, please try refreshing this page.</p>
 	{%endif%}
-	<p>You are being redirected to the main page. If you do not wish to wait click here</p>
-	<a href="/">Click here</a>
+	<p>If you are not redirected within a few seconds please click here: </p>
+	<a href="/">Redirect to Inpica</a>
 {%endblock%}
