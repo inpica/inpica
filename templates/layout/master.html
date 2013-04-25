@@ -2,32 +2,54 @@
 <html>
 <head>
 	<title>{%block title%}MASTER TITLE{%endblock%}</title>
+
 	<script type="text/javascript" src="{{ STATIC_URL }}js/lib/jquery-1.9.1.min.js"></script>
 	<script type="text/javascript" src="{{ STATIC_URL }}js/lib/jquery-ui-1.10.2.custom.min.js"></script>
 	<script type="text/javascript" src="{{ STATIC_URL }}js/lib/raphael-min.js"></script>
 	<script type="text/javascript" src="{{ STATIC_URL }}js/lib/raphael.free_transform.js"></script>
 	<script type="text/javascript" src="{{ STATIC_URL }}js/lib/underscore-min.js"></script>
 	<script type="text/javascript" src="{{ STATIC_URL }}js/svg.js"></script>
+  <script src="{{ STATIC_URL }}js/bootstrap.js"></script>
 	
-	<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/main.css"/>
-	<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/jquery-ui-1.10.2.custom.css"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/bootstrap.css">
+  <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/bootstrap-responsive.css">
+  <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/font-awesome.min.css">
+  <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/jquery-ui-1.10.2.custom.css"/>
+
+  <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/main.css"/>
+ 
 	{%block head%}{%endblock%}
 </head>
 <body>
-	<div id="header">
-		<div id="login-wrapper">
+
+ <!-- NAVIGATION BAR  ==================================== -->
+  <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar-inner">
+      <div class="container">
+
+        <a class="brand" href="#">INPICA</a>
+        <div id="screen"></div>
+        <div id="createform-wrapper">
+          {%include 'account/create.html'%}
+        </div>
+
+        <div id="login-wrapper">
           {%if user.is_authenticated%}
             {%include 'account/logged.html'%}
           {%else%}
             {%include 'account/login.html'%}
           {%endif%}
         </div>
-         <div id="createform-wrapper">
-      		{%include 'account/create.html'%}
-    	</div>
-    <div id="screen"></div>
-	</div>
+      </div>
+    </div>  
+  </div> 
+  </div>
+  <!-- the screen doesnt cover some elements, why? -->
+
+
 	{%block body%}{%endblock%}
+
 	<div id="footer"></div>
 </body>
 </html>
