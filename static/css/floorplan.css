@@ -342,7 +342,7 @@
 	overflow: auto;
 }
 
-#prop-wrapper .close{
+#prop-wrapper .closeprop{
 	color:#FFF;
 	position: absolute;
 	right:-30px;
@@ -352,7 +352,7 @@
 	background-color: #ed522e;
 }
 
-#prop-wrapper .close:hover{
+#prop-wrapper .closeprop:hover{
 	cursor:pointer;
 	background-color: #e54823;
 }

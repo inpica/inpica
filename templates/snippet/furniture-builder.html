@@ -148,13 +148,13 @@ function FurnitureBuilderSubmit(isPin){
 
 function SubmitHandler(data, isPin){
 	$("#furniture-builder .body").empty().append(data);
-	$("#furniture-builder .submit").val("Close").on("click", function(){
-		if(isPin){
-			window.top.document.getElementById('inpica-iframe').runtimeStyle.display='none';
-		} else{
+	if(isPin){
+		$("#furniture-builder .submit").remove();
+	} else{
+		$("#furniture-builder .submit").val("Close").on("click", function(){
 			$("#furniture-builder").remove();
-		}
-	});
+		});
+	}
 };
 
 
