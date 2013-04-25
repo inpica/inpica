@@ -427,7 +427,7 @@ function outerpath(data){
 
 	this.prop = function(){
 		var template = '<div class="prop" robjectid="<%= r.id %>" type="outerpath"> \
-			<div class="close">CLOSE X</div> \
+			<div class="closeprop">CLOSE X</div> \
 			<div class="prop-body"> \
 				<div class="title"><h1><%= r.title %></h1></div> \
 				<div class="measure"> \
@@ -599,7 +599,7 @@ function innerpath(data){
 	this.prop = function(){
 		var template = '<div class="prop" robjectid="<%= r.id %>" type="innerpath"> \
 			<div class="prop-body"> \
-				<div class="close">CLOSE X</div> \
+				<div class="closeprop">CLOSE X</div> \
 				<div class="title"><h1><%= r.title %></h1></div> \
 				<div class="measure"> \
 					<h2>Length</h2> \
@@ -902,7 +902,7 @@ function outerarc(data){
 
 	this.prop = function(){
 		var template = '<div class="prop" robjectid="<%= r.id %>" type="outerarc"> \
-			<div class="close">CLOSE X</div> \
+			<div class="closeprop">CLOSE X</div> \
 			<div class="prop-body"> \
 				<div class="title"><h1><%= r.title %></h1></div> \
 				<div class="propimg"></div> \
@@ -1064,7 +1064,7 @@ function image(data){
 			return $(propHTML);
 		} else{
 			var template = '<div class="prop" robjectid="<%= r.id %>" type="image"> \
-				<div class="close">CLOSE X</div> \
+				<div class="closeprop">CLOSE X</div> \
 				<div class="prop-body"> \
 					<div class="title"><h1><%= r.title %></h1></div> \
 					<div class="propimg"><img src="<%= r.src %>"/></div> \

@@ -38,9 +38,9 @@ urlpatterns = patterns('',
     url(r'^furniture/builder-submit$','main.views.FurnitureBuilderSubmit'),
     
     url(r'^pin/(?P<id>\d+)/(?P<ss>.+)$','main.views.Pin'),
-    url(r'^pin/save/(?P<id>\d+)/(?P<ss>.+)$','main.views.PinSave')
+    url(r'^pin/save/(?P<id>\d+)/(?P<ss>.+)$','main.views.PinSave'),
 
-
+    url(r'^bookmarklet/(?P<id>\d+)/(?P<ss>.+)$','main.views.Bookmarklet'),
 
     # Uncomment the admin/doc line below to enable admin documentation:
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),

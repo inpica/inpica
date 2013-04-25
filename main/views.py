@@ -232,7 +232,7 @@ def Pin(request, id, ss):
 	return render_to_response('main/pin.html',
 		{"furniturebuilder":{
 			"builderform":form,
-			"symbolid":request.GET.get('symbolid', 1001),
+			"symbolid":request.GET.get('type', 1001),
 			"url":request.GET.get("url"),
 			"isPin":True,
 			"picurls":request.GET.getlist("picurl"),
@@ -263,3 +263,6 @@ def PinSave(request, id, ss):
 		pics.append(m.FurniturePic(furniture=furniture, url=url))
 	m.FurniturePic.objects.bulk_create(pics)
 	return render_to_response("snippet/pin-success.html", context_instance=RequestContext(request))
+
+def Bookmarklet(request, id, ss):
+	return render_to_response("bookmarklet.js", {"id":id, "ss":ss}, context_instance=RequestContext(request))
