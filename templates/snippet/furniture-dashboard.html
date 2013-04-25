@@ -1,20 +1,20 @@
-
-<div class="pagination_furniture">
-		<span class="step-links">
-	        {% if furniture.has_previous %}
-	            <span onClick="renderpage({{ furniture.previous_page_number }})">previous</span>
-	        {% endif %}
-
-	        <span class="current">
-	            Page {{ furniture.number }} of {{ furniture.paginator.num_pages }}.
-	        </span>
-
-	        {% if furniture.has_next %}
-	        	<span onClick="renderpage({{ furniture.next_page_number }})">next</span>
-	        {% endif %}
-    	</span>
-</div>
 <p class="tablecaption">Furniture</p>
+	<div class="table-container">
+		<div class="pagination">
+			<span class="step-links">
+		        {% if furniture.has_previous %}
+		            <span class="click" onClick="renderpage({{ furniture.previous_page_number }})">&lt;&lt;</span>
+		        {% endif %}
+
+		        <span class="current">
+		            Page {{ furniture.number }} of {{ furniture.paginator.num_pages }}
+		        </span>
+
+		        {% if furniture.has_next %}
+		        	<span class="click" onClick="renderpage({{ furniture.next_page_number }})">&gt;&gt;</span>
+		        {% endif %}
+	    	</span>
+		</div>
 	<table id="floorplans">
 		<tr>
 			<th></th>
@@ -38,6 +38,7 @@
 			</tr>
 	{%endfor%}
 	</table>
+	</div>
 <script type="text/javascript">
 	function renderpage(page){
 		$.ajax({

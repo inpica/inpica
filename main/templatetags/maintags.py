@@ -32,3 +32,22 @@ def FurnitureDashboard(context, pageNumber):
 	except EmptyPage:
 		furniture = paginator_furniture.page(paginator_furniture.num_pages)
 	return {'furniture':furniture, "STATIC_URL":context['STATIC_URL']}
+
+@register.inclusion_tag('snippet/comments-dashboard.html', takes_context = True)
+def CommentsDashboard(context, pageNumber):
+	#floorplan = m.Floorplan.objects.filter(user=context['user']).order_by('-RCD')
+	#comments_list = m.Furnishing.objects.filter(floorplan__exact=context['user']).exclude()
+	comments_list = m.Furnishing.objects.filter(floorplan__user_id__exact=context['user'].pk)
+	comments_list = comments_list.exclude(user_id=context['user'])
+	print comments_list
+	'''Blog.objects.filter(entry__headline__contains='Lennon')
+	paginator_furniture = Paginator(furniture_list, 5) 
+	page_furniture = pageNumber
+	try:
+		furniture = paginator_furniture.page(page_furniture)
+	except PageNotAnInteger:
+		furniture = paginator_furniture.page(1)
+	except EmptyPage:
+		furniture = paginator_furniture.page(paginator_furniture.num_pages)
+	return {'furniture':furniture, "STATIC_URL":context['STATIC_URL']}'''
+	return {'comments': comments_list, "STATIC_URL":context['STATIC_URL']}

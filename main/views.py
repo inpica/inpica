@@ -60,6 +60,7 @@ def Logout(request):
 	logout(request)
 	return HttpResponseRedirect('/')
 
+@csrf_exempt
 def Create(request):
 	form = main.forms.Create()
 	if request.method == 'POST':
@@ -103,6 +104,11 @@ def Dashboard(request):
 @csrf_exempt
 def FurnitureDashboard(request, page):
 	return render_to_response('snippet/furniture-dashboard.html', maintags.FurnitureDashboard(RequestContext(request),page))
+
+@login_required
+@csrf_exempt
+def FurnitureDashboard(request, page):
+	return render_to_response('snippet/comments-dashboard.html', maintags.CommentsDashboard(RequestContext(request),page))
 
 @login_required
 def NewFloorplan(request):

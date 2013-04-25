@@ -3,12 +3,9 @@
 }
 
 table{
-	margin-left: 10px;
-
 	color:#666;
 	text-shadow: 1px 1px 0px #fff;
 	background:#eaebec;
-	margin:20px;
 	border:#ccc 1px solid;
 
 	-moz-border-radius:3px;
@@ -36,7 +33,6 @@ p.tablecaption{
 	padding: 0;
 	margin-top: 10px;
 	margin-left: 30px;
-	margin-bottom: 10px
 }
 
 th  {
@@ -84,4 +80,32 @@ img.big-image {
 
 td.symbol img{
 	height: 30px;
+}
+
+.pagination {
+	font-size: 14px;
+	text-shadow: 0px 1px 0px #ffffff;
+	text-align: right;
+}
+
+.table-container {
+	margin: 0px 20px 20px 20px ;
+}
+.click {
+	font-weight: bold;
+	border-top: 1px solid #eee;
+	-webkit-transition: background 0.5s linear;
+    -moz-transition: background 0.5s linear;
+    -ms-transition: background 0.5s linear;
+    -o-transition: background 0.5s linear;
+    transition: background 0.5s linear;
+}
+
+.click:hover{
+	cursor: pointer;
+	background: #e1e1e1;
+    border-top: 1px solid #d0d0d0;
+}
+
+.outer-container{
 }

@@ -263,6 +263,8 @@
     }
 
     function cancelOperation(){
+      $('#createform-wrapper').find("input[type=text], textarea").val("");
+      $('#createform-wrapper').find("input[type=password], textarea").val("");
       $('#createform-wrapper').css('display', 'none');$('#screen').css('display', 'none');
       $('body').css({'overflow':'visible'});
     }
