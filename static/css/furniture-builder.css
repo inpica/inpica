@@ -32,7 +32,7 @@
 	width:960px;
 	overflow: auto;
 	background-color: #f3f3f3;
-	height:600px;
+	height:650px;
 	border: 1px solid #CCC;
 	border-radius: 5px;
 	margin:0 auto;
@@ -108,11 +108,11 @@
 	width:270px;
 	position:absolute;
 	left:660px;
-	height:450px;
+	height:500px;
 }
 
 #builder-pics-wrapper .piclist{
-	height:400px;
+	height:450px;
 	overflow: auto;
 }
 

@@ -175,7 +175,7 @@ $(document).ready(function(){
 		c.focus_set(c.focus);
 	});
 
-	$("#prop-wrapper").on("click", ".close", function(){
+	$("#prop-wrapper").on("click", ".closeprop", function(){
 		c.focus_clear();
 	});
 
