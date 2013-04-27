@@ -20,23 +20,40 @@
 	<div id="canvas-wrapper">
 		<div class="toolbar">
 			<div id="zoom"></div>
-			<div id="clear-furnishing" class="tool">Clear All Furnitures</div>
-			<div id="undo-changes" class="tool">Undo All Changes</div>
+			<div id="clear-furnishing" class="tool"><span class="icon-remove icon"></span>Remove All Furnitures</div>
+			<div id="undo-changes" class="tool"><span class="icon-undo icon"></span>Undo Changes to Furnshing</div>
 		</div>
 		<div id="main-canvas"></div>
 		<div id="prop-wrapper"></div>
 	</div>
 
 	<div id="content-wrapper">
+
+		<div id="ideapics">
+			<h2>Idea Board</h2>
+			<input type="file" id="ideapic-file" />
+			<div id="ideapic-list">
+				{%for ideapic in floorplan.ideapic_set.all %}
+					{%include 'snippet/ideapic.html'%}
+				{%endfor%}
+			</div>
+		</div>
+
 		<div id="furnishings">
 
-			<div id="add-furnishing">
-				<textarea class="comment" placeholder="Comment..."></textarea>
-				<div id="furnishing-section">
-					<p class="instructions">Add, remove and/or move furniture on the floorplan to save furnishing with comment.</p>
-					<input type="text" class="title" placeholder="Furnishing Title..." />
+			<div id="add-furnishing-wrapper">
+
+				<div id="add-furnishing-btn" active="0"><span class="text">Add Comment</span><span class="icon-chevron-down icon"></span></div>
+
+				<div id="add-furnishing">
+					<textarea class="comment" placeholder="Comment..."></textarea>
+					<div id="furnishing-section">
+						<p class="instructions">Add, remove and/or move furniture on the floorplan to save furnishing with comment.</p>
+						<input type="text" class="title" placeholder="Furnishing Title..." />
+					</div>
+					<input id="submit-furnishing" type="button" value="Save" />
 				</div>
-				<input id="submit-furnishing" type="button" value="Save" />
+
 			</div>
 
 			<h2>{{user.username}}'s Comments &amp; Furnishings</h2>

@@ -28,6 +28,7 @@ urlpatterns = patterns('',
     url(r'^floorplan/save/furnishing/(?P<id>\d+)$', 'main.views.SaveFurnishing'),
     url(r'^floorplan/delete/furnishing/(?P<id>\d+)$', 'main.views.DeleteFurnishing'),
     url(r'^floorplan/set-default/furnishing/(?P<id>\d+)$', 'main.views.SetDefaultFurnishing'),
+    url(r'^floorplan/ideapic-upload/(?P<id>\d+)$', 'main.views.IdeapicUpload'),
 
     url(r'^furniture/prop/(?P<id>\d+)$', 'main.views.FurnitureProp'),
 

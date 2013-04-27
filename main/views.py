@@ -272,3 +272,14 @@ def PinSave(request, id, ss):
 
 def Bookmarklet(request, id, ss):
 	return render_to_response("bookmarklet.js", {"id":id, "ss":ss}, context_instance=RequestContext(request))
+
+
+@login_required
+@csrf_exempt
+def IdeapicUpload(request, id):
+	if request.method == "POST":
+		ideapic = m.IdeaPic(floorplan=m.Floorplan.objects.get(pk=id))
+		ideapic.image = request.FILES["file"]
+		ideapic.save()
+		return render_to_response('snippet/ideapic.html', {'ideapic':ideapic}, context_instance=RequestContext(request))
+	return HttpResponse("Error - this was not uploaded correctly.")

@@ -43,7 +43,7 @@ class Floorplan(models.Model):
 
 
 def IdeaPic_Filename(instance, filename):
-	return '/'.join(['image/floorplan/idea', instance.floorplan.id,str(instance.id) + filename.split('.')[-1]])
+	return '/'.join(['image/floorplan/idea', str(instance.floorplan.id), str(instance.id) + filename.split('.')[-1]])
 
 class IdeaPic(models.Model):
 	'''

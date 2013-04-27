@@ -121,6 +121,16 @@ $(document).ready(function(){
 		}
 		
 	});
+
+	$("#add-furnishing-btn").on("click", function(){
+		if($(this).attr("active") == "1"){
+			$("#add-furnishing").hide();
+			$(this).attr("active", 0).find(".icon").removeClass().addClass("icon-chevron-down icon");
+		} else{
+			$("#add-furnishing").show();
+			$(this).attr("active", 1).find(".icon").removeClass().addClass("icon-chevron-up icon");;
+		}
+	})
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -194,10 +204,12 @@ function ResetAddFurnishing(){
 
 function ResetAddFurnishing_Title(){
 	$("#add-furnishing .title").val('').hide();
-	$("#add-furnishing .instructions").show("fast");	
+	$("#add-furnishing .instructions").show("fast");
+	$("#add-furnishing-btn .text").text("Add Comment");	
 };
 
 function ShowAddFurnishing_Title(){
+	$("#add-furnishing-btn .text").text("Add Comment + Save Furnishing");
 	$("#add-furnishing .title").show("fast");
 	$("#add-furnishing .instructions").hide();	
 };
@@ -274,6 +286,8 @@ function DeleteFurnishing(id){
 };
 
 function SetDefaultFurnishing(id){
+	$("#furnishings .furnishing").attr("default", 0).filter("[furnishingid='"+id+"']").attr("default", 1);
+
 	$.ajax({
 		type:"POST",
 		url:"/floorplan/set-default/furnishing/"+id,
@@ -431,4 +445,46 @@ function MapUploadHandler(data){
 	$("#map-remove-control").show();
     c.addMap(data);
     
+};
+
+
+//Idea Pic///////////////////////////////////////////////////////////////////////////////////////////////////////
+
+$(document).ready(function(){
+
+	$('#ideapic-file').change(function(e){
+		var file = e.target.files[0],
+            imageType = /image.*/;
+
+        if (!file.type.match(imageType)){
+            alert("This is not an image file!");
+        };
+
+        var reader = new FileReader();
+        reader.onload = ideaPicFileOnload;
+        reader.readAsDataURL(file);  
+	});
+
+	function ideaPicFileOnload(e) {
+    	var img = new Image;
+    	img.src = e.target.result;
+
+    	formdata = new FormData()
+    	formdata.append('file',$("#ideapic-file")[0].files[0])
+
+    	$.ajax({
+    		type:"POST",
+    		url:"/floorplan/ideapic-upload/"+floorplan.id,
+    		data:formdata,
+    		processData: false,
+  			contentType: false,
+  			success:IdeapicUploadHandler
+    	});
+
+	};
+
+});
+
+function IdeapicUploadHandler(data){
+	$("#ideapic-list").append(data);
 };
