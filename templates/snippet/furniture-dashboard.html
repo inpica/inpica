@@ -15,28 +15,33 @@
 		        {% endif %}
 	    	</span>
 		</div>
-	<table id="floorplans">
+	<table id="furniture">
 		<tr>
-			<th></th>
+			<th class="first"></th>
 			<th>Title</th>
 			<th>Pic</th>
-			<th>Created On</th>
-			<th>Bucket</th>
-			<th>Height</th>
-			<th>Width</th>
+			<th >Created On</th>
+			<th class="adjust">Bucket</th>
+			<th class="small">Height</th>
+			<th class="small">Width</th>
 		</tr>
-	{%for f in furniture%}
-			<tr>
-				<td class="symbol"><img src="{{STATIC_URL}}{{f.symbol}}"/></td>
-				<td>{{f.title}}</td>
-				<td><div class="external-img"><img class="small-image" src="{{f.url}}"/><img class="big-image" src="{{f.url}}"/></div>
-				<div class="external-img"><img class="small-image" src="http://www.ikea.com/us/en/images/products/vejmon-coffee-table__0089487_PE221828_S4.JPG"/><img class="big-image" src="http://www.ikea.com/us/en/images/products/vejmon-coffee-table__0089487_PE221828_S4.JPG"/></td>
-				<td>{{f.RCD}}</td>
-				<td>{{f.bucket}}</td>
-				<td>{{f.h}}</td>
-				<td>{{f.w}}</td>
-			</tr>
-	{%endfor%}
+	{%if furniture|length != 0%}
+		{%for f in furniture%}
+				<tr>
+					<td class="symbol first"><img src="{{STATIC_URL}}{{f.symbol}}"/></td>
+					<td >{{f.title}}</td>
+					<td><div class="external-img"><img class="small-image" src="{{f.url}}"/><img class="big-image" src="{{f.url}}"/></div>
+					<div class="external-img"><img class="small-image" src="http://www.ikea.com/us/en/images/products/vejmon-coffee-table__0089487_PE221828_S4.JPG"/><img class="big-image" src="http://www.ikea.com/us/en/images/products/vejmon-coffee-table__0089487_PE221828_S4.JPG"/></td>
+					<td>{{f.RCD}}</td>
+					<td class="adjust">{{f.bucket}}</td>
+					<td class="small">{{f.h}}</td>
+					<td class="small">{{f.w}}</td>
+				</tr>
+		{%endfor%}
+	{%else%}
+		<td></td>
+		<!--<td colspan="6" align="center">No data available</td>-->
+	{%endif%}
 	</table>
 	</div>
 <script type="text/javascript">

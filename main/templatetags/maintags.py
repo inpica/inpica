@@ -22,7 +22,7 @@ def FurniturePicker(context, includePins):
 
 @register.inclusion_tag('snippet/furniture-dashboard.html',takes_context=True)
 def FurnitureDashboard(context, pageNumber):
-	furniture_list = m.Furniture.objects.filter(user=context['user']).order_by('-RCD')
+	furniture_list = m.Furniture.objects.filter(user=context['user']).order_by('-RCD') 
 	paginator_furniture = Paginator(furniture_list, 5) 
 	page_furniture = pageNumber
 	try:
@@ -33,21 +33,31 @@ def FurnitureDashboard(context, pageNumber):
 		furniture = paginator_furniture.page(paginator_furniture.num_pages)
 	return {'furniture':furniture, "STATIC_URL":context['STATIC_URL']}
 
-@register.inclusion_tag('snippet/comments-dashboard.html', takes_context = True)
-def CommentsDashboard(context, pageNumber):
-	#floorplan = m.Floorplan.objects.filter(user=context['user']).order_by('-RCD')
-	#comments_list = m.Furnishing.objects.filter(floorplan__exact=context['user']).exclude()
-	comments_list = m.Furnishing.objects.filter(floorplan__user_id__exact=context['user'].pk)
-	comments_list = comments_list.exclude(user_id=context['user'])
-	print comments_list
-	'''Blog.objects.filter(entry__headline__contains='Lennon')
-	paginator_furniture = Paginator(furniture_list, 5) 
-	page_furniture = pageNumber
+@register.inclusion_tag('snippet/my-comments-dashboard.html', takes_context = True)
+def MyCommentsDashboard(context, pageNumber):
+	comments_list  = m.Furnishing.objects.filter(user_id=context['user']).exclude(floorplan__user=context['user']).select_related(depth=2) #select all furnishings created by me on floorplans excluding mine
+	for a in comments_list:
+		print dir(a.floorplan)
+	paginator_comments = Paginator(comments_list, 5) 
+	page_comments = pageNumber
 	try:
-		furniture = paginator_furniture.page(page_furniture)
+		comments = paginator_comments.page(page_comments)
 	except PageNotAnInteger:
-		furniture = paginator_furniture.page(1)
+		comments = paginator_comments.page(1)
 	except EmptyPage:
-		furniture = paginator_furniture.page(paginator_furniture.num_pages)
-	return {'furniture':furniture, "STATIC_URL":context['STATIC_URL']}'''
-	return {'comments': comments_list, "STATIC_URL":context['STATIC_URL']}
+		comments = paginator_comments.page(page_comments.num_pages)
+	return {'mycomments':comments, "STATIC_URL":context['STATIC_URL']}
+
+@register.inclusion_tag('snippet/other-comments-dashboard.html', takes_context = True)
+def OtherCommentsDashboard(context, pageNumber):
+	comments_list = m.Furnishing.objects.filter(floorplan__user=context['user']).exclude(user_id=context['user']).select_related(depth=1) #select all furnishings created by others on my floorplans, excluding my own comments
+	paginator_comments = Paginator(comments_list, 5) 
+	page_comments = pageNumber
+	try:
+		comments = paginator_comments.page(page_comments)
+	except PageNotAnInteger:
+		comments = paginator_comments.page(1)
+	except EmptyPage:
+		comments = paginator_comments.page(page_comments.num_pages)
+	return {'othercomments':comments, "STATIC_URL":context['STATIC_URL']}
+

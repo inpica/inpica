@@ -1,0 +1,50 @@
+<p class="tablecaption">My Comments on Other Floorplans</p>
+	<div class="table-container">
+		<div class="pagination">
+			<span class="step-links">
+		        {% if mycomments.has_previous %}
+		            <span class="click" onClick="renderpage({{ mycomments.previous_page_number }})">&lt;&lt;</span>
+		        {% endif %}
+
+		        <span class="current">
+		            Page {{ mycomments.number }} of {{ mycomments.paginator.num_pages }}
+		        </span>
+
+		        {% if mycomments.has_next %}
+		        	<span class="click" onClick="renderpage({{ mycomments.next_page_number }})">&gt;&gt;</span>
+		        {% endif %}
+	    	</span>
+		</div>
+	<table id="mycomments">
+		<tr>
+			<th class="first">Owner</th>
+			<th class="first">Floorplan</th>
+			<th>Comment</th>
+			<th>Commented On</th>
+		</tr>
+	{%for c in mycomments%}
+			<tr>
+				<td class="first">{{c.floorplan.user}}</td>
+				<td class="first">{{c.floorplan.title}}</td>
+				{%if c.comment|length < 100%}
+					<td class="comment">{{c.comment}}</td>
+				{%else%}
+					<td class="comment" onMouseOver="rendercomment(other{{c.id}})">{{c.comment|slice:":100"}}...</td>
+					<div class="expanded_text" id="other{{c.id}}">{{c.comment}}</div>
+				{% endif%}
+				<td>{{c.RUD}}</td>
+			</tr>
+	{%endfor%}
+	</table>
+	</div>
+	<script type="text/javascript">
+	function renderpage(page){
+		$.ajax({
+			type: 'POST',
+			url:'/dashboard/mycomments/'+page,
+			success: function(data){
+				$('#my-comments-container').empty().append(data)
+			}
+		})
+	}
+</script>

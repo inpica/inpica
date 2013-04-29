@@ -1,0 +1,60 @@
+<p class="tablecaption">Comments by others on my floorplans</p>
+	<div class="table-container">
+		<div class="pagination">
+			<span class="step-links">
+		        {% if othercomments.paginator.num_pages != 1 %}
+			        {% if othercomments.has_previous %}
+			            <span class="click" onClick="renderpage({{ othercomments.previous_page_number }})">&lt;&lt;</span>
+			        {% endif %}
+
+			        <span class="current">
+			            Page {{ othercomments.number }} of {{ othercomments.paginator.num_pages }}
+			        </span>
+
+			        {% if othercomments.has_next %}
+			        	<span class="click" onClick="renderpage({{ othercomments.next_page_number }})">&gt;&gt;</span>
+			        {% endif %}
+			     {%else%}
+			     	<span class="current blank"></span>
+			    {%endif%}
+	    	</span>
+		</div>
+	<table id="othercomments">
+		<tr>
+			<th class="first">User</th>
+			<th class="first">Floorplan</th>
+			<th>Comment</th>
+			<th>Commented On</th>
+		</tr>
+	{%for c in othercomments%}
+			<tr>
+				<td class="first">{{c.user}}</td>
+				<td class="first">{{c.floorplan.title}}</td>
+				{%if c.comment|length < 100%}
+					<td class="comment">{{c.comment}}</td>
+				{%else%}
+					<td class="comment" onMouseOver="rendercomment(other{{c.id}})">{{c.comment|slice:":100"}}...</td>
+					<div class="expanded_text" id="other{{c.id}}">{{c.comment}}</div>
+				{% endif%}
+				<td>{{c.RUD}}</td>
+			</tr>
+	{%endfor%}
+	</table>
+	</div>
+<script type="text/javascript">
+	function renderpage(page){
+		$.ajax({
+			type: 'POST',
+			url:'/dashboard/othercomments/'+page,
+			success: function(data){
+				$('#other-comments-container').empty().append(data)
+			}
+		})
+	}
+	function rendercomment(el_id){
+		$(el_id).show();
+		$(el_id).mouseout(function() {
+  			$('.expanded_text').hide();
+			});
+	}
+</script>

@@ -17,8 +17,23 @@ table{
 	box-shadow: 0 1px 2px #d1d1d1;
 }
 
+th{
+	width: 200px;
+}
 td{
 	width: 200px;
+}
+
+.first {
+	width: 150px;
+}
+
+.small {
+	width: 100px;
+}
+
+.adjust{
+	width: 130px;
 }
 
 body {
@@ -108,4 +123,22 @@ td.symbol img{
 }
 
 .outer-container{
+}
+
+.expanded_text{
+	display: none;
+	position: absolute;
+	z-index: 100;
+	width: 650px;
+	background: yellow;
+	left: 320px;
+}
+
+.comment {
+	width: 650px;
+}
+
+.blank{
+	height: 17px;
+	display: block;
 }

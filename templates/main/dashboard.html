@@ -8,10 +8,11 @@
 	<h1>Dashboard</h1>
 	<form method="post" action="/floorplan/new">
 		{%csrf_token%}
-		<h2>New Floorplan</h2>
-		<label>Title</label>
-		<input type="text" name="title" />
-		<input type="submit" value="Create" />
+		<div id="create">
+			<p class = "tablecaption">Create a new floorplan :</span> <input type="text" name="title" placeholder="floorplan title"/> <input type="submit" value="Create" />
+		</div>
+		
+		
 	</form>
 	
 	<div id="floorplan-container" class="outer-container">
@@ -56,7 +57,11 @@
 		{%FurnitureDashboard 1%}
 	</div>
 
-	<div id="comments-container" class="outer-container">
-		{%CommentsDashboard 1%}
+	<div id="other-comments-container" class="outer-container">
+		{%MyCommentsDashboard 1%}
+	</div>
+
+	<div id="my-comments-container" class="outer-container">
+		{%OtherCommentsDashboard 1%}
 	</div>
 {%endblock%}
