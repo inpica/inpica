@@ -44,7 +44,7 @@
 	height:450px;
 	width:300px;
 	border-left:1px solid #c6d2de;
-	display:none;
+	/*display:none;*/
 }
 
 #layout-picker .filter, #layout-picker .map, #furniture-picker .filter{
@@ -168,7 +168,7 @@
 	height:550px;
 	overflow: hidden;
 	border-bottom: 1px solid #d1d1d1;
-	box-shadow: 0px 200px 200px #b6d7d3;
+	/*box-shadow: 0px 200px 200px #b6d7d3;*/
 	background-color: #f8f9fA;
 	/*background-color: #F5F5F5;*/
 }
@@ -469,21 +469,19 @@
 }
 
 #furnishings .furnishing-list tr{
-	background-color: #bfd6d3;
-	/*background-color: #a1cbc5;*/
 	border-bottom: 5px solid #d9e8e6;
 }
 
-#furnishings .furnishing-list tr[active="1"]{
+#furnishings .furnishing-list td.furnishing-controls.hasfurnishing{
+	background-color: #bfd6d3;
+}
+
+#furnishings .furnishing-list tr[active="1"] td.furnishing-controls{
 	background-color: #7497bc;
 }
 
-#furnishings .furnishing[active="1"] .icon-eye-open{
-	color:#89f999;
-}
-
 #furnishings .furnishing-list td{
-	padding:20px;
+	padding:5px 20px;
 	font-size: 12px;
 	color:#333;
 
@@ -503,6 +501,8 @@
 
 #furnishings .furnishing-controls > div{
 	padding:5px 10px;
+	font-size: 14px;
+	color:#333;
 }
 
 #furnishings .furnishing-controls .icon{

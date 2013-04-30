@@ -31,7 +31,7 @@
 
 		<div id="ideapics">
 			<h2>Idea Board</h2>
-			<input type="file" id="ideapic-file" />
+			{%if isOwner%}<input type="file" id="ideapic-file" />{%endif%}
 			<div id="ideapic-list">
 				{%for ideapic in floorplan.ideapic_set.all %}
 					{%include 'snippet/ideapic.html'%}
@@ -56,7 +56,7 @@
 
 			</div>
 
-			<h2>{{user.username}}'s Comments &amp; Furnishings</h2>
+			<h2>{{floorplan.user.username}}'s Comments &amp; Furnishings</h2>
 			<table id="owner-furnishing-list" class="furnishing-list">
 				{%for furnishing in furnishings %}{%if furnishing.user == floorplan.user%}
 					{%include 'snippet/furnishing.html'%}
