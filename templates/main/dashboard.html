@@ -81,12 +81,22 @@
 		<div class="span4">
 			<!-- Bookmark	========================== -->
 			<div id="bookmark-container" class='well well-small'>
-				<h3>Add Furniture 
-				<a class='btn btn-info pull-right headeralign' href='javascript:(function()%7Bdocument.body.appendChild(document.createElement(%27script%27)).src%3D%27http://people.ischool.berkeley.edu/~jacob.portnoff/Inpica/inpicav1.js%27%3B%7D)()'>In-Pick it</a></h3>
-				<i class='icon-circle-arrow-up icon-4x pull-right'></i>
+				<h3 >Add Furniture 
+				<!-- <a class='btn btn-info pull-right headeralign' href='javascript:(function()%7Bdocument.body.appendChild(document.createElement(%27script%27)).src%3D%27http://people.ischool.berkeley.edu/~jacob.portnoff/Inpica/inpicav1.js%27%3B%7D)()'>In-Pick it</a></h3> -->
+
+				<div id="bookmarklets" class="outer-container pull-right alignheader">
+					<!-- <p class="tablecaption">Bookmarklets</p> -->
+					<!--<a href="javascript:(function(){document.body.appendChild(document.createElement('script')).src='http://127.0.0.1:8000/bookmarklet/{{user.id}}/gaurav'};)()">Inpica Bookmark</a> -->
+					<a class='btn btn-info' href="javascript:(function(){document.body.appendChild(document.createElement('script')).src='http://127.0.0.1:8000/bookmarklet/{{user.id}}/{{user.userdetails.bookmarkletss}}';})()">Inpica Bookmark</a>
+				</div>
+				</h3>
+
+
+				<h3><i class='icon-circle-arrow-up icon-3x pull-right'></i></h3>
 				<p>Drag this button to your bookmarks bar and collect images of furniture that you like directly through your browser. <a href='#'>Learn more..</a></p>
 				
 			</div>
+
 			<!-- FURNITURE	========================== -->
 			<div id="furniture-container" class="outer-container">
 				{%FurnitureDashboard 1%}
@@ -108,5 +118,6 @@
 </footer>
 
 </div>
+
 
 {%endblock%}
