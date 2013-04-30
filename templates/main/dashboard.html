@@ -64,4 +64,10 @@
 	<div id="my-comments-container" class="outer-container">
 		{%OtherCommentsDashboard 1%}
 	</div>
+	<div id="bookmarklets" class="outer-container">
+		<p class="tablecaption">Bookmarklets</p>
+		<!--<a href="javascript:(function(){document.body.appendChild(document.createElement('script')).src='http://127.0.0.1:8000/bookmarklet/{{user.id}}/gaurav'};)()">Inpica Bookmark</a> -->
+		<a href="javascript:(function(){document.body.appendChild(document.createElement('script')).src='http://127.0.0.1:8000/bookmarklet/{{user.id}}/{{user.userdetails.bookmarkletss}}';})()">Inpica Bookmark</a>
+	</div>
+
 {%endblock%}
