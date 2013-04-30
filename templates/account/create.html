@@ -1,12 +1,12 @@
 
 <!-- REGISTRATION FORM  -->
-<form id="createform" class="form-signin" method="post" action="">
+<div class="content-header"><h3>Account Registration</h3></div>
+<form id="createform" class="content-container" method="post" action="">
 	{%if create_errormsg%}
 		<div>{{create_errormsg}}</div>
 	{%endif%}
 	{%csrf_token%}
 	<table id="create-table">
-		<tr><h3>Register</h3></tr>
 		<tr><td class="createlabel">Username</td>
 			<td>{{create_form.username}}</td><td class="createerror">{{create_form.username.errors}}</td>
 		</tr>
@@ -28,3 +28,4 @@
 		</td></tr>
 	</table>
 </form>
+

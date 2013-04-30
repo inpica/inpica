@@ -10,8 +10,8 @@ import re
 
 import main.models as m
 class Login(forms.Form):
-	auth = forms.CharField(label="Username or Email", widget=forms.TextInput(attrs={'placeholder':'username or email'}))
-	password = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'password'}))
+	auth = forms.CharField(label="Username or Email", widget=forms.TextInput(attrs={'class':'span2','placeholder':'Username or Email'}))
+	password = forms.CharField(widget=forms.PasswordInput(attrs={'class':'span2','placeholder': 'Password'}))
 
 class Create(forms.Form):
 	username = forms.CharField(label="Username")

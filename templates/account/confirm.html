@@ -4,16 +4,26 @@
 <meta http-equiv="refresh" content="5;url=http://127.0.0.1:61002/">
 {%endblock%}
 {%block body%}
-	<link rel="stylesheet" href="{{ STATIC_URL }}css/bootstrap.css">
-	<link rel="stylesheet" href="{{ STATIC_URL }}css/bootstrap-responsive.css">
+<link rel="stylesheet" href="{{ STATIC_URL }}css/bootstrap.css">
+<link rel="stylesheet" href="{{ STATIC_URL }}css/bootstrap-responsive.css">
+
+
+<div class="container push-down">
 	
 	{%if confirmed%}
-	<h3>Welcome to Inpica!</h3>
-	<p>Your account has been confirmed and activated. </p>
-	{%else%}
-	<h3>Uh-oh..</h3>
-	<p>There was an error confirming your account, please try refreshing this page.</p>
-	{%endif%}
-	<p>If you are not redirected within a few seconds please click here: </p>
-	<a href="/">Redirect to Inpica</a>
+
+	<div class="content-header">
+		<h3>Welcome to Inpica!</h3>
+	</div>
+	<div class="content-container">
+		<!-- <h3>Welcome to Inpica!</h3> -->
+		<p>Your account has been confirmed and activated. </p>
+		{%else%}
+		<h3>Uh-oh..</h3>
+		<p>There was an error confirming your account, please try refreshing this page.</p>
+		{%endif%}
+		<p>If you are not redirected within a few seconds please click here: </p>
+		<a href="/">Redirect to Inpica</a>
+	</div>
+</div>
 {%endblock%}

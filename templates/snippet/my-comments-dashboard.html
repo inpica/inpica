@@ -1,6 +1,7 @@
-<p class="tablecaption">My Comments on Other Floorplans</p>
+<!-- <p class="tablecaption">My Comments on Other Floorplans</p> -->
+	<h3 class='pull-left'> Comments on Other Floorplans</h3>
 	<div class="table-container">
-		<div class="pagination">
+		<div class="pagination pull-right headeralign">
 			<span class="step-links">
 		        {% if mycomments.has_previous %}
 		            <span class="click" onClick="renderpage({{ mycomments.previous_page_number }})">&lt;&lt;</span>
@@ -15,7 +16,7 @@
 		        {% endif %}
 	    	</span>
 		</div>
-	<table id="mycomments">
+	<table id="mycomments" class='table table-bordered table-hover table-condensed table-striped'>
 		<tr>
 			<th class="first">Owner</th>
 			<th class="first">Floorplan</th>

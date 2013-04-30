@@ -1,6 +1,7 @@
-<p class="tablecaption">Comments by others on my floorplans</p>
+<!-- <p class="tablecaption">Comments by others on my floorplans</p> -->
+	<h3 class='pull-left'>Comments by others on my floorplans</h3>
 	<div class="table-container">
-		<div class="pagination">
+		<div class="pagination pull-right headeralign">
 			<span class="step-links">
 		        {% if othercomments.paginator.num_pages != 1 %}
 			        {% if othercomments.has_previous %}
@@ -19,7 +20,7 @@
 			    {%endif%}
 	    	</span>
 		</div>
-	<table id="othercomments">
+	<table id="othercomments" class='table table-bordered table-hover table-condensed table-striped'>
 		<tr>
 			<th class="first">User</th>
 			<th class="first">Floorplan</th>

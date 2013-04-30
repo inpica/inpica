@@ -14,10 +14,10 @@ body{
 	font-family: "Segoe UI", Calibri, Helvetica, Arial;
 }*/
 
-h1, h2, h3, h4{
+/*h1, h2, h3, h4{
 	font-weight: normal;
 	color:#333;
-}
+}*/
 
 p{
 	font-size: 12px;
@@ -42,6 +42,10 @@ h1, h2, h3, h4, p, tr{
 	/*background-color:#3a3c40;*/
 	background-color: #333;
 }
+
+.push-down{
+	/*margin-top: 60px;*/
+	padding-top: 60px;}
 
 ::-webkit-scrollbar {
     height: 12px;
@@ -101,12 +105,65 @@ h1, h2, h3, h4, p, tr{
   margin-top: 10px;
 }
 
+/*POP-UP MESSAGES ()
+---------------------------------------------------*/
+.content-header{
+
+	max-width: 500px;
+	margin: 0 auto; 
+    padding: 1px 30px 1px;
+    text-align: center;
+    border-top-right-radius:5px ;
+    border-top-left-radius: 5px;
+    text-decoration: none;
+    background-color: #EAEAEA;
+
+	-webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+	   -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+	        box-shadow: 0 1px 2px rgba(0,0,0,.05);
+    /*gradient header*/
+	background-image: linear-gradient(top, rgb(3,166,158) 8%, rgb(29,200,190) 54%);
+	background-image: -o-linear-gradient(top, rgb(3,166,158) 8%, rgb(29,200,190) 54%);
+	background-image: -moz-linear-gradient(top, rgb(3,166,158) 8%, rgb(29,200,190) 54%);
+	background-image: -webkit-linear-gradient(top, rgb(3,166,158) 8%, rgb(29,200,190) 54%);
+	background-image: -ms-linear-gradient(top, rgb(3,166,158) 8%, rgb(29,200,190) 54%);
+	background-image: -webkit-gradient(
+		linear,
+		right top,
+		right bottom,
+		color-stop(0.08, rgb(3,166,158)),
+		color-stop(0.54, rgb(29,200,190))
+	);
+}
+
+.content-container{
+
+	max-width: 500px;
+    margin: 0 auto 20px;
+    padding: 19px 29px 29px;
+    border-bottom-right-radius:5px ;
+	border-bottom-left-radius: 5px; 
+    border: 1px solid #e5e5e5;
+    background-color: #fff;
+
+    -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+       -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+            box-shadow: 0 1px 2px rgba(0,0,0,.05);
+}
 
 
 /* ACCOUNT REGISTRATION & LOGIN FORM 
 -------------------------------------------------- */
-
-/*registration form wrapper*/
+/*login form style in navbar*/
+#loginform{
+	position:relative;
+	margin-top: 5px
+}
+/*logged in message in navbar*/
+#logged{
+	margin-top: 15px
+}
+/*registration form pop-up wrapper*/
 #createform-wrapper{
 	position: fixed;
 	top:20%;
@@ -115,27 +172,6 @@ h1, h2, h3, h4, p, tr{
 	z-index: 100;
 	display: none;
 }
-/*registration form style*/
-.form-signin {
-    max-width: 500px;
-    padding: 19px 29px 29px;
-    margin: 0 auto 20px;
-    background-color: #fff;
-    border: 1px solid #e5e5e5;
-    -webkit-border-radius: 5px;
-       -moz-border-radius: 5px;
-            border-radius: 5px;
-    -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
-       -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
-            box-shadow: 0 1px 2px rgba(0,0,0,.05);
-  }
-
-
-/* center account created success message*/
-#createsucess {
-	text-align: center;
-}
-
 /*transparent background veil*/
 #screen{
 	position: absolute;
@@ -145,15 +181,6 @@ h1, h2, h3, h4, p, tr{
 	z-index:2;
 }
 
-/*login form style*/
-#loginform{
-	position:relative;
-	margin-top: 5px
-}
-#logged{margin-top: 15px}
-
-
-
 /*LOGIN & REGISTRATION ERROR MESSAGES
 -------------------------------------------------- */
 .createerror{
@@ -161,8 +188,7 @@ h1, h2, h3, h4, p, tr{
 	width: 200px;
 	float: left;
 }
-
-
+/*red error box style*/
 .errorlist{
 	/*color: red;
 	font-size: 13px;
@@ -182,7 +208,6 @@ h1, h2, h3, h4, p, tr{
 	border-color: #eed3d7;
 }
 
-
 #loginError, #blankUserErr{
 	position:absolute;
 	top:50px;
@@ -196,11 +221,6 @@ h1, h2, h3, h4, p, tr{
 	top:50px;
 	left:200px;
 }
-
-/*#loginform .errorlist{
-	padding:30px;
-	opacity: 0.9;
-}*/
 
 .buttondisplay{
 	padding-left: 80px;
@@ -229,4 +249,29 @@ h1, h2, h3, h4, p, tr{
     margin: -20px;
   }
 
+}
+
+
+/*trial--------------------*/
+/*bg white container centered*/
+.maincontainer{
+	background-color: white;
+	    -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+       -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
+            box-shadow: 0 1px 2px rgba(0,0,0,.05);
+}
+.maincontainer-header{
+    /*gradient header*/
+	background-image: linear-gradient(top, rgb(3,166,158) 8%, rgb(29,200,190) 54%);
+	background-image: -o-linear-gradient(top, rgb(3,166,158) 8%, rgb(29,200,190) 54%);
+	background-image: -moz-linear-gradient(top, rgb(3,166,158) 8%, rgb(29,200,190) 54%);
+	background-image: -webkit-linear-gradient(top, rgb(3,166,158) 8%, rgb(29,200,190) 54%);
+	background-image: -ms-linear-gradient(top, rgb(3,166,158) 8%, rgb(29,200,190) 54%);
+	background-image: -webkit-gradient(
+		linear,
+		right top,
+		right bottom,
+		color-stop(0.08, rgb(3,166,158)),
+		color-stop(0.54, rgb(29,200,190))
+	);
 }

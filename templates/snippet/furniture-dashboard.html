@@ -1,6 +1,7 @@
-<p class="tablecaption">Furniture</p>
+<!-- <p class="tablecaption">Furniture</p> -->
+	<h3 class='pull-left'>My Furniture</h3>
 	<div class="table-container">
-		<div class="pagination">
+		<div class="pagination pull-right headeralign">
 			<span class="step-links">
 		        {% if furniture.has_previous %}
 		            <span class="click" onClick="renderpage({{ furniture.previous_page_number }})">&lt;&lt;</span>
@@ -15,7 +16,7 @@
 		        {% endif %}
 	    	</span>
 		</div>
-	<table id="furniture">
+	<table id="furniture" class='table table-bordered table-hover table-condensed table-striped'>
 		<tr>
 			<th class="first"></th>
 			<th>Title</th>
