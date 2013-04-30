@@ -9,14 +9,14 @@ from django.conf.urls.static import static
 urlpatterns = patterns('',
 
     url(r'^$', 'main.views.Index'),
-    url(r'^home/login$', 'main.views.Login'),
-    url(r'^home/logout$', 'main.views.Logout'),
-    url(r'^home/create$', 'main.views.Create'),
+    url(r'^home/login$', 'account.views.Login'),
+    url(r'^home/logout$', 'account.views.Logout'),
+    url(r'^home/create$', 'account.views.Create'),
 
 	#Account#############################################
-    url(r'^login$', 'account.views.Login'),
-    url(r'^logout$', 'account.views.Logout'),
-    url(r'^account/create$', 'account.views.Create'),
+    # url(r'^login$', 'account.views.Login'),
+    # url(r'^logout$', 'account.views.Logout'),
+    # url(r'^account/create$', 'account.views.Create'),
     url(r'^account/confirm/(?P<id>\d+)$', 'account.views.Confirm'),
     
     #Main################################################
