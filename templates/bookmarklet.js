@@ -2,6 +2,8 @@ var pics = new Array();
 var body;
 var title;
 var v="1.8.2";
+var userId;// = {{id}};
+var ss;// = {{ss}};
 /*var inpica=document.createElement("script");
 inpica.src='http://people.ischool.berkeley.edu/~jacob.portnoff/Inpica/inpicav1.js';
 inpica.type='text/javascript';
@@ -26,8 +28,9 @@ else{
 }
 
 function addBootstrap(){
-    var locJS = '{{ STATIC_URL}}js/bootstrap.min.js';
-    var locCSS = '{{ STATIC_URL}}css/bootstrap.min.css';
+    console.log("bootstrap")
+    var locJS = 'http://people.ischool.berkeley.edu/~jacob.portnoff/Inpica/bootstrap/js/bootstrap.min.js';
+    var locCSS = 'http://people.ischool.berkeley.edu/~jacob.portnoff/Inpica/bootstrap/css/bootstrap.min.css';
     //var locPNG = 'http://people.ischool.berkeley.edu/~jacob.portnoff/Inpica/bootstrap/img/glyphicons-halflings.png';
     var BootstrapJS=document.createElement("script");
     var BootstrapCSS=document.createElement("link");
@@ -35,16 +38,21 @@ function addBootstrap(){
     BootstrapJS.onload=script.onreadystatechange=function(){
         if(!done&&(!this.readyState||this.readyState=="loaded"||this.readyState=="complete")){
             done=true;
+            console.log("mess")
         }
     };
+    document.getElementsByTagName("head")[0].appendChild(BootstrapJS);
     BootstrapCSS.type="text/css";
     BootstrapCSS.rel="stylesheet";
     BootstrapCSS.href=locCSS;
     BootstrapCSS.onload=script.onreadystatechange=function(){
         if(!done&&(!this.readyState||this.readyState=="loaded"||this.readyState=="complete")){
             done=true;
+            console.log("pie")
         }
     };
+    document.getElementsByTagName("head")[0].appendChild(BootstrapCSS);
+    console.log("bootstrap2")
 }
 /*
 function initMyBookmarklet(){
@@ -92,21 +100,21 @@ function initMyBookmarklet(){
                 <p>Loading...</p>\
                 <img src='http://people.ischool.berkeley.edu/~jacob.portnoff/Inpica/close.png' alt='missing image' width='0' height='0' onload=\"loadImagesInpica();\">\
             </div>\
-            <div id='super'>\
-                <div id='buttons' class='container'>\
-                    <p>Inpica</p>\
-                    <button class='close pull-right' onclick='closeInpica();'>&times;</button>\
+            <div id='super' class='row-fluid'>\
+                <div id='inpicaHeader' class='span12'>\
+                    <h3 class='pull-left'>Inpica</h3>\
+                    <div style='float:right;margin:10px 3px 10px'><button class='btn btn-inverse' onclick='closeInpica();'>Cancel</button></div>\
+                    <div id='inpickit' style='float:right;margin:10px 3px 10px'></div>\
                 </div>\
-                <input type='image' src='http://people.ischool.berkeley.edu/~jacob.portnoff/Inpica/close.png' id='closeInpica' onclick='closeInpica();'>\
-                <div id='inpickit'>\
+                <div id='subsuper' class=''  style='margin-top:60px'>\
                 </div>\
             </div>\
             <style type='text/css'>\
-                #inpicaframe_veil { display: none; position: fixed; width: 100%; height: 100%; top: 0; left: 0; background-color: rgba(255,255,255,.5); cursor: pointer; z-index: 900; }\
+                #inpicaframe_veil { display: none; position: fixed; width: 100%; height: 100%; top: 0; left: 0; background-color: rgba(0,0,0,.5); cursor: pointer; z-index: 900; }\
                 #inpicaframe_veil p { color: black; font: normal normal bold 20px/20px Helvetica, sans-serif; position: absolute; top: 50%; left: 50%; width: 10em; margin: -10px auto 0 -5em; text-align: center; }\
                 #super { display: none; position: fixed; top: 10%; left: 10%; width: 80%; height: 80%; overflow: auto; z-index: 999; background-color: rgba(128,128,128,1); border: 10px solid rgba(0,0,0,.5); margin: -5px 0 0 -5px; }\
-                #inpickit { position: fixed; top: 90%; left: 90%; z-index: 999; border: 5px solid rgba(0,0,0,.5); margin: -5px 0 0 -5px; }\
                 #closeInpica { position: fixed; top: 7%; left: 91%; z-index: 999; height: 25px; width: 25px;}\
+                #inpicaHeader{ color:#fff;background-color: rgba(0,0,0,.5); position: fixed; width:80%; padding-right:10px;padding-left:10px;}\
             </style>\
         </div>");
     }
@@ -133,7 +141,7 @@ function loadImagesInpica(){
       console.log(i);
       if(images[i].height>100 && images[i].width>100){
         numImages++;
-        $('#super').append("\
+        $('#subsuper').append("\
         <div id='imgDivInpica"+i+"'>\
             <INPUT type='image' src='"+images[i].src+"' id='img"+i+"' value='off' onclick='addImage("+i+");' height=max-width=100%>\
             <style type='text/css'>\
@@ -146,11 +154,13 @@ function loadImagesInpica(){
     console.log('here3');
     // append the submit button
     if(numImages>0) {
-        $('#inpickit').append("\ <input type='submit' id='InpicaSubmit' value='In-Pick-It!' onclick='InpicaSubmit();' float='right'>");
+        $('#inpickit').append("<button class='btn btn-info' onclick='InpicaSubmit();' float='right'>In-Pick-It</button>");
     }
     // display the structure
     $('#super').slideDown(500);
 }
+
+// select image before hitting inpick it button (multiple select)
 function addImage(i){
     console.log('here5now');
     var x=$("#img"+i).attr('value');
@@ -159,7 +169,7 @@ function addImage(i){
     var imageSrc = $("#img"+i).attr('src');
     console.log(imageSrc);
     if ($("#img"+i).attr('value')=='off') {
-        $("#imgDivInpica"+i).attr('style','border: 3px solid rgba(250,0,0,1)');
+        $("#imgDivInpica"+i).attr('style','opacity: .5;');
         $("#img"+i).attr('value','on');
         //console.log('here6');
         pics[curLen]=imageSrc;
@@ -212,7 +222,7 @@ function InpicaSubmit() {
         var grabbedVals = {};
         grabbedVals = runRegexs(grabbedVals);
         $('body').append("\
-            <iframe id='inpica-frame' src='http://127.0.0.1:8000/pin/{{user.id}}/{{user.userdetails.bookmarkletss}}?"+urlStr+"w="+grabbedVals['width']+"&l="+grabbedVals['length']+"&h="+grabbedVals['height']+"&title="+grabbedVals['title']+"&type="+grabbedVals['type']+"&other="+grabbedVals['other']+"&url="+url+"'>\
+            <iframe id='inpica-frame' src='http://127.0.0.1:8000/pin/2/ss?"+urlStr+"w="+grabbedVals['width']+"&l="+grabbedVals['length']+"&h="+grabbedVals['height']+"&title="+grabbedVals['title']+"&type="+grabbedVals['type']+"&other="+grabbedVals['other']+"&url="+url+"'>\
             </iframe>\
             <input type='image' src='http://people.ischool.berkeley.edu/~jacob.portnoff/Inpica/close.png' id='closeInpica' onclick='closeInpica();'>\
             <style>\
