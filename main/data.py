@@ -151,5 +151,172 @@ default_furnitures = [
 		"category":"living",
 		"title":"Corner Desk (Curved)"
 	},
-
+	{
+		"symbolid":3000,
+		"h":6.83,
+		"w":6.00,
+		"searchtags":"bed king sized",
+		"category":"bedroom",
+		"title":"King Bed"
+	},
+	{
+		"symbolid":3001,
+		"h":6.67,
+		"w":5.00,
+		"searchtags":"bed queen sized",
+		"category":"bedroom",
+		"title":"Queen Bed"
+	},
+	{
+		"symbolid":3002,
+		"h":6.67,
+		"w":4.50,
+		"searchtags":"bed double regular sized",
+		"category":"bedroom",
+		"title":"Double Bed"
+	},
+	{
+		"symbolid":3004,
+		"h":6.67,
+		"w":3.25,
+		"searchtags":"bed bunkbeds bunks",
+		"category":"bedroom",
+		"title":"Bunkbeds"
+	},
+	{
+		"symbolid":3006,
+		"h":1.50,
+		"w":1.50,
+		"searchtags":"nightstand end table",
+		"category":"bedroom",
+		"title":"Nightstand"
+	},
+	{
+		"symbolid":3007,
+		"h":1.5,
+		"w":5.17,
+		"searchtags":"dresser",
+		"category":"bedroom",
+		"title":"Dresser"
+	},
+	{
+		"symbolid":4000,
+		"h":2.50,
+		"w":4.17,
+		"searchtags":"bathtub tub bath",
+		"category":"bathroom",
+		"title":"Bathtub"
+	},
+	{
+		"symbolid":4001,
+		"h":3.00,
+		"w":3.00,
+		"searchtags":"shower",
+		"category":"bathroom",
+		"title":"Shower"
+	},
+	{
+		"symbolid":4002,
+		"h":1.25,
+		"w":1.75,
+		"searchtags":"sink oval",
+		"category":"bathroom",
+		"title":"Sink Oval"
+	},
+	{
+		"symbolid":4003,
+		"h":1.25,
+		"w":1.25,
+		"searchtags":"sink circle",
+		"category":"bathroom",
+		"title":"Sink Circle"
+	},
+	{
+		"symbolid":4004,
+		"h":1.58,
+		"w":1.25,
+		"searchtags":"toilet john potty",
+		"category":"bathroom",
+		"title":"Toilet"
+	},
+	{
+		"symbolid":5003,
+		"h":3.67,
+		"w":3.67,
+		"searchtags":"dining room table 4 chairs round",
+		"category":"dining",
+		"title":"Dining Room Table w/ 4 Chairs Round"
+	},
+	{
+		"symbolid":5004,
+		"h":4.00,
+		"w":3.00,
+		"searchtags":"dining room table 4 chairs rectangular square",
+		"category":"dining",
+		"title":"Dining Room Table w/ 4 Chairs"
+	},
+	{
+		"symbolid":5005,
+		"h":5.00,
+		"w":3.00,
+		"searchtags":"dining room table 6 chairs rectangular",
+		"category":"dining",
+		"title":"Dining Room Table w/ 6 Chairs"
+	},
+	{
+		"symbolid":5006,
+		"h":6.50,
+		"w":3.00,
+		"searchtags":"dining room table 8 chairs rectangular",
+		"category":"dining",
+		"title":"Dining Room Table w/ 8 Chairs"
+	},
+	{
+		"symbolid":6000,
+		"h":2.00,
+		"w":4.17,
+		"searchtags":"kitchen counter",
+		"category":"kitchen",
+		"title":"Counter"
+	},
+	{
+		"symbolid":6001,
+		"h":2.00,
+		"w":4.17,
+		"searchtags":"kitchen sink long",
+		"category":"kitchen",
+		"title":"Sink Long"
+	},
+	{
+		"symbolid":6002,
+		"h":2.00,
+		"w":2.50,
+		"searchtags":"kitchen sink short",
+		"category":"kitchen",
+		"title":"Sink Short"
+	},
+	{
+		"symbolid":6003,
+		"h":2.00,
+		"w":1.58,
+		"searchtags":"kitchen oven stove",
+		"category":"kitchen",
+		"title":"Stove"
+	},
+	{
+		"symbolid":6004,
+		"h":2.67,
+		"w":3.75,
+		"searchtags":"kitchen fridge refridgerator double",
+		"category":"kitchen",
+		"title":"Fridge Double"
+	},
+	{
+		"symbolid":6005,
+		"h":2.67,
+		"w":2.75,
+		"searchtags":"kitchen fridge refridgerator single",
+		"category":"kitchen",
+		"title":"Fridge Single"
+	},
 ]
