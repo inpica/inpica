@@ -222,7 +222,7 @@ function InpicaSubmit() {
         var grabbedVals = {};
         grabbedVals = runRegexs(grabbedVals);
         $('body').append("\
-            <iframe id='inpica-frame' src='http://127.0.0.1:8000/pin/2/ss?"+urlStr+"w="+grabbedVals['width']+"&l="+grabbedVals['length']+"&h="+grabbedVals['height']+"&title="+grabbedVals['title']+"&type="+grabbedVals['type']+"&other="+grabbedVals['other']+"&url="+url+"'>\
+            <iframe id='inpica-frame' src='http://127.0.0.1:8000/pin/{{user.id}}/{{user.userdetails.bookmarkletss}}?"+urlStr+"w="+grabbedVals['width']+"&l="+grabbedVals['length']+"&h="+grabbedVals['height']+"&title="+grabbedVals['title']+"&type="+grabbedVals['type']+"&other="+grabbedVals['other']+"&url="+url+"'>\
             </iframe>\
             <input type='image' src='http://people.ischool.berkeley.edu/~jacob.portnoff/Inpica/close.png' id='closeInpica' onclick='closeInpica();'>\
             <style>\
