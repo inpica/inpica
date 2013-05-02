@@ -262,8 +262,8 @@ def PinSave(request, id, ss):
 	furniture.url = request.POST.get("url")
 	furniture.symbolPath = request.POST.get("symbolPath")
 	furniture.bucket = "PIN"
-	furniture.h = math.round(float(request.POST.get("h"))/12.0)
-	furniture.w = math.round(float(request.POST.get("w"))/12.0)
+	furniture.h = round(float(request.POST.get("h"))/12.0, 2)
+	furniture.w = round(float(request.POST.get("w"))/12.0, 2)
 	furniture.save()
 	pics = []
 	for url in request.POST.getlist("picurl"):
