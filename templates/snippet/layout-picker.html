@@ -8,16 +8,24 @@
 	</div>
 	<div class="list">
 		<div class="object" l="6" type="outerpath" search-filter-match="exterior wall" search-filter="1">
-			<img src="{{STATIC_URL}}image/floorplan/symbol/ewall.jpg" />
+			<img src="{{STATIC_URL}}image/floorplan/symbol/ewall.png" />
 			<p>Exterior Wall</p>
 		</div>
 		<div class="object" l="6" type="innerpath" search-filter-match="interior wall" search-filter="1">
-			<img src="{{STATIC_URL}}image/floorplan/symbol/ewall.jpg" />
+			<img src="{{STATIC_URL}}image/floorplan/symbol/iwall.png" />
 			<p>Interior Wall</p>
 		</div>
 		<div class="object" w="6" h="2" type="outerarc" search-filter-match="exterior arched wall" search-filter="1">
-			<img src="{{STATIC_URL}}image/floorplan/symbol/ewall.jpg" />
+			<img src="{{STATIC_URL}}image/floorplan/symbol/awall.png" />
 			<p>Exterior Arched Wall</p>
 		</div>
+
+		{%for dl in default_layouts%}
+			<div class="object" isFurniture="0" type="image" w="{{dl.w}}" h="{{dl.h}}" symbolid="{{dl.symbolid}}" staticurl="{{STATIC_URL}}" path="image/floorplan/symbol/{{dl.symbolid}}.png" search-filter-match="{{ddl.searchtags}}" search-filter="1" title="{{dl.title}}">
+				<img src="{{STATIC_URL}}image/floorplan/symbol/{{dl.symbolid}}.png" />
+				<p>{{dl.title}}</p>
+			</div>
+		{%endfor%}
+
 	</div>
 </div>

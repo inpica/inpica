@@ -20,6 +20,10 @@ def FurniturePicker(context, includePins):
 		furnitures = None
 	return {"furnitures":furnitures, "default_furnitures":main.data.default_furnitures, "user":context["user"],"STATIC_URL":context['STATIC_URL']}
 
+@register.inclusion_tag('snippet/layout-picker.html', takes_context=True)
+def LayoutPicker(context):
+	return {"default_layouts":main.data.default_layouts, "STATIC_URL":context['STATIC_URL']}
+
 @register.inclusion_tag('snippet/furniture-dashboard.html',takes_context=True)
 def FurnitureDashboard(context, pageNumber):
 	furniture_list = m.Furniture.objects.filter(user=context['user']).order_by('-RCD') 

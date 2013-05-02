@@ -12,7 +12,7 @@
 				<div id="picker-tab-furniture" ref="furniture-picker" class="tab" {%if furnishings%}active='1'{%endif%}>Furniture</div>
 			</div>
 			{%include 'snippet/map-uploader.html'%}
-			{%include 'snippet/layout-picker.html'%}
+			{% LayoutPicker %}
 		{%endif%}
 		{% FurniturePicker True %}
 	</div>

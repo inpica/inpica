@@ -320,3 +320,62 @@ default_furnitures = [
 		"title":"Fridge Single"
 	},
 ]
+
+default_layouts = [
+	{
+		"symbolid":"0001",
+		"h":3,
+		"w":6,
+		"searchtags":"double door",
+		"title":"Double Door"
+	},
+	{
+		"symbolid":"0002",
+		"h":3,
+		"w":3,
+		"searchtags":"left door",
+		"title":"Left Door"
+	},
+	{
+		"symbolid":"0003",
+		"h":3,
+		"w":3,
+		"searchtags":"right door",
+		"title":"Right Door"
+	},
+	{
+		"symbolid":"0005",
+		"h":1,
+		"w":2.5,
+		"searchtags":"window",
+		"title":"Window"
+	},
+	{
+		"symbolid":"0006",
+		"h":10,
+		"w":10,
+		"searchtags":"stairs l",
+		"title":"Stairs L"
+	},
+	{
+		"symbolid":"0007",
+		"h":10,
+		"w":10,
+		"searchtags":"stairs reverse l",
+		"title":"Stairs Reverse-L"
+	},
+	{
+		"symbolid":"0008",
+		"h":4.4,
+		"w":4.4,
+		"searchtags":"stairs spiral",
+		"title":"Stairs Spiral"
+	},
+	{
+		"symbolid":"0009",
+		"h":12,
+		"w":2.7,
+		"searchtags":"stairs",
+		"title":"Stairs"
+	},
+]

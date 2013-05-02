@@ -241,7 +241,8 @@ function SubmitFurnishing(){
 			console.log(furnishingid);
 			ResetAddFurnishing();
 			ViewFurnishing(furnishingid);
-			submitFurnishing.on("click", SubmitFurnishing)
+			submitFurnishing.on("click", SubmitFurnishing);
+			$("#add-furnishing-btn").trigger("click");
 		}
 	});
 };
