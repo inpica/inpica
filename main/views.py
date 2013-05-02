@@ -272,7 +272,7 @@ def PinSave(request, id, ss):
 	return render_to_response("snippet/pin-success.html", context_instance=RequestContext(request))
 
 def Bookmarklet(request, id, ss):
-	return render_to_response("bookmarklet.js", {"id":id, "ss":ss}, context_instance=RequestContext(request))
+	return render_to_response("bookmarklet.js", {"userid":id, "ss":ss}, context_instance=RequestContext(request))
 
 
 @login_required

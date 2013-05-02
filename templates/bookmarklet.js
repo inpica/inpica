@@ -2,8 +2,6 @@ var pics = new Array();
 var body;
 var title;
 var v="1.8.2";
-var userId;// = {{id}};
-var ss;// = {{ss}};
 /*var inpica=document.createElement("script");
 inpica.src='http://people.ischool.berkeley.edu/~jacob.portnoff/Inpica/inpicav1.js';
 inpica.type='text/javascript';
@@ -222,7 +220,7 @@ function InpicaSubmit() {
         var grabbedVals = {};
         grabbedVals = runRegexs(grabbedVals);
         $('body').append("\
-            <iframe id='inpica-frame' src='http://127.0.0.1:8000/pin/{{user.id}}/{{user.userdetails.bookmarkletss}}?"+urlStr+"w="+grabbedVals['width']+"&l="+grabbedVals['length']+"&h="+grabbedVals['height']+"&title="+grabbedVals['title']+"&type="+grabbedVals['type']+"&other="+grabbedVals['other']+"&url="+url+"'>\
+            <iframe id='inpica-frame' src='http://127.0.0.1:8000/pin/{{userid}}/{{ss}}?"+urlStr+"w="+grabbedVals['width']+"&l="+grabbedVals['length']+"&h="+grabbedVals['height']+"&title="+grabbedVals['title']+"&type="+grabbedVals['type']+"&other="+grabbedVals['other']+"&url="+url+"'>\
             </iframe>\
             <input type='image' src='http://people.ischool.berkeley.edu/~jacob.portnoff/Inpica/close.png' id='closeInpica' onclick='closeInpica();'>\
             <style>\
