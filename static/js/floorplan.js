@@ -72,7 +72,7 @@ $(document).ready(function(){
 
 	$("#main-canvas").droppable({
 		drop: function(e, ui){
-			var isFurniture = ui.draggable.attr("isFurniture") ? true : false
+			var isFurniture = ui.draggable.attr("isFurniture") == "1" ? true : false
 			AddObjectToCanvas(ui.draggable, isFurniture);
 		}
 	});
@@ -80,7 +80,7 @@ $(document).ready(function(){
 	//adding objects to canvas - click
 	$('#layout-picker .object, #furniture-picker .list .object').on("click", function(){
 		object = $(this);
-		var isFurniture = object.attr("isFurniture") ? true : false
+		var isFurniture = object.attr("isFurniture") == "1" ? true : false
 		AddObjectToCanvas(object, isFurniture);
 	});
 
