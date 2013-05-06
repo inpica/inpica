@@ -174,7 +174,7 @@
 }
 
 #canvas-wrapper .toolbar{
-	top:25px;
+	top:65px;
 	left:375px;
 	position: absolute;
 	height:450px;
@@ -184,7 +184,8 @@
 
 #canvas-wrapper .toolbar .tool{
 	font-size: 8px;
-	margin:20px 0px;
+	/*margin:20px 0px;*/
+	margin:15px 0px 0px;
 	padding:2px;
 	text-align: center;
 }
@@ -210,6 +211,9 @@
 
 #zoom{
 	height:200px;
+	margin:5px 5px 5px 20px;
+}
+.center{
 	margin:5px 5px 5px 20px;
 }
 
@@ -382,12 +386,12 @@
 
 #ideapics img{
 	max-width: 360px;
-	margin-top: 20px
+	margin-top: 10px
 }
 
 #furnishings{
 	float: left;
-	width:600px;
+	width:800px;
 	position: relative;
 }
 
@@ -488,7 +492,7 @@
 }
 
 #furnishings .furnishing-list td.comment{
-	width:360px;
+	width:500px;
 	background-color:#F7F7F7;
 	color:#333;
 }
@@ -518,3 +522,4 @@
 #furnishings .furnishing[default="1"] .furnishing-controls .icon-star{
 	color:#e24b33;
 }
+

@@ -5,6 +5,7 @@
 
 	<link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/floorplan.css"/>
 
+<!-- CANVAS AND TOOLS SECTION================================== -->
 	<div id="picker-wrapper">
 		{%if isOwner%}
 			<div id='picker-tabs'>
@@ -19,18 +20,21 @@
 
 	<div id="canvas-wrapper">
 		<div class="toolbar">
-			<div id="zoom"></div>
-			<div id="clear-furnishing" class="tool"><span class="icon-remove icon"></span>Remove All Furnitures</div>
-			<div id="undo-changes" class="tool"><span class="icon-undo icon"></span>Undo Changes to Furnshing</div>
+			<i class="icon-zoom-in icon center"></i></span>
+			<div id="zoom"> </div>
+			<i class="icon-zoom-out icon center"></i>
+			<div id="clear-furnishing" class="tool btn"><span class="icon-remove icon"></span>Remove Furniture</div>
+			<div id="undo-changes" class="tool btn"><span class="icon-undo icon"></span>Undo Furnshing</div>
 		</div>
 		<div id="main-canvas"></div>
 		<div id="prop-wrapper"></div>
 	</div>
 
+<!-- IDEA BOARD AND FURNISHING SECTION================================== -->
 	<div id="content-wrapper">
 
 		<div id="ideapics">
-			<h2>Idea Board</h2>
+			<h3>Idea Board</h3>
 			{%if isOwner%}<input type="file" id="ideapic-file" />{%endif%}
 			<div id="ideapic-list">
 				{%for ideapic in floorplan.ideapic_set.all %}
@@ -43,7 +47,7 @@
 
 			<div id="add-furnishing-wrapper">
 
-				<div id="add-furnishing-btn" active="0"><span class="text">Add Comment</span><span class="icon-chevron-down icon"></span></div>
+				<div id="add-furnishing-btn" active="0"><span class="text"><i class="icon-comment"></i> Add Comment</span><span class="icon-chevron-down icon"></span></div>
 
 				<div id="add-furnishing">
 					<textarea class="comment" placeholder="Comment..."></textarea>
@@ -56,13 +60,13 @@
 
 			</div>
 
-			<h2>{{floorplan.user.username}}'s Comments &amp; Furnishings</h2>
+			<h3>{{floorplan.user.username}}'s Comments &amp; Furnishings</h3>
 			<table id="owner-furnishing-list" class="furnishing-list">
 				{%for furnishing in furnishings %}{%if furnishing.user == floorplan.user%}
 					{%include 'snippet/furnishing.html'%}
 				{%endif%}{%endfor%}
 			</table>
-			<h2>Comments &amp; Suggested Furnishings</h2>
+			<h3>Comments &amp; Suggested Furnishings</h3>
 			<table id="user-furnishing-list" class="furnishing-list">
 				{%for f in furnishings %}{%if f.user != floorplan.user%}
 					{%include 'snippet/furnishing.html'%}
