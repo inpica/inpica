@@ -144,8 +144,19 @@ td.symbol img{
 	-moz-border-radius: 4px;
 	border-radius: 4px;
 }
+/*emboss effect*/
+td{
+	text-shadow: 0px 1px 0px #ffffff;
+}
 
+th{
+	text-shadow: 0px 1px 0px #ffffff;
+}
 
+h3{
+	text-shadow: 0px 1px 0px #ffffff;
+}
+/*end emboss effet */
 .comment {
 	width: 650px;
 }

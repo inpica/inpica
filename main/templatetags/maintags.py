@@ -42,8 +42,6 @@ def FurnitureDashboard(context, pageNumber):
 @register.inclusion_tag('snippet/my-comments-dashboard.html', takes_context = True)
 def MyCommentsDashboard(context, pageNumber):
 	comments_list  = m.Furnishing.objects.filter(user_id=context['user']).exclude(floorplan__user=context['user']).select_related(depth=2) #select all furnishings created by me on floorplans excluding mine
-	for a in comments_list:
-		print dir(a.floorplan)
 	paginator_comments = Paginator(comments_list, 5) 
 	page_comments = pageNumber
 	try:
