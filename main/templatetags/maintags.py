@@ -1,7 +1,9 @@
 import main.models as m
 from django import template
-from datetime import datetime
+from datetime import datetime, timedelta
+from django.utils.timesince import timesince
 import main.data
+from django.utils import formats
 
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
@@ -65,3 +67,11 @@ def OtherCommentsDashboard(context, pageNumber):
 		comments = paginator_comments.page(page_comments.num_pages)
 	return {'othercomments':comments, "STATIC_URL":context['STATIC_URL']}
 
+@register.filter
+def timesince_threshold(value, hours=1):
+	if datetime.utcnow() - value.replace(tzinfo=None) < timedelta(hours=hours):
+		return  str(timesince(value)) + " ago"
+	else:
+		return formats.date_format(value, "DATE_FORMAT")
+		#return value|date:"d M, Y"
+	timesince_threshold.is_safe = False

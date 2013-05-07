@@ -1,4 +1,5 @@
 <!-- <p class="tablecaption">Furniture</p> -->
+	{%load maintags%}
 	<h3 class='pull-left'>Pinned Furniture</h3>
 	<div class="table-container">
 	<table id="furniture" class='table table-bordered table-hover table-condensed table-striped'>
@@ -19,7 +20,7 @@
 							<img class="big-image" src="{{fp.url}}" /></div>
 						{%endfor%}
 					</td>
-					<td>{{f.RCD}}</td>
+					<td>{{f.RCD|timesince_threshold}}</td>
 				</tr>
 		{%endfor%}
 	{%else%}
@@ -29,20 +30,22 @@
 	</table>
 	<div class="pagination pull-right headeralign">
 			<span class="step-links">
-		        {% if furniture.has_previous %}
-		            <span class="click" onClick="renderpage({{ furniture.previous_page_number }})">&lt;&lt;</span>
-		        {% endif %}
+				{% if furniture.paginator.num_pages != 1 %}
+			        {% if furniture.has_previous %}
+			            <span class="click" onClick="renderpage({{ furniture.previous_page_number }})">&lt;&lt;</span>
+			        {% endif %}
 
-		        <span class="current">
-		            Page {{ furniture.number }} of {{ furniture.paginator.num_pages }}
-		        </span>
+			        <span class="current">
+			            Page {{ furniture.number }} of {{ furniture.paginator.num_pages }}
+			        </span>
 
-		        {% if furniture.has_next %}
-		        	<span class="click" onClick="renderpage({{ furniture.next_page_number }})">&gt;&gt;</span>
-		        {% endif %}
+			        {% if furniture.has_next %}
+			        	<span class="click" onClick="renderpage({{ furniture.next_page_number }})">&gt;&gt;</span>
+			        {% endif %}
+		        {%endif%}
 	    	</span>
-		</div>
 	</div>
+</div>
 <script type="text/javascript">
 	function renderpage(page){
 		$.ajax({

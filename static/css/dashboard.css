@@ -155,6 +155,9 @@ td.symbol img{
 	display: block;
 }
 
+.table{
+	margin-bottom: 10px; /*remove the default 20 px by bootstrap */
+}
 /*added=========================*/
 /*used to align page numbers with table header*/
 .headeralign{ margin: 0px;margin-top: 3%;}
