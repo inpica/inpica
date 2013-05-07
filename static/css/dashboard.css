@@ -155,10 +155,15 @@ td.symbol img{
 	display: block;
 }
 
-/*trial=========================*/
+/*added=========================*/
+/*used to align page numbers with table header*/
+.headeralign{ margin: 0px;margin-top: 3%;}
+/*adjust size of bookmarklet well*/
+.smaller{margin-bottom:0px; padding:10px}
+/*bookmarklet icon position*/
+#bookmarklets{color:#49afcd; position: fixed; top:25px; right:10%;}
 
-.headeralign{
-	margin: 0px;
-	/*margin-top: 20px;*/
-	margin-top: 3%;
-}
+
+
+
+

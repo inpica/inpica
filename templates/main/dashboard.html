@@ -6,25 +6,19 @@
 {%endblock%}
 {%block body%}
 <!--  DASHBOARD BODY========================== -->
-
-<!-- <div class='container container-fluid maincontainer-header push-down'>
-	<h1 class=''>Dashboard</h1>
-</div> -->
 <div id='maincontainer' class='container container-fluid maincontainer push-down'>
-	<h1 class='page-header'>Dashboard</h1>
+
 	<div class="row-fluid">
-		<!--2/3 content ==================================-->
+		<!--2/3 content ==============================-->
 		<div class="span8">
-			<!-- FLOORPLANS	========================== -->
+			<h1 class='page-header'>Dashboard</h1>
+			<!-- FLOORPLANS	-->
 			<div id="floorplan-container" class="outer-container">
-				<!-- <p class="tablecaption">Floorplans</p> -->
 				<h3 class='pull-left'>Floorplans</h3>
 				<!-- create new plan form -->
 				<form class='form-horizontal pull-right headeralign' method="post" action="/floorplan/new">
 					{%csrf_token%}
 					<div id="create" class='input-append'>
-						<!-- <p class = "tablecaption">Create a new floorplan :</span> -->
-						<!-- <label class='control-label' for='new-floorplan'>Create a new floorplan&nbsp; </label> --> 
 						<input id='new-floorplan' class='span8' type="text" name="title" placeholder="New floorplan name"/> 
 						<input class='btn btn-info ' type="submit" value="Create" >
 					</div>
@@ -67,7 +61,7 @@
 		    	</span>
 			</div>-->
 
-			<!-- COMMENTS	========================== -->
+			<!-- COMMENTS	-->
 			<div id="other-comments-container" class="outer-container">
 				{%MyCommentsDashboard 1%}
 			</div>
@@ -77,45 +71,27 @@
 			</div>
 
 		</div>
-		<!--1/3 content ==================================-->
+		<!--1/3 content ==============================-->
 		<div class="span4">
-			<!-- Bookmark	========================== -->
-			<div id="bookmark-container" class='well well-small'>
-				<h3 >Add Furniture 
-				<!-- <a class='btn btn-info pull-right headeralign' href='javascript:(function()%7Bdocument.body.appendChild(document.createElement(%27script%27)).src%3D%27http://people.ischool.berkeley.edu/~jacob.portnoff/Inpica/inpicav1.js%27%3B%7D)()'>In-Pick it</a></h3> -->
-
-				<div id="bookmarklets" class="outer-container pull-right alignheader">
-					<!-- <p class="tablecaption">Bookmarklets</p> -->
-					<!--<a href="javascript:(function(){document.body.appendChild(document.createElement('script')).src='http://127.0.0.1:8000/bookmarklet/{{user.id}}/gaurav'};)()">Inpica Bookmark</a> -->
-					<a class='btn btn-info' href="javascript:(function(){document.body.appendChild(document.createElement('script')).src='http://127.0.0.1:8000/bookmarklet/{{user.id}}/{{user.userdetails.bookmarkletss}}';})()">Inpica Bookmark</a>
+			<!-- Bookmark	-->
+			<div id="bookmark-container" class='well well-small smaller' >
+				<h3 class="icon-circle-arrow-up "> In-Pick It </h3>
+				<div id="bookmarklets" class="outer-container pull-right alignheader" >
+					<h3 >		
+						<a href="javascript:(function(){document.body.appendChild(document.createElement('script')).src='http://127.0.0.1:8000/bookmarklet/{{user.id}}/{{user.userdetails.bookmarkletss}}';})()"><i  class='icon-bookmark icon-3x'></i></a>
+					</h3>
 				</div>
-				</h3>
-
-
-				<h3><i class='icon-circle-arrow-up icon-3x pull-right'></i></h3>
-				<p>Drag this button to your bookmarks bar and collect images of furniture that you like directly through your browser. <a href='#'>Learn more..</a></p>
+				
+				<p>Drag the bookmark icon to your web browsers bookmarks bar to pick furniture while you browse. <a href='#'>Learn more.</a></p>
 				
 			</div>
 
-			<!-- FURNITURE	========================== -->
+			<!-- FURNITURE	 -->
 			<div id="furniture-container" class="outer-container">
 				{%FurnitureDashboard 1%}
 			</div>
 		</div>
 	</div>
-
-
-
-<footer>
-	<p class="pull-right">
-		<a href="#">Back to top</a>
-	</p>
-	<p>
-		© 2013 Inpica 
-		<!-- <a href="#">Privacy</a> ·
-		<a href="#">Terms</a> -->
-	</p>
-</footer>
 
 </div>
 
