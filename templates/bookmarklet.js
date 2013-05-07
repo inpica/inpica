@@ -7,6 +7,8 @@ inpica.src='http://people.ischool.berkeley.edu/~jacob.portnoff/Inpica/inpicav1.j
 inpica.type='text/javascript';
 inpica.charset='UTF-8';
 document.getElementsByTagName("head")[0].appendChild(inpica);*/
+
+// add jquery as needed to the site
 if(window.jQuery===undefined||window.jQuery.fn.jquery<v){
     var done=false;
     var script=document.createElement("script");
@@ -25,6 +27,7 @@ else{
     initMyBookmarklet();
 }
 
+// add bootstrap to the site for visual design
 function addBootstrap(){
     console.log("bootstrap")
     var locJS = 'http://people.ischool.berkeley.edu/~jacob.portnoff/Inpica/bootstrap/js/bootstrap.min.js';
@@ -52,45 +55,10 @@ function addBootstrap(){
     document.getElementsByTagName("head")[0].appendChild(BootstrapCSS);
     console.log("bootstrap2")
 }
-/*
+
+// build the initial form so pics can be selected
 function initMyBookmarklet(){
-    //console.log('here1');
     addBootstrap();
-    //<link type="text/css" rel="stylesheet" href=
-    if ($("#inpicaframe").length == 0) {
-        $("body").append("\
-        <div id='inpicaframe'>\
-            <div id='inpicaframe_veil'>\
-                <p>Loading...</p>\
-                <img src='http://people.ischool.berkeley.edu/~jacob.portnoff/Inpica/close.png' alt='missing image' width='0' height='0' onload=\"loadImagesInpica();\">\
-            </div>\
-            <div id='super'>\
-                <div id='buttons' class='container'>\
-                    <button class='close'>&times;</button>\
-                </div>\
-                <input type='image' src='http://people.ischool.berkeley.edu/~jacob.portnoff/Inpica/close.png' id='closeInpica' onclick='closeInpica();'>\
-                <div id='inpickit'>\
-                </div>\
-            </div>\
-            <style type='text/css'>\
-                #inpicaframe_veil { display: none; position: fixed; width: 100%; height: 100%; top: 0; left: 0; background-color: rgba(255,255,255,.5); cursor: pointer; z-index: 900; }\
-                #inpicaframe_veil p { color: black; font: normal normal bold 20px/20px Helvetica, sans-serif; position: absolute; top: 50%; left: 50%; width: 10em; margin: -10px auto 0 -5em; text-align: center; }\
-                #super { display: none; position: fixed; top: 10%; left: 10%; width: 80%; height: 80%; overflow: auto; z-index: 999; background-color: rgba(128,128,128,1); border: 10px solid rgba(0,0,0,.5); margin: -5px 0 0 -5px; }\
-                #inpickit { position: fixed; top: 90%; left: 90%; z-index: 999; border: 5px solid rgba(0,0,0,.5); margin: -5px 0 0 -5px; }\
-                #closeInpica { position: fixed; top: 7%; left: 91%; z-index: 999; height: 25px; width: 25px;}\
-            </style>\
-        </div>");
-    }
-    else {
-        $("#inpicaframe_veil").fadeOut(750);
-        $('#inpicaframe').remove();
-    }
-}
-*/
-function initMyBookmarklet(){
-    //console.log('here1');
-    addBootstrap();
-    //<link type="text/css" rel="stylesheet" href=
     if ($("#inpicaframe").length == 0) {
         $("body").append("\
         <div id='inpicaframe'>\
@@ -110,24 +78,27 @@ function initMyBookmarklet(){
             <style type='text/css'>\
                 #inpicaframe_veil { display: none; position: fixed; width: 100%; height: 100%; top: 0; left: 0; background-color: rgba(0,0,0,.5); cursor: pointer; z-index: 900; }\
                 #inpicaframe_veil p { color: black; font: normal normal bold 20px/20px Helvetica, sans-serif; position: absolute; top: 50%; left: 50%; width: 10em; margin: -10px auto 0 -5em; text-align: center; }\
-                #super { display: none; position: fixed; top: 10%; left: 10%; width: 80%; height: 80%; overflow: auto; z-index: 999; background-color: rgba(128,128,128,1); border: 10px solid rgba(0,0,0,.5); margin: -5px 0 0 -5px; }\
-                #closeInpica { position: fixed; top: 7%; left: 91%; z-index: 999; height: 25px; width: 25px;}\
+                #super { display: none; position: fixed; top: 10%; left: 10%; width: 80%; height: 98%; overflow: auto; z-index: 999; background-color: rgba(128,128,128,1); border: 10px solid rgba(0,0,0,.5); margin: -5px 0 0 -5px; }\
                 #inpicaHeader{ color:#fff;background-color: rgba(0,0,0,.5); position: fixed; width:80%; padding-right:10px;padding-left:10px;}\
             </style>\
         </div>");
     }
     else {
-		$("#inpicaframe_veil").fadeOut(750);
-		$('#inpicaframe').remove();
+        closeInpica();
     }
 }
 
+// shut it all down, called when the cancel button is called or the bookmarklet is called twice
+// on the same page
 function closeInpica() {
   console.log('here8');
   $("#inpicaframe").remove();
   $("#inpica-frame").remove();
-  $("#closeInpica").remove();
+  $("#superiframe").remove();
 }
+
+// select the images out of the body and populate the first form for selection
+// only images of size 100x100 or greater are displayed
 function loadImagesInpica(){
     $("#inpicaframe_veil").fadeIn(750);
     body = $('body')[0].outerHTML;
@@ -137,14 +108,25 @@ function loadImagesInpica(){
     var numImages=0;
     for(var i=0;i<images.length;i++){
       console.log(i);
-      if(images[i].height>100 && images[i].width>100){
+      if(images[i].height>=100 && images[i].width>=100 && images[i].width>=images[i].height){
         numImages++;
         $('#subsuper').append("\
         <div id='imgDivInpica"+i+"'>\
             <INPUT type='image' src='"+images[i].src+"' id='img"+i+"' value='off' onclick='addImage("+i+");' height=max-width=100%>\
             <style type='text/css'>\
-                #imgDivInpica"+i+" { padding: 5px; height: 150px; width: 150px; float: left; background-color: rgba(250,250,250,1);}\
+                #imgDivInpica"+i+" { margin:10px 3px 10px; padding: 5px; height: 150px; width: 150px; float: left; background-color: rgba(250,250,250,1);}\
                 #img"+i+" { max-width: 100%; }\
+            </style>\
+        </div>");
+      }
+      else if(images[i].height>=100 && images[i].width>=100 && images[i].width<=images[i].height){
+        numImages++;
+        $('#subsuper').append("\
+        <div id='imgDivInpica"+i+"'>\
+            <INPUT type='image' src='"+images[i].src+"' id='img"+i+"' value='off' onclick='addImage("+i+");' height=max-width=100%>\
+            <style type='text/css'>\
+                #imgDivInpica"+i+" { margin:10px 3px 10px; padding: 5px; height: 150px; width: 150px; float: left; background-color: rgba(250,250,250,1);}\
+                #img"+i+" { max-height: 100%; }\
             </style>\
         </div>");
       }
@@ -158,7 +140,7 @@ function loadImagesInpica(){
     $('#super').slideDown(500);
 }
 
-// select image before hitting inpick it button (multiple select)
+// select image before hitting in-pick-it button (multiple select)
 function addImage(i){
     console.log('here5now');
     var x=$("#img"+i).attr('value');
@@ -184,32 +166,22 @@ function addImage(i){
         }
     }
 }
+
+// once submit button is check to make sure an image was picked
+// if at least one was, add inipca iframe for furniture addition
 function InpicaSubmit() {
     numPics = pics.length;
     con = false;
-    if (numPics>1) {
-        con = confirm("Do you want to add these images to your furniture selection at Inpica?");
-    }
-    else if (numPics<1) {
+    if (numPics<1) {
         alert("Please select an image to continue.");
     }
     else {
-        con = confirm("Do you want to add this image to your furniture selection at Inpica?");
+        con = true;
     }
-    //console.log(body);
-    //console.log(title);
     var x = "";
     if (con==true) {
         x="submit array of pics";
         setTimeout("$('#super').remove()", 450);
-        /*$("body").append("\
-        <div id='super2'>\
-        <img src='http://people.ischool.berkeley.edu/~jacob.portnoff/Inpica/close.png' alt='missing image' width='50' height='50' onload=\"loadFormInpica();\">\
-        </div>\
-        <style type='text/css'>\
-        #super2 { display: none; position: fixed; top: 10%; left: 10%; width: 80%; height: 80%; overflow: auto; z-index: 999; background-color: rgba(128,128,128,1); border: 10px solid rgba(0,0,0,.5); margin: -5px 0 0 -5px; }\
-        </style>\
-        ");*/
         // encodeURIComponent(picurl)
         var urlStr = "";
         for(var i=0;i<pics.length;i++){
@@ -220,17 +192,21 @@ function InpicaSubmit() {
         var grabbedVals = {};
         grabbedVals = runRegexs(grabbedVals);
         $('body').append("\
-            <iframe id='inpica-frame' src='http://127.0.0.1:8000/pin/{{userid}}/{{ss}}?"+urlStr+"w="+grabbedVals['width']+"&l="+grabbedVals['length']+"&h="+grabbedVals['height']+"&title="+grabbedVals['title']+"&type="+grabbedVals['type']+"&other="+grabbedVals['other']+"&url="+url+"'>\
-            </iframe>\
-            <input type='image' src='http://people.ischool.berkeley.edu/~jacob.portnoff/Inpica/close.png' id='closeInpica' onclick='closeInpica();'>\
+            <div id='superiframe' class='row-fluid'>\
+                <div id='inpicaHeader' class='span12'>\
+                    <h3 class='pull-left'>Inpica</h3>\
+                    <div style='float:right;margin:10px 3px 10px'><button class='btn btn-inverse' onclick='closeInpica();'>Cancel</button></div>\
+                </div>\
+                <div id='subsuper' class=''  style='margin-top:60px'>\
+                    <iframe id='inpica-frame' src='http://127.0.0.1:8000/pin/{{userid}}/{{ss}}?"+urlStr+"w="+grabbedVals['width']+"&l="+grabbedVals['length']+"&h="+grabbedVals['height']+"&title="+grabbedVals['title']+"&type="+grabbedVals['type']+"&other="+grabbedVals['other']+"&url="+url+"'>\
+                    </iframe>\
+                </div>\
+            </div>\
             <style>\
-                #inpica-frame { display: none; position: fixed; top: 10%; left: 10%; width: 80%; height: 80%; overflow: auto; z-index: 999; margin: -5px 0 0 -5px; }\
-                #closeInpica { position: fixed; top: 7%; left: 91%; z-index: 999; height: 25px; width: 25px;}\
+                #inpica-frame { width: 100%; height: 100%; }\
+                #superiframe { position: fixed; top: 0%; left: 10%; width: 80%; height: 98%; overflow: auto; z-index: 999; background-color: rgba(128,128,128,1); border: 10px solid rgba(0,0,0,.5); margin: -5px 0 0 -5px; }\
             </style>\
             ");
-        $('#inpica-frame').slideDown(500);
-
-
     }
     else {
         x="Cancelled";
@@ -238,13 +214,8 @@ function InpicaSubmit() {
     console.log(x);
 }
 
-function loadFormInpica() {
-    var grabbedVals = {};
-    grabbedVals = runRegexs(grabbedVals);
-    // what I need: pic(s), furniture type, length, width, height and title, extra, and 'purchased'
-    
-}
-
+// grab from body what information is useful
+// returns a hashtable called grabbedVals that will be sent to inpica 
 function runRegexs(grabbedVals) {
     var units = "(in|in.|inch|inches|foot|feet|ft|cm|mm|m|\'|\")";
     var widthRegex = "^.*(Width)[\:\=\-x ]? ?([0-9]+) ?"+units+".*$";
@@ -370,6 +341,7 @@ function runRegexs(grabbedVals) {
     return grabbedVals;
 }
 
+// depending o nthe title, determine the most appropriate furniture symbol
 function determineType(typeVal,length,width) {
     var code = "2000";
     if (typeVal == null){
@@ -564,6 +536,7 @@ function determineType(typeVal,length,width) {
     }
 }
 
+// takes the expected value and unit of measurement and returns the value in inches
 function cleanVal(lenVal, unit){
     var len = parseInt(lenVal);
     // convert to inches
@@ -574,6 +547,7 @@ function cleanVal(lenVal, unit){
     return lenCommit;
 }
 
+// provides conversions as needed regarding unit of measurement
 function checkUofM(UofM){
     var inRegex = "^(in|in.|inch|inches|\")$";
     var ftRegex = "^(foot|feet|ft|\')$";
