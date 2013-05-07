@@ -18,7 +18,6 @@
   <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/jquery-ui-1.10.2.custom.css"/>
 
   <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/main.css"/>
- 
 	{%block head%}{%endblock%}
 </head>
 <body>
@@ -28,7 +27,14 @@
     <div class="navbar-inner">
       <div class="container">
 
-        <a class="brand" href="#">INPICA</a>
+        <a class="brand" href="/">INPICA</a>
+        <div class="nav-collapse collapse" id="menu">
+            <ul class="nav">
+              <li class="active"><a href="/">Home</a></li>
+              <li><a href="/about">About</a></li>
+              <li><a href="/contact">Contact</a> </li>
+              <li><a href="/dashboard">Dashboard</a></li>
+            </ul></div>
         <div id="screen"></div>
         <div id="createform-wrapper">
           {%include 'account/create.html'%}
@@ -58,5 +64,42 @@
       <!--<a href="#">Terms</a>-->
     </p>
   </div>
+
+  <script type="text/javascript">
+  $(document).ready(function () {
+    function stripTrailingSlash(str) {
+        var n = str.lastIndexOf("/")
+        if (n != -1)
+        {
+          return str.substr(n+1)
+        }
+        else
+          return str
+      }
+
+    var url = window.location.pathname;
+    var activePage = stripTrailingSlash(url);
+    console.log(activePage);
+    $("#menu li").removeClass('active');
+    $('#menu li a').each(function(){  
+    var currentPage = stripTrailingSlash($(this).attr('href'));
+    if (activePage == currentPage) {
+      $(this).parent().addClass('active'); 
+    }
+    });
+    console.log("loading");
+    if (!isNaN(parseFloat(activePage)) && isFinite(activePage)){
+      $('#menu ul').append('<li class="active"><a href="'+url + '">Floorplan </a></li>');
+    }
+  });
+    /*  $('.nav li a').each(function(){  
+        var currentPage = stripTrailingSlash($(this).attr('href'));
+
+        if (activePage == currentPage) {
+          $(this).parent().addClass('active'); 
+        } 
+      });
+    });*/
+  </script>
 </body>
 </html>
