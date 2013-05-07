@@ -26,39 +26,45 @@
   <div class="navbar navbar-inverse navbar-fixed-top">
     <div class="navbar-inner">
       <div class="container">
+        <!-- mobile menu icon -->
+        <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
 
-        <a class="brand" href="/">INPICA</a>
+        <!-- default menu options in browser-->
+        <a class="brand" href="/" style="padding:5px 20px 5px;"><img src="{{ STATIC_URL }}image/home/logo.png"></a>
         <div class="nav-collapse collapse" id="menu">
             <ul class="nav">
               <li class="active"><a href="/">Home</a></li>
-              <li><a href="/about">About</a></li>
-              <li><a href="/contact">Contact</a> </li>
               <li><a href="/dashboard">Dashboard</a></li>
-            </ul></div>
-        <div id="screen"></div>
-        <div id="createform-wrapper">
-          {%include 'account/create.html'%}
+              <li><a href="/about">About</a></li>
+            </ul>
+          <div id="screen"></div>
+          <div id="createform-wrapper" class="navbar-form pull-right">
+            {%include 'account/create.html'%}
+          </div>
+          <div id="login-wrapper" class="navbar-form pull-right">
+            {%if user.is_authenticated%}
+              {%include 'account/logged.html'%}
+            {%else%}
+              {%include 'account/login.html'%}
+            {%endif%}
+          </div>
         </div>
 
-        <div id="login-wrapper">
-          {%if user.is_authenticated%}
-            {%include 'account/logged.html'%}
-          {%else%}
-            {%include 'account/login.html'%}
-          {%endif%}
-        </div>
       </div>
     </div>  
   </div> 
   </div>
-  <!-- the screen doesnt cover some elements, why? -->
 
 
 	{%block body%}{%endblock%}
 
-	<div id="footer">
+	<div id="footer" class ="container">
     <p>
-      © 2013 Inpica 
+      © 2013 Inpica | 
       <a href="http://www.privacychoice.org/policy/mobile?policy=59c6535ef18f38575889222f12e58fa9">Privacy</a>
       
       <!--<a href="#">Terms</a>-->

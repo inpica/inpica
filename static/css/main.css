@@ -190,10 +190,6 @@ h1, h2, h3, h4, p, tr{
 }
 /*red error box style*/
 .errorlist{
-	/*color: red;
-	font-size: 13px;
-	font-family: 'Whipsmart Bold';*/
-	/*width: 150px*/
 	list-style-type: none;
 	padding: 5px 5px 5px 10px;
 	margin-bottom: 20px;
@@ -212,8 +208,6 @@ h1, h2, h3, h4, p, tr{
 	position:absolute;
 	top:50px;
 	left:-20px;
-	/*background-color: red;
-	color:#FFF;*/
 }
 
 #blankPassErr{	
@@ -225,34 +219,9 @@ h1, h2, h3, h4, p, tr{
 .buttondisplay{
 	padding-left: 80px;
 }
+/*General
+----------------------*/
 
-
-/* RESPONSIVE CSS
--------------------------------------------------- */
-
-@media (max-width: 979px) {
-
-  .container.navbar-wrapper {
-    margin-bottom: 0;
-    width: auto;
-  }
-  .navbar-inner {
-    border-radius: 0;
-    margin: -20px 0;
-  }
-
-}
-
-@media (max-width: 767px) {
-
-  .navbar-inner {
-    margin: -20px;
-  }
-
-}
-
-
-/*trial--------------------*/
 /*bg white container centered*/
 .maincontainer{
 	background-color: white;
@@ -275,3 +244,29 @@ h1, h2, h3, h4, p, tr{
 		color-stop(0.54, rgb(29,200,190))
 	);
 }
+
+/* RESPONSIVE CSS
+-------------------------------------------------- */
+/*
+@media (max-width: 979px) {
+
+  .container.navbar-wrapper {
+    margin-bottom: 0;
+    width: auto;
+  }
+  .navbar-inner {
+    border-radius: 0;
+    margin: -20px 0;
+  }
+
+}
+
+@media (max-width: 767px) {
+
+  .navbar-inner {
+    margin: -20px;
+  }
+
+}*/
+
+
