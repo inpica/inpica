@@ -74,23 +74,23 @@ tr:hover{
 	float: left;
 }
 
-.external-img img{
+img.small-image{
 	height:30px;
 	width: 30px;
 	position: relative;
 }
+
 img.big-image{
+	display: none;
 	height: 300px;
+	position: absolute;
+	z-index:100;
+	max-width: none;
+	right: 1px;
 }
 
 .external-img:hover img.big-image{
 	display: block;
-}
-img.big-image {
-	display:none;
-	width: 300px;
-	position: absolute;
-	z-index:100;
 }
 
 td.symbol img{
