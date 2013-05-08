@@ -178,6 +178,21 @@ h3{
 #bookmarklets{color:#49afcd; position: fixed; top:25px; right:10%;}
 
 
+/*learn more section*/
+#bookmarklet-learnmore{
+	position: fixed;
+	top:20%;
+	width:100%;
+	height:500px;
+	z-index: 100;
+	display:none;
+}
 
-
-
+#learnmore{
+	position: relative;
+	width:800px;
+	height: 400px;
+	z-index:2;
+	margin: 0 auto;
+	background-color: white;
+}

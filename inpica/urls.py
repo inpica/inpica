@@ -17,7 +17,7 @@ urlpatterns = patterns('',
     # url(r'^login$', 'account.views.Login'),
     # url(r'^logout$', 'account.views.Logout'),
     # url(r'^account/create$', 'account.views.Create'),
-    url(r'^account/confirm/(?P<id>\d+)$', 'account.views.Confirm'),
+    url(r'^home/confirm/(?P<id>\d+)$', 'account.views.Confirm'),
     
     #Main################################################
     url(r'^floorplan/(?P<id>\d+)$', 'main.views.Floorplan'),
@@ -35,7 +35,6 @@ urlpatterns = patterns('',
     url(r'^dashboard$', 'main.views.Dashboard'),
     url(r'^dashboard/furniture/(?P<page>\d+)$', 'main.views.FurnitureDashboard'),
     url(r'^dashboard/mycomments/(?P<page>\d+)$', 'main.views.MyCommentsDashboard'),
-    url(r'^dashboard/othercomments/(?P<page>\d+)$', 'main.views.OtherCommentsDashboard'),
 
     url(r'^furniture/builder$','main.views.FurnitureBuilder'),
     url(r'^furniture/builder-submit$','main.views.FurnitureBuilderSubmit'),

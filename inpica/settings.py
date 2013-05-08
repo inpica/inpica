@@ -53,9 +53,9 @@ LANGUAGE_CODE = 'en-us'
 
 SITE_ID = 1
 
-LOGIN_URL = '/login'
+LOGIN_URL = '/'
 
-LOGOUT_URL = '/login'
+LOGOUT_URL = '/home/logout'
 
 #URL that user is taken to after they log in successfully
 LOGIN_REDIRECT_URL = '/'

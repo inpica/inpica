@@ -99,7 +99,16 @@ def Index(request):
 @login_required
 def Dashboard(request):
 	floorplans = m.Floorplan.objects.filter(user=request.user).order_by('-RUD')
-	return render_to_response('main/dashboard.html',{"floorplans":floorplans},context_instance=RequestContext(request))
+	latest_comments = []
+	for floorplan in floorplans:
+		comment = m.Furnishing.objects.filter(floorplan=floorplan).exclude(user_id=request.user).order_by('-RUD')
+		if len(comment) > 0:
+			latest_comments.append(comment[0])
+		else:
+			latest_comments.append(None)
+	combined = zip(floorplans,latest_comments)
+	#return render_to_response('main/dashboard.html',{"floorplans":floorplans, "comments": latest_comments},context_instance=RequestContext(request))
+	return render_to_response('main/dashboard.html',{"combined": combined},context_instance=RequestContext(request))
 
 @login_required
 @csrf_exempt
@@ -108,8 +117,8 @@ def FurnitureDashboard(request, page):
 
 @login_required
 @csrf_exempt
-def FurnitureDashboard(request, page):
-	return render_to_response('snippet/comments-dashboard.html', maintags.CommentsDashboard(RequestContext(request),page))
+def MyCommentsDashboard(request, page):
+	return render_to_response('snippet/comments-dashboard.html', maintags.MyCommentsDashboard(RequestContext(request),page))
 
 @login_required
 def NewFloorplan(request):

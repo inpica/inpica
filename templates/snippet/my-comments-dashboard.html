@@ -11,7 +11,7 @@
 		{%for c in mycomments%}
 				<tr>
 					<td class="first">{{c.floorplan.user}}</td>
-					<td class="first">{{c.floorplan.title}}</td>
+					<td class="first"><a href="/floorplan/{{c.floorplan.id}}">{{c.floorplan.title}}</a></td>
 					{%if c.comment|length < 100%}
 						<td class="comment">{{c.comment}}</td>
 					{%else%}

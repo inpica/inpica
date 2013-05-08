@@ -28,18 +28,25 @@
 					<table id="floorplans" class='table table-bordered table-hover table-condensed table-striped'>
 						<tr class=''>
 							<th>Title</th>
-							<th>Creation On</th>
-							<th>Updated On</th>
-							<th>Width in Feet</th>
-							<th>Breadth in Feet</th>
+							<th>Created On</th>
+							<th>Comment</th>
+							<th>Commented On</th>
 						</tr>
-					{%for f in floorplans%}
+					{%for f,c in combined%}
 							<tr>
 								<td><a href="/floorplan/{{f.id}}">{{f.title}}</a></td>
-								<td>{{f.RCD}}</td>
-								<td>{{f.RUD}}</td>
-								<td>{{f.mapxFeet}}</td>
-								<td>{{f.mapyFeet}}</td>
+								<td>{{f.RCD|timesince_threshold}}</td>
+								{%if c != None%}
+									{%if c.comment|length < 100%}
+										<td class="comment">{{c.comment}}</td>
+									{%else%}
+										<td class="comment">{{c.comment|slice:":100"}}...</td>
+									{%endif%}
+									<td class="small pad">{{c.RCD|timesince_threshold}}</td>
+								{%else%}
+									<td class="comment"> No Comments</td>
+									<td class="small pad"></td>
+								{%endif%}
 							</tr>
 					{%endfor%}
 					</table>
@@ -62,12 +69,8 @@
 			</div>-->
 
 			<!-- COMMENTS	-->
-			<div id="other-comments-container" class="outer-container">
-				{%MyCommentsDashboard 1%}
-			</div>
-
 			<div id="my-comments-container" class="outer-container">
-				{%OtherCommentsDashboard 1%}
+				{%MyCommentsDashboard 1%}
 			</div>
 
 		</div>
@@ -75,14 +78,14 @@
 		<div class="span4">
 			<!-- Bookmark	-->
 			<div id="bookmark-container" class='well well-small smaller' >
-				<h3 class="icon-circle-arrow-up "> In-Pick It </h3>
+				<h3 class="icon-circle-arrow-up "></h3>
 				<div id="bookmarklets" class="outer-container pull-right alignheader" >
 					<h3 >		
-						<a href="javascript:(function(){document.body.appendChild(document.createElement('script')).src='http://127.0.0.1:8000/bookmarklet/{{user.id}}/{{user.userdetails.bookmarkletss}}';})()"><i  class='icon-bookmark icon-3x'></i></a>
+						<a href="javascript:(function(){document.body.appendChild(document.createElement('script')).src='http://127.0.0.1:8000/bookmarklet/{{user.id}}/{{user.userdetails.bookmarkletss}}';})()"><i  class='icon-bookmark icon-3x'></i>Inpick-it</a>
 					</h3>
 				</div>
 				
-				<p>Drag the bookmark icon to your web browsers bookmarks bar to pick furniture while you browse. <a href='#'>Learn more.</a></p>
+				<p>Drag the bookmark icon to your web browsers bookmarks bar to pick furniture while you browse. <a onClick="test()">Learn more.</a></p>
 				
 			</div>
 
@@ -94,6 +97,19 @@
 	</div>
 
 </div>
-
-
+<div id="bookmarklet-learnmore">
+	<div id="learnmore">
+		Test data
+	</div>
+</div>
+<script type="text/javascript">
+function test(){
+	/*$('#screen').css({'display': 'block', opacity: 0.7, 'width':$(document).width(),'height':$(document).height()});
+    $('body').css({'overflow':'hidden'});*/
+   	
+	$('#screen').css({'display': 'block', opacity: 0.7, 'width':$(document).width(),'height':$(document).height()});
+    $('body').css({'overflow':'hidden'});
+    $('#bookmarklet-learnmore:hidden').css({'display': 'block'});
+}
+</script>
 {%endblock%}

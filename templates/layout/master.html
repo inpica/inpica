@@ -85,7 +85,6 @@
 
     var url = window.location.pathname;
     var activePage = stripTrailingSlash(url);
-    console.log(activePage);
     $("#menu li").removeClass('active');
     $('#menu li a').each(function(){  
     var currentPage = stripTrailingSlash($(this).attr('href'));
@@ -93,7 +92,7 @@
       $(this).parent().addClass('active'); 
     }
     });
-    console.log("loading");
+    
     if (!isNaN(parseFloat(activePage)) && isFinite(activePage)){
       $('#menu ul').append('<li class="active"><a href="'+url + '">Floorplan </a></li>');
     }

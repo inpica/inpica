@@ -4,6 +4,7 @@ from datetime import datetime, timedelta
 from django.utils.timesince import timesince
 import main.data
 from django.utils import formats
+from django.contrib.auth.decorators import login_required
 
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
@@ -26,6 +27,7 @@ def FurniturePicker(context, includePins):
 def LayoutPicker(context):
 	return {"default_layouts":main.data.default_layouts, "STATIC_URL":context['STATIC_URL']}
 
+@login_required
 @register.inclusion_tag('snippet/furniture-dashboard.html',takes_context=True)
 def FurnitureDashboard(context, pageNumber):
 	furniture_list = m.Furniture.objects.filter(user=context['user']).order_by('-RCD') 
@@ -39,6 +41,7 @@ def FurnitureDashboard(context, pageNumber):
 		furniture = paginator_furniture.page(paginator_furniture.num_pages)
 	return {'furniture':furniture, "STATIC_URL":context['STATIC_URL']}
 
+@login_required
 @register.inclusion_tag('snippet/my-comments-dashboard.html', takes_context = True)
 def MyCommentsDashboard(context, pageNumber):
 	comments_list  = m.Furnishing.objects.filter(user_id=context['user']).exclude(floorplan__user=context['user']).select_related(depth=2) #select all furnishings created by me on floorplans excluding mine
@@ -51,19 +54,6 @@ def MyCommentsDashboard(context, pageNumber):
 	except EmptyPage:
 		comments = paginator_comments.page(page_comments.num_pages)
 	return {'mycomments':comments, "STATIC_URL":context['STATIC_URL']}
-
-@register.inclusion_tag('snippet/other-comments-dashboard.html', takes_context = True)
-def OtherCommentsDashboard(context, pageNumber):
-	comments_list = m.Furnishing.objects.filter(floorplan__user=context['user']).exclude(user_id=context['user']).select_related(depth=1) #select all furnishings created by others on my floorplans, excluding my own comments
-	paginator_comments = Paginator(comments_list, 5) 
-	page_comments = pageNumber
-	try:
-		comments = paginator_comments.page(page_comments)
-	except PageNotAnInteger:
-		comments = paginator_comments.page(1)
-	except EmptyPage:
-		comments = paginator_comments.page(page_comments.num_pages)
-	return {'othercomments':comments, "STATIC_URL":context['STATIC_URL']}
 
 @register.filter
 def timesince_threshold(value, hours=1):

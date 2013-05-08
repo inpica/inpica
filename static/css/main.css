@@ -174,7 +174,7 @@ h1, h2, h3, h4, p, tr{
 }
 /*transparent background veil*/
 #screen{
-	position: absolute;
+	position: fixed;
 	left: 0;
 	top: 0;
 	background: #000;
