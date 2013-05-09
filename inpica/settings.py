@@ -16,10 +16,7 @@ DATABASES = {
         'USER': 'root',
         'PASSWORD': 'inpica',
         'HOST': '54.225.108.90',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
-        'PORT': '3306'        
-        #'PASSWORD': 'inpica',
-        #'HOST': '54.225.108.90',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
-        #'PORT': '3306',                      # Set to empty string for default.
+        'PORT': '3306',                      # Set to empty string for default.
     }
 }
 
@@ -53,9 +50,9 @@ LANGUAGE_CODE = 'en-us'
 
 SITE_ID = 1
 
-LOGIN_URL = '/'
+LOGIN_URL = '/home/login'
 
-LOGOUT_URL = '/home/logout'
+LOGOUT_URL = '/home/login'
 
 #URL that user is taken to after they log in successfully
 LOGIN_REDIRECT_URL = '/'
@@ -73,7 +70,7 @@ USE_TZ = True
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/var/www/example.com/media/"
-MEDIA_ROOT = '/Users/gauravshetti/Documents/inpica/media'
+MEDIA_ROOT = '/Users/NailasMac/Projects/inpica/media'
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
@@ -92,7 +89,7 @@ STATIC_URL = '/static/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
-    '/Users/gauravshetti/Documents/inpica/static',
+    '/Users/NailasMac/Projects/inpica/static',
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
@@ -132,7 +129,7 @@ ROOT_URLCONF = 'inpica.urls'
 WSGI_APPLICATION = 'inpica.wsgi.application'
 
 TEMPLATE_DIRS = (
-    '/Users/gauravshetti/Documents/inpica/templates',
+    '/Users/NailasMac/Projects/inpica/templates',
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.

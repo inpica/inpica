@@ -131,7 +131,7 @@ def Create(request):
 			code = uuid.uuid4()
 			bookmarkletss = uuid.uuid4()
 			userDetails = m.UserDetails.objects.create(user=user, confirmCode=code, bookmarkletss=bookmarkletss)
-			confirmURL = 'http://www.inpica.com/account/confirm/%s'%(user.id) + '?c=%s'%(code)
+			confirmURL = 'http://www.inpica.com/home/confirm/%s'%(user.id) + '?c=%s'%(code)
 			subject, from_email, to = 'Inpica New Account', 'accounts@inpica.com', form.cleaned_data['email']
 			text_content = 'Thank you for signing up with Inpica! Please go to the following url to confirm your new account: %s'%(confirmURL)
 			html_content = '<p>Thank you for signing up with Inpica! Please go to the following url to confirm your new account: <a href="%s">%s</a></p>'%(confirmURL, confirmURL)

@@ -15,8 +15,7 @@
 					{%if c.comment|length < 100%}
 						<td class="comment">{{c.comment}}</td>
 					{%else%}
-						<td class="comment">{{c.comment|slice:":100"}}...</td>
-						<!--<div class="expanded_text" id="other{{c.id}}">{{c.comment}}</div>-->
+						<td class="comment">{c.comment|slice:":100"}}...</td>
 					{% endif%}
 					<td>{{c.RUD|timesince_threshold}}</td>
 				</tr>
@@ -50,4 +49,5 @@
 			}
 		})
 	}
+
 </script>

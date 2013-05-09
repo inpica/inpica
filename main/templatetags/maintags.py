@@ -30,7 +30,7 @@ def LayoutPicker(context):
 @login_required
 @register.inclusion_tag('snippet/furniture-dashboard.html',takes_context=True)
 def FurnitureDashboard(context, pageNumber):
-	furniture_list = m.Furniture.objects.filter(user=context['user']).order_by('-RCD') 
+	furniture_list = m.Furniture.objects.filter(user=context["user"]).order_by('-RCD') 
 	paginator_furniture = Paginator(furniture_list, 5) 
 	page_furniture = pageNumber
 	try:
