@@ -69,7 +69,7 @@ function initMyBookmarklet(){
             <div id='super' class='row-fluid'>\
                 <div id='inpicaHeader' class='span12'>\
                     <h3 class='pull-left'>Inpica</h3>\
-                    <div style='float:right;margin:10px 3px 10px'><button class='btn btn-inverse' onclick='closeInpica();'>Cancel</button></div>\
+                    <div style='float:right;margin:10px 3px 10px'><button class='btn btn-inverse' onclick='closeInpica();'>Close</button></div>\
                     <div id='inpickit' style='float:right;margin:10px 3px 10px'></div>\
                 </div>\
                 <div id='subsuper' class=''  style='margin-top:60px'>\
@@ -95,6 +95,7 @@ function closeInpica() {
   $("#inpicaframe").remove();
   $("#inpica-frame").remove();
   $("#superiframe").remove();
+  $("#inpicaScript").remove();
 }
 
 // select the images out of the body and populate the first form for selection
@@ -195,7 +196,7 @@ function InpicaSubmit() {
             <div id='superiframe' class='row-fluid'>\
                 <div id='inpicaHeader' class='span12'>\
                     <h3 class='pull-left'>Inpica</h3>\
-                    <div style='float:right;margin:10px 3px 10px'><button class='btn btn-inverse' onclick='closeInpica();'>Cancel</button></div>\
+                    <div style='float:right;margin:10px 3px 10px'><button class='btn btn-inverse' onclick='closeInpica();'>Close</button></div>\
                 </div>\
                 <div id='subsuper' class=''  style='margin-top:60px'>\
                     <iframe id='inpica-frame' src='http://127.0.0.1:8000/pin/{{userid}}/{{ss}}?"+urlStr+"w="+grabbedVals['width']+"&l="+grabbedVals['length']+"&h="+grabbedVals['height']+"&title="+grabbedVals['title']+"&type="+grabbedVals['type']+"&other="+grabbedVals['other']+"&url="+url+"'>\
