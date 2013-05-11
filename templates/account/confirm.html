@@ -1,7 +1,7 @@
 {%extends 'layout/master.html' %}
 {%block title%}Confirm Account{%endblock%}
 {%block head%}
-<meta http-equiv="refresh" content="5;url=http://127.0.0.1:61002/">
+<meta http-equiv="refresh" content="5;url=/">
 {%endblock%}
 {%block body%}
 <link rel="stylesheet" href="{{ STATIC_URL }}css/bootstrap.css">
@@ -23,7 +23,7 @@
 		<p>There was an error confirming your account, please try refreshing this page.</p>
 		{%endif%}
 		<p>If you are not redirected within a few seconds please click here: </p>
-		<a href="/">Redirect to Inpica</a>
+		<center><a href="/">Redirect to Inpica</a></center>
 	</div>
 </div>
 {%endblock%}
