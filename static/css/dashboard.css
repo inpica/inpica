@@ -209,6 +209,35 @@ h3{
 	background-color: white;
 }
 
-/* expanded comment */
+/* table message */
+.table_msg{
+	background-color: #CEF6EC;
+}
 
+.table_msg center a{
+	color: black;
+	cursor: pointer;
+}
 
+#bookmarklet-text{
+	position: fixed;
+	top: 55px;
+	background-color: #C0EAEA;
+	border-color: #2EB8B8;
+	color:black;
+	z-index: -1;
+	right: 180px;
+	width: 155px;
+	text-align: right;
+	border:2px solid;
+	border-radius:5px;
+	box-shadow: 3px 3px 10px #888888;
+}
+
+#bookmarklet-help{
+	margin-top:10px;
+}
+
+.icon-bookmark{
+	margin-right: 150px;
+}
