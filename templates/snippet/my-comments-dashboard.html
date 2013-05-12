@@ -8,18 +8,24 @@
 				<th>Comment</th>
 				<th>Commented On</th>
 			</tr>
-		{%for c in mycomments%}
-				<tr>
-					<td class="first">{{c.floorplan.user}}</td>
-					<td class="first"><a href="/floorplan/{{c.floorplan.id}}">{{c.floorplan.title}}</a></td>
-					{%if c.comment|length < 100%}
-						<td class="comment">{{c.comment}}</td>
-					{%else%}
-						<td class="comment">{{c.comment|slice:":100"}}...</td>
-					{% endif%}
-					<td>{{c.RUD|timesince_threshold}}</td>
-				</tr>
-		{%endfor%}
+		{%if mycomments|length != 0%}
+			{%for c in mycomments%}
+					<tr>
+						<td class="first">{{c.floorplan.user}}</td>
+						<td class="first"><a href="/floorplan/{{c.floorplan.id}}">{{c.floorplan.title}}</a></td>
+						{%if c.comment|length < 100%}
+							<td class="comment">{{c.comment}}</td>
+						{%else%}
+							<td class="comment">{{c.comment|slice:":100"}}...</td>
+						{% endif%}
+						<td>{{c.RUD|timesince_threshold}}</td>
+					</tr>
+			{%endfor%}
+		{%else%}
+			<tr>
+				<td colspan="4" class="table_msg"><center>Start commenting on others' floorplans</center></td>
+			</tr>
+		{%endif%}
 		</table>
 		<div class="pagination pull-right headeralign">
 				<span class="step-links">

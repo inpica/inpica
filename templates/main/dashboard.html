@@ -32,23 +32,29 @@
 							<th>Comment</th>
 							<th>Commented On</th>
 						</tr>
-					{%for f,c in combined%}
-							<tr>
-								<td><a href="/floorplan/{{f.id}}">{{f.title}}</a></td>
-								<td>{{f.RCD|timesince_threshold}}</td>
-								{%if c != None%}
-									{%if c.comment|length < 100%}
-										<td class="comment">{{c.comment}}</td>
+					{%if combined|length != 0%}
+						{%for f,c in combined%}
+								<tr>
+									<td><a href="/floorplan/{{f.id}}">{{f.title}}</a></td>
+									<td>{{f.RCD|timesince_threshold}}</td>
+									{%if c != None%}
+										{%if c.comment|length < 100%}
+											<td class="comment">{{c.comment}}</td>
+										{%else%}
+											<td class="comment">{{c.comment|slice:":100"}}...</td>
+										{%endif%}
+										<td class="small pad">{{c.RCD|timesince_threshold}}</td>
 									{%else%}
-										<td class="comment">{{c.comment|slice:":100"}}...</td>
+										<td class="comment"> No Comments</td>
+										<td class="small pad"></td>
 									{%endif%}
-									<td class="small pad">{{c.RCD|timesince_threshold}}</td>
-								{%else%}
-									<td class="comment"> No Comments</td>
-									<td class="small pad"></td>
-								{%endif%}
-							</tr>
-					{%endfor%}
+								</tr>
+						{%endfor%}
+					{%else%}
+						<tr>
+							<td colspan ="5" class="table_msg"><center>Start by adding your floorplan. Enter the name of your room and click Create</td>
+						</tr>
+					{%endif%}
 					</table>
 				</div>
 			</div>
@@ -81,11 +87,12 @@
 				<h3 class="icon-circle-arrow-up "></h3>
 				<div id="bookmarklets" class="outer-container pull-right alignheader" >
 					<h3 >		
-						<a href="javascript:(function(){document.body.appendChild(document.createElement('script')).src='http://127.0.0.1:8000/bookmarklet/{{user.id}}/{{user.userdetails.bookmarkletss}}';})()"><i  class='icon-bookmark icon-3x'></i>Inpick-it</a>
+						<a href="javascript:(function(){document.body.appendChild(document.createElement('script')).src='http://127.0.0.1:8000/bookmarklet/{{user.id}}/{{user.userdetails.bookmarkletss}}';})()">
+							<i class='icon-bookmark icon-3x'></i><div id="bookmarklet-text">Inpick-it</div></a>
 					</h3>
 				</div>
 				
-				<p>Drag the bookmark icon to your web browsers bookmarks bar to pick furniture while you browse. <a onClick="test()">Learn more.</a></p>
+				<p id="bookmarklet-help">Drag the bookmark icon to your web browsers bookmarks bar to pick furniture while you browse. <a onClick="test()">Learn more.</a></p>
 				
 			</div>
 
