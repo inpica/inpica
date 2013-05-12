@@ -192,7 +192,7 @@ h3{
 
 #bookmarklet-learnmore{
 	position: fixed;
-	top:20%;
+	top:10%;
 	width:100%;
 	height:500px;
 	z-index: 100;
@@ -207,6 +207,12 @@ h3{
 	z-index:2;
 	margin: 0 auto;
 	background-color: white;
+}
+
+#learnmore img {
+	box-shadow: 3px 3px 10px #888888;
+	width: 95% !important;
+	margin: 10px 10px 10px 10px;
 }
 
 /* table message */
