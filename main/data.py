@@ -33,40 +33,40 @@ default_furnitures = [
 	},
 	{
 		"symbolid":1012,
-		"h":2.5,
-		"w":1.67,
+		"h":1.67,
+		"w":2.5,
 		"searchtags":"box tv",
 		"category":"living",
 		"title":"Box TV"
 	},
 	{
 		"symbolid":1017,
-		"h":1.92,
-		"w":4.92,
+        "h":5.1,
+        "w":4.5,
 		"searchtags":"piano",
 		"category":"living",
 		"title":"Piano Classic"
 	},
 	{
 		"symbolid":1018,
-		"h":5.1,
-		"w":4.5,
+        "h":1.92,
+        "w":4.92,
 		"searchtags":"piano",
 		"category":"living",
 		"title":"Upright Piano"
 	},
 	{
 		"symbolid":1019,
-		"h":4,
-		"w":2.5,
+		"h":2.5,
+		"w":4,
 		"searchtags":"coffee table oval",
 		"category":"living",
 		"title":"Coffee Table (Oval)"
 	},
 	{
 		"symbolid":1020,
-		"h":4,
-		"w":2.5,
+		"h":2.5,
+		"w":4,
 		"searchtags":"coffee table rectangular",
 		"category":"living",
 		"title":"Coffee Table (Rectangular)"
@@ -257,16 +257,16 @@ default_furnitures = [
 	},
 	{
 		"symbolid":5005,
-		"h":5.00,
-		"w":3.00,
+		"h":3.00,
+		"w":5.00,
 		"searchtags":"dining room table 6 chairs rectangular",
 		"category":"dining",
 		"title":"Dining Room Table w/ 6 Chairs"
 	},
 	{
 		"symbolid":5006,
-		"h":6.50,
-		"w":3.00,
+		"h":3.00,
+		"w":6.50,
 		"searchtags":"dining room table 8 chairs rectangular",
 		"category":"dining",
 		"title":"Dining Room Table w/ 8 Chairs"
