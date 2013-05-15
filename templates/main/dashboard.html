@@ -84,14 +84,15 @@
 		<div class="span4">
 			<!-- Bookmark	-->
 			<div id="bookmark-container" class='well well-small smaller' >
-				<h3 class="icon-circle-arrow-up "></h3>
+				
 				<div id="bookmarklets" class="outer-container pull-right alignheader" >
-					<h3 >		
-						<a href="javascript:(function(){var script=document.createElement('script');document.body.appendChild(script);script.src='http://127.0.0.1:8000/bookmarklet/{{user.id}}/{{user.userdetails.bookmarkletss}}';script.id='inpicaScript';})()"><i class='icon-bookmark icon-3x'></i><div id="bookmarklet-text">Inpick-it</div></a>
-					</h3>
+					
+					<div >		
+						<a href="javascript:(function(){var script=document.createElement('script');document.body.appendChild(script);script.src='http://127.0.0.1:8000/bookmarklet/{{user.id}}/{{user.userdetails.bookmarkletss}}';script.id='inpicaScript';})()"><i class='icon-bookmark icon-3x'></i><div id="bookmarklet-text" class="btn btn-info btn-large">Inpick-it</div></a>
+					</div>
 				</div>
 				
-				<p id="bookmarklet-help">Drag the bookmark icon to your web browsers bookmarks bar to pick furniture while you browse. <a onClick="test()">Learn more.</a></p>
+				<p id="bookmarklet-help" >Drag the bookmark icon to your bookmarks bar to pick furniture while you browse. <a onClick="test()">Learn more.</a></p>
 				
 			</div>
 

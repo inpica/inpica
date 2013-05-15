@@ -175,7 +175,7 @@ h3{
 /*adjust size of bookmarklet well*/
 .smaller{margin-bottom:0px; padding:10px}
 /*bookmarklet icon position*/
-#bookmarklets{color:#49afcd; position: fixed; top:25px; right:10%;}
+/*#bookmarklets{color:#49afcd; position: fixed; top:25px; right:10%;}*/
 
 
 /*learn more section*/
@@ -226,18 +226,18 @@ h3{
 }
 
 #bookmarklet-text{
-	position: fixed;
-	top: 55px;
-	background-color: #C0EAEA;
-	border-color: #2EB8B8;
-	color:black;
+	/*position: fixed;
+	top: 55px;*/
+	/*background-color: #C0EAEA;*/
+	/*border-color: #2EB8B8;*/
+	/*color:black;*/
 	z-index: -1;
-	right: 180px;
-	width: 155px;
+	/*right: 180px;*/
+	width: 110px;
 	text-align: right;
-	border:2px solid;
-	border-radius:5px;
-	box-shadow: 3px 3px 10px #888888;
+	/*border:2px solid;*/
+	/*border-radius:5px;*/
+	/*box-shadow: 3px 3px 10px #888888;*/
 }
 
 #bookmarklet-help{
@@ -245,5 +245,8 @@ h3{
 }
 
 .icon-bookmark{
-	margin-right: 150px;
+	position: relative;
+	left: 50px;
+	top: 3px;
+	/*margin-right: 150px;*/
 }
