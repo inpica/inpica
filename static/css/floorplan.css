@@ -391,7 +391,7 @@
 
 #furnishings{
 	float: left;
-	width:800px;
+	width:600px;
 	position: relative;
 }
 
@@ -492,7 +492,7 @@
 }
 
 #furnishings .furnishing-list td.comment{
-	width:500px;
+	width:350px;
 	background-color:#F7F7F7;
 	color:#333;
 }
